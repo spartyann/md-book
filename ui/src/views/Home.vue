@@ -30,9 +30,14 @@ export default {
 	mounted()
 	{
 		let self = this;
-		axios.post(`${server.baseURL}/api/test2/op`, { "var": "var hihi" }).then(data => {
+		const url = `${server.baseURL}/api/test2/op`;
+		console.log("URL = " + url)
+
+		axios.post(url, { "var": "var hihi" }).then(data => {
 			self.myvar = data;
 		});
+
+		console.log(process.env.VUE_APP_ENV); // OUTPUT: production
 
 	}
 }

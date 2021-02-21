@@ -33,6 +33,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, '../../ui/dist'),
+			serveStaticOptions: {
+				//index: false,
+				//redirect: false
+			}
 		}),
 	],
 	controllers: [ AppController, ApiController, TestController],

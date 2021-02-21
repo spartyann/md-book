@@ -12,6 +12,7 @@ ENV DB_PASSWORD=
 ENV DB_USERNAME=root
 ENV DB_DATABASE=md-book
 ENV NODE_ENV=production
+ENV SECRET=
 
 ADD docker/images/md-book/entrypoint /entrypoint
 RUN chmod a+x /entrypoint/*.sh

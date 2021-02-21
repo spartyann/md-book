@@ -1,0 +1,196 @@
+// Width
+
+.max-content{
+	width: max-content;
+	min-width: 100%;
+	//padding-right: 2rem;
+}
+
+
+//  FLEX
+.flex-col {
+    -ms-flex-direction: column;
+    flex-direction: column;
+    display: flex;
+}
+
+.flex-col-reverse {
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+    display: flex;
+}
+
+
+.flex-row {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    display: flex;
+}
+
+.flex-row-reverse {
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    display: flex;
+}
+
+.flex-justify-content-center {
+    justify-content: center;
+}
+
+.flex-justify-content-end {
+    justify-content: flex-end;
+}
+
+@mixin generate-flex($i: 1) {
+	.flex-ratio-#{$i} { -ms-flex: $i; flex: $i; }
+	.flex-#{$i} { -ms-flex: $i; flex: $i; }
+}
+
+@for $i from 1 through 20 { @include generate-flex($i); }
+
+//  Table
+.tbl {
+	display:table !important;
+}
+
+.tbl-100 {
+	@extend .tbl;
+	width: 100%;
+}
+
+.tbl-85 { @extend .tbl; width: 85%;}
+.tbl-75 { @extend .tbl; width: 75%; }
+.tbl-50 { @extend .tbl; width: 50%; }
+.tbl-25 { @extend .tbl; width: 25%; }
+
+
+.tr {
+	display:table-row !important;
+}
+
+.td {
+	vertical-align: top;
+	display:table-cell !important;
+}
+
+@mixin generate-td($i: 0) {
+	.td-#{$i} { @extend .td; width: #{"#{$i}%"}; }
+}
+
+$i: 0;
+@while $i <= 100 { @include generate-td($i); $i: $i + 5 }
+
+// Margin padding
+
+.ml-auto{
+	margin-left: auto;
+}
+
+.mr-auto{
+	margin-right: auto;
+}
+
+// Generic Spacing
+
+.spacer {
+    width: 100%;
+    height: 15px;
+    display: block;
+    clear: both;
+}
+
+.vat { vertical-align: top !important; }
+.vam { vertical-align: middle !important; }
+.vab { vertical-align: bottom !important; }
+.tal { text-align: left !important; }
+.tac { text-align: center !important; }
+.tar { text-align: right !important; }
+
+
+
+// ************** Overflow ***********
+.overflow-hidden {
+	overflow:hidden;
+}
+
+.overflow-scroll{
+	overflow:auto;
+}
+
+.overflow-visible {
+	overflow: visible;
+}
+
+.overflow-scroll-x {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.overflow-scroll-y {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.overflow-visible-y {
+	overflow-y: visible;
+	overflow-x: hidden;
+}
+
+.overflow-visible-x {
+	overflow-x: visible;
+	overflow-y: hidden;
+}
+
+// *************** Hover **************
+.hover-handler .hover-only {
+	visibility: hidden;
+}
+
+.hover-handler:hover .hover-only {
+	visibility: visible;
+}
+
+// ****** 1
+.hover-handler-1 .hover-only-1 {
+	visibility: hidden;
+}
+
+.hover-handler-1:hover .hover-only-1 {
+	visibility: visible;
+}
+
+// ******* 2
+.hover-handler-2 .hover-only-2 {
+	visibility: hidden;
+}
+
+.hover-handler-2:hover .hover-only-2 {
+	visibility: visible;
+}
+
+
+// ************* Line break
+.block-line-break, .white-space-nowrap {
+	white-space: nowrap !important;
+}
+
+.text-bold{
+	font-weight: bold;
+}
+
+.text-normal{
+	font-weight: normal;
+}
+
+
+.text-sm { font-size: $font-size-sm; }
+.text-md { font-size: $font-size-base; }
+.text-lg { font-size: $font-size-lg; }
+.text-xlg { font-size: $h1-font-size; }
+
+
+.clickable-text:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+

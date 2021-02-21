@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  md-book-db:
+    image: md-book-db
+    container_name: "md-book-db"
+    restart: always
+    volumes:
+      - ./volumes/db1:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+      - MYSQL_DATABASE=md-book
+    networks:
+      - local_network
+  
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "md-book-phpmyadmin"
+    restart: always
+    environment:
+      - PMA_HOST=md-book-db
+      - PMA_USER=root
+      - PMA_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+    ports:
+      - 8081:80
+    depends_on:
+      - "md-book-db"
+    networks:
+      - local_network
+      
+networks:
+  local_network:

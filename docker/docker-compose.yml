@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  md-book-db:
+    image: md-book-db
+    container_name: "md-book-db"
+    restart: always
+    volumes:
+      - ./volumes/db1:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+      - MYSQL_DATABASE=md-book
+    networks:
+      - local_network
+
+
+  md-book:
+    image: md-book
+    container_name: "md-book"
+    restart: always
+    ports:
+      - 80:3000
+    environment:
+#      - DB_HOST=localhost
+      - DB_HOST=md-book-db
+      - DB_PORT=3306
+      - DB_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+      - DB_USERNAME=root
+      - DB_DATABASE=md-book
+    depends_on:
+      - "md-book-db"
+    networks:
+      - local_network
+      
+networks:
+  local_network:

@@ -11,26 +11,40 @@ export class InitDb1613902171887 implements MigrationInterface {
 		// Office
 		// ACLS
 
-		await queryRunner.query("CREATE TABLE clients (\
+
+		await queryRunner.query("CREATE TABLE users (\
             id int(11) NOT NULL AUTO_INCREMENT,\
-            full_name varchar(200) NOT NULL,\
+            name varchar(200) NOT NULL,\
             first_namme varchar(100) NOT NULL,\
             last_name varchar(100) NOT NULL,\
-            comment longtext NOT NULL,\
+			email varchar(100) NOT NULL,\
+			google_sub varchar(200) NOT NULL,\
             PRIMARY KEY (id)\
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
+		  
+		await queryRunner.query("CREATE TABLE clients (\
+            id int(11) NOT NULL AUTO_INCREMENT,\
+			user_id int(11) NOT NULL,\
+            name varchar(200) NOT NULL,\
+            first_namme varchar(100) NOT NULL,\
+            last_name varchar(100) NOT NULL,\
+			email varchar(100) NOT NULL,\
+            comment longtext NOT NULL,\
+            PRIMARY KEY (id),\
+            CONSTRAINT fk_clients_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE\
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
 		
-		await queryRunner.query("CREATE TABLE md_sessions (\
+		await queryRunner.query("CREATE TABLE consults (\
             id int(11) NOT NULL AUTO_INCREMENT,\
             client_id int(11) NOT NULL,\
             date datetime NOT NULL DEFAULT current_timestamp(),\
-            pre_session longtext NOT NULL,\
+            pre_consult longtext NOT NULL,\
             report longtext NOT NULL,\
             report_client longtext NOT NULL,\
-            report_client_post_session mediumtext NOT NULL,\
+            report_client_post_consult mediumtext NOT NULL,\
             PRIMARY KEY (id),\
-            CONSTRAINT fk_client FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE\
+            CONSTRAINT fk_consults_client FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE\
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
 		await queryRunner.query("CREATE TABLE dico (\
@@ -48,6 +62,8 @@ export class InitDb1613902171887 implements MigrationInterface {
             INDEX idx_dico_cgram(cgram, cgram2, ortho),\
             INDEX idx_dico_cgram_l(cgram, cgram2, lemme)\
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
+
+		  
 
     }
 

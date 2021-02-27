@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ApiController } from './api/api';
-import { TestController } from './test/controller';
+import { AppController } from './http/app.controller';
+import { AppService } from './app/services/app.service';
+import { ApiController } from './http/api/api';
+import { TestController } from './http/test/controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';

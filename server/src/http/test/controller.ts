@@ -14,6 +14,7 @@ export class TestController {
 		session.test = 1;
 
 		session.views = (session.views || 0) + 1;
+
     	return session.views;
 	}
 }

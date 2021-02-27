@@ -1,12 +1,18 @@
 <template>
-	<div class="home text-primary">
-		
+	<div class="page-home">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				
+				<div class="col-lg-5">
+					Accueil en construction
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Communication from '@/lib/Communication';
 
 export default {
 
@@ -24,11 +30,7 @@ export default {
 
 	mounted()
 	{
-		let self = this;
 
-		Communication.call("test2", "op", { "var": "var hihi"}).then(function(data){
-			self.myvar = data;
-		});
 	}
 }
 </script>

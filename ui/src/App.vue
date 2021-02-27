@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="loaded">
 
 	<ApiErrorModale></ApiErrorModale>
 
@@ -22,28 +22,53 @@
 </style>
 
 <script>
-	import { mapActions } from 'vuex';
+	import { mapActions, mapState } from 'vuex';
 	import PageTemplate from './template/page_template';
 	import ApiErrorModale from './components/modale_api_error';
 
 	export default {
 
+		data(){
+			return {
+				loaded: false
+			}
+		},
 		components: {
 			PageTemplate: PageTemplate,
 			ApiErrorModale: ApiErrorModale
 		},
 
-		mounted(){
-			this.storeInit();
+		watch:
+		{
+			$route(){ if (this.loaded) { this.checkRoute(); } }
+		},
+
+		mounted()
+		{
+			let self = this;
+			
+			this.storeInit().then(function() {
+				self.checkRoute();
+				self.loaded = true;
+			});
 		},
 		methods: {
-
+			checkRoute()
+			{
+				let routeName = this.$route.name;
+				if (this.user == null && routeName != 'Home' && routeName != 'Login' && routeName != 'Register')
+				{
+					this.$router.push({name: "Login"});
+				}
+			},
 			...mapActions({
 				storeInit: 'init',
 			}),
 		},
 		computed: {
-
+			...mapState({
+				user: state => state.user,
+			})
 		}
 	}
 

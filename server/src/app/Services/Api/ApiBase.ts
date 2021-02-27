@@ -5,6 +5,7 @@ export class ApiBase {
 
 	constructor(protected readonly app: App, protected readonly params: any) { }
 
+	public actions = [];
 	public static readonly TYPE_STRING = 'string';
 	public static readonly TYPE_INT = 'int';
 	public static readonly TYPE_JSON = 'json';

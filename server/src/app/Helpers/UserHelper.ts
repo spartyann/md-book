@@ -2,10 +2,11 @@ import { AppBase } from "../AppBase";
 
 export class UserHelper extends AppBase {
 
-	public getUser(id: Number): any
+	public async getUser(id: Number): Promise<any>
 	{
-		
-		return {};
+		let res = await this.queryRunner.query("SELECT * FROM users WHERE id = ?", [ id ]);
+		if (res.length == 1) return res[0];
+		return null;
 	}
 
 	public async getUserByEmail(email: string): Promise<any>

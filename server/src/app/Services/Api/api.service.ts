@@ -30,7 +30,7 @@ export class ApiService {
 
 		// Api and Action exists ?
 		if (api == null) throw new ApiException("Api does not exists");
-		if (api[action] == undefined) throw new ApiException("Action does not exists");
+		if (api.actions.indexOf(action) == -1) throw new ApiException("Action does not exists");
 
 		// Connect and create transaction
 		await queryRunner.connect();

@@ -15,6 +15,10 @@ async function bootstrap() {
 			credentials: true
 		});
 	}
+	else
+	{
+		//app.enableCors();
+	}
 
 	app.use(
 		session({

@@ -4,7 +4,7 @@ export class PasswordTools
 {
 	static async hashPassword(password: string)
 	{
-		return await bcrypt.hash(password, 20);
+		return await bcrypt.hash(password, 5);
 	}
 
 	static async matchPassword(password: string, hash: string)

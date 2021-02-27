@@ -15,7 +15,7 @@ export class InitDb1613902171887 implements MigrationInterface {
 		await queryRunner.query(`CREATE TABLE users (
             id int(11) NOT NULL AUTO_INCREMENT,
             name varchar(200) NOT NULL,
-            first_namme varchar(100) NOT NULL,
+            first_name varchar(100) NOT NULL,
             last_name varchar(100) NOT NULL,
 			email varchar(100) NOT NULL,
 			password varchar(100) NOT NULL,

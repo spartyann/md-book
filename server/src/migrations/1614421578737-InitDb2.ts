@@ -32,9 +32,9 @@ export class InitDb21614421578737 implements MigrationInterface {
 			}, null, 4),
 		]);
 
-
+	
 		const email = 'admin@admin.fr';
-		const pwd = await bcrypt.hash(email, 20);
+		const pwd = await bcrypt.hash(email, 5);
 
 		await queryRunner.query(`INSERT INTO users VALUES(?,?,?,?,?,?, NULL)`, [
 			1, 'Admin', 'Admin', 'Admin', email, pwd

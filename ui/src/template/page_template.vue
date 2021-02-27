@@ -15,10 +15,7 @@
 					<template v-if="user != null">
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item" >
-								<router-link :to="{ name: 'client' }" class="nav-link">Clients</router-link>
-							</li>
-							<li class="nav-item" >
-								<router-link :to="{ name: 'sessions' }" class="nav-link">Séances</router-link>
+								<router-link :to="{ name: 'Clients' }" class="nav-link">Clients</router-link>
 							</li>
 						</ul>
 					</template>
@@ -41,10 +38,14 @@
 									{{ user.name }}
 								</a>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<router-link :to="{ name: 'MyAccount' }" class="dropdown-item">
+										Mon compte
+									</router-link>
 									<a class="dropdown-item" @click="logout" href="#">
 										Se déconnecter
 									</a>
 								</div>
+								
 							</li>
 						</template>
 					</ul>

@@ -15,22 +15,22 @@ export class WFUser extends AppBase {
 			throw new UserException('Login ou mot de passe invalide');
 		}
 
-		this.session.user = user;
+		this.session.userId = user.id;
 
 		return user;
 	}
 
 	async logout()
 	{
-		this.session.user = null;
+		this.session.userId = null;
 		return 'ok';
 	}
 
 	async getUser()
 	{
-		if (this.session.user == null) throw new ApiException('No user logged');
+		if (this.session.userId == null) return null;
 
-		return this.session.user;
+		return this.UserHelper.getUser(this.session.userId);
 	}
 
 }

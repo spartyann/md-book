@@ -4,6 +4,8 @@ import { ApiBase } from "./ApiBase";
 
 export class ApiUser extends ApiBase {
 
+	public actions = ['login', 'logout', 'get_user'];
+	
 	async login()
 	{
 		const email = this.getParam('email', ApiBase.TYPE_STRING);

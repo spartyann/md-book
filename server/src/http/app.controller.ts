@@ -1,15 +1,15 @@
 import { Controller, Get, HttpStatus, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { join } from 'path';
-import { AppService } from '../app/services/app.service';
+import { ApiService } from '../app/Services/Api/api.service';
 import { readFileSync } from 'fs';
 
 @Controller()
 export class AppController {
-	constructor(private readonly appService: AppService) { }
+	constructor(private readonly ApiService: ApiService) { }
 	//@Get()
 	//getHome(): string {
-	//	return this.appService.getHello();
+	//	return this.ApiService.getHello();
 	//}
 
 	@Get("/")

@@ -37,18 +37,13 @@
 					
 						<template v-else>
 							<li class="nav-item dropdown">
-								<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-									User Name
+								<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									{{ user.name }}
 								</a>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="/logout"
-										onclick="event.preventDefault();
-														document.getElementById('logout-form').submit();">
-										Logout
+									<a class="dropdown-item" @click="logout" href="#">
+										Se déconnecter
 									</a>
-									<form id="logout-form" action="/logout" method="POST" class="d-none">
-										@csrf
-									</form>
 								</div>
 							</li>
 						</template>
@@ -66,7 +61,7 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
 
@@ -84,6 +79,19 @@ export default {
 	mounted()
 	{
 
+	},
+
+	methods:{
+		logout()
+		{
+			let self = this;
+			this.storeLogout().then(function(){
+				self.$router.push({ name: 'Login'});
+			});
+		},
+		...mapActions({
+			storeLogout: 'logout',
+		}),
 	},
 
 	computed: {

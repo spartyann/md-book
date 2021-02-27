@@ -22,6 +22,8 @@ fi
 
 
 echo '' > .env
+
+echo "DEBUG=false" >> .env
 echo "PORT=$PORT" >> .env
 echo "DB_HOST=$DB_HOST" >> .env
 echo "DB_PORT=$DB_PORT" >> .env

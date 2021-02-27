@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './http/app.controller';
-import { AppService } from './app/services/app.service';
+import { ApiService } from './app/Services/Api/api.service';
 import { ApiController } from './http/api/api';
 import { TestController } from './http/test/controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -40,7 +40,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 		}),
 	],
 	controllers: [ AppController, ApiController, TestController],
-	providers: [ AppService ],
+	providers: [ ApiService ],
 })
 export class AppModule {
 	constructor(private connection: Connection) {}

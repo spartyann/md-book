@@ -10,11 +10,14 @@ export default class Communication {
 		return new Promise(function(resolve, reject) {
 
 			const url = baseURL + "/api/" + api + "/" + operation;
-			axios.post(url, params).then(data => {
-				resolve(data);
+
+			axios.post(url, params, {
+				withCredentials: isDebug
+			}).then(data => {
+				resolve(data.data);
 			})
 			.catch(function (error) {
-				reject(error);
+				reject(error.response.data);
 			});
 
 		});

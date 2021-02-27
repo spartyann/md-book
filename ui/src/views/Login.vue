@@ -15,7 +15,7 @@
 								<input v-model="email" type="email" class="form-control">
 							</div>
 							<div class="form-group">
-								<label>Password</label>
+								<label>Mot de passe</label>
 								<input v-model="pwd" type="password" class="form-control">
 							</div>
 
@@ -31,6 +31,7 @@
 <script>
 
 import { mapState, mapActions } from 'vuex'
+const isDebug = process.env.VUE_APP_ENV == "development";
 
 export default {
 
@@ -43,8 +44,8 @@ export default {
 	data()
 	{
 		return {
-			email: '',
-			pwd: ''
+			email: isDebug ? 'admin@admin.fr' : '',
+			pwd: isDebug ? 'admin@admin.fr' : ''
 		};
 	},
 
@@ -66,7 +67,7 @@ export default {
 			{
 				if (user == null) return;
 				self.$router.push({ name: 'Dashboard'});
-			})
+			}).catch(function () {});
 		},
 
 		...mapActions({

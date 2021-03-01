@@ -16,4 +16,21 @@ export class UserHelper extends AppBase {
 		return null;
 	}
 
+	async update(id: Number, first_name: string, last_name: string, email: string, pwd: string)
+	{
+		let values = [];
+		let strings = [];
+
+		if (first_name !== null) { values.push("first_name = ?"); strings.push(first_name); }
+		if (last_name !== null) { values.push("last_name = ?"); strings.push(last_name); }
+		if (email !== null) { values.push("email = ?"); strings.push(email); }
+		if (pwd !== null) { values.push("pwd = ?"); strings.push(pwd); }
+		
+		if (values.length == 0) return;
+
+		let sql = 'UPDATE users SET ' + values.join(',') + " WHERE id = " + id;
+
+		await this.queryRunner.query(sql, strings);
+	}
+
 }

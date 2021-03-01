@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './http/app.controller';
 import { ApiService } from './app/Services/Api/api.service';
-import { ApiController } from './http/api/api';
 import { TestController } from './http/test/controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ApiUserController } from './http/api/ApiUserController';
 
 @Module({
 	imports: [
@@ -39,7 +39,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			}
 		}),
 	],
-	controllers: [ AppController, ApiController, TestController],
+	controllers: [
+		AppController,
+		ApiUserController,
+		TestController
+	],
 	providers: [ ApiService ],
 })
 export class AppModule {

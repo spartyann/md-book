@@ -1,4 +1,5 @@
 import { AppBase } from "../AppBase";
+import { PasswordTools } from "../Tools/PasswordTools";
 
 export class UserHelper extends AppBase {
 
@@ -16,7 +17,7 @@ export class UserHelper extends AppBase {
 		return null;
 	}
 
-	async update(id: Number, first_name: string, last_name: string, email: string, pwd: string)
+	async update(id: Number, first_name: string, last_name: string, email: string, clearPwd: string)
 	{
 		let values = [];
 		let strings = [];
@@ -24,7 +25,7 @@ export class UserHelper extends AppBase {
 		if (first_name !== null) { values.push("first_name = ?"); strings.push(first_name); }
 		if (last_name !== null) { values.push("last_name = ?"); strings.push(last_name); }
 		if (email !== null) { values.push("email = ?"); strings.push(email); }
-		if (pwd !== null) { values.push("pwd = ?"); strings.push(pwd); }
+		if (clearPwd !== null) { values.push("password = ?"); strings.push(await PasswordTools.hashPassword(clearPwd)); }
 		
 		if (values.length == 0) return;
 

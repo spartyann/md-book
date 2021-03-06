@@ -34,7 +34,7 @@ export class WFUser extends AppBase {
 		return this.UserHelper.getUser(this.session.userId);
 	}
 
-	async update(id: Number, first_name: string, last_name: string, email: string, pwd: string)
+	async update(id: Number, first_name: string, last_name: string, email: string, clearPwd: string)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
@@ -46,7 +46,7 @@ export class WFUser extends AppBase {
 		if (this.session.userId != id) throw new AccessDeniedException();
 
 		// Update User
-		await this.UserHelper.update(id, first_name, last_name, email, pwd);
+		await this.UserHelper.update(id, first_name, last_name, email, clearPwd);
 
 		return 'ok';
 	}

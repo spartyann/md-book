@@ -17,8 +17,8 @@ export class ApiContext {
 		// Check Exists
 		if (this.params[name] === undefined && defaultValue === undefined) throw new ApiException("Missing parameter: " + name);
 
-		// Default Value
-		if (this.params[name] === undefined) return defaultValue;
+		// Default Value => undefined or null
+		if (this.params[name] === undefined || this.params[name] === null) return defaultValue;
 
 		// Types of param
 		let val:any = this.params[name];

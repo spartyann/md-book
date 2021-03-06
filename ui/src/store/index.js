@@ -8,15 +8,26 @@ export default new Vuex.Store({
 	state: {
 		user: null,
 
-		apiError: null
+		message: null
 	},
 	mutations: {
 
 	},
 	actions: {
-		error(context, apiError)
+		apiError(context, apiError)
 		{
-			context.state.apiError = apiError;
+			context.state.message = {
+				type: apiError.error == 'ApiException' ? 'ApiException' : apiError.type,
+				message: apiError.message
+			};
+		},
+		message(context, message)
+		{
+			if (message == null) context.state.message = null;
+			else context.state.message = {
+				type: 'message',
+				message: message
+			};
 		},
 		login(context, params)
 		{
@@ -34,7 +45,7 @@ export default new Vuex.Store({
 
 				}).catch(function(data)
 				{
-					context.dispatch("error", data);
+					context.dispatch("apiError", data);
 					reject(data);
 				});
 			})
@@ -50,7 +61,7 @@ export default new Vuex.Store({
 
 				}).catch(function(data)
 				{
-					context.dispatch("error", data);
+					context.dispatch("apiError", data);
 					reject(data);
 				});
 			})
@@ -72,6 +83,32 @@ export default new Vuex.Store({
 				});
 			})
 		},
+
+		update(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = {
+					id: params.id,
+					first_name: params.first_name,
+					last_name: params.last_name,
+					email: params.email,
+					pwd: params.pwd,
+				};
+
+				Communication.call("user", "update", apiParams).then(function(user)
+				{
+					context.state.user = user;
+					resolve(user);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		}
 	},
 	modules: {
 		

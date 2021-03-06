@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-if="loaded">
 
-	<ApiErrorModale></ApiErrorModale>
+	<ApiMsgModale></ApiMsgModale>
 
     <PageTemplate>
 		<router-view />
@@ -24,7 +24,7 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 	import PageTemplate from './template/page_template';
-	import ApiErrorModale from './components/modale_api_error';
+	import ApiMsgModale from './components/msg_modale';
 
 	export default {
 
@@ -35,7 +35,7 @@
 		},
 		components: {
 			PageTemplate: PageTemplate,
-			ApiErrorModale: ApiErrorModale
+			ApiMsgModale: ApiMsgModale
 		},
 
 		watch:
@@ -62,7 +62,7 @@
 				}
 			},
 			...mapActions({
-				storeInit: 'init',
+				storeInit: 'init'
 			}),
 		},
 		computed: {

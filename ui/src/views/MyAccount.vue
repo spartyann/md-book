@@ -80,20 +80,22 @@ export default {
 
 			if (this.passwordOk == false) return;
 
+			this.dialogWaiting(true);
+
 			this.storeUpdate({
 				id: this.user.id,
 				first_name: this.first_name,
 				last_name: this.last_name,
 				email: this.email,
 				pwd: this.pwd == '' ? null : this.pwd,
-			}).then(function(){
-				self.message("Vos informations ont bien été enregistrée.");
+			}).then(function()
+			{
+				self.dialogSuccess("Vos informations ont bien été enregistrée.");
 			});
 		},
 
 		...mapActions({
 			storeUpdate: 'update',
-			message: 'message'
 		}),
 	},
 	computed: {

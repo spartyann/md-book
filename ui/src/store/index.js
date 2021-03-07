@@ -7,8 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		user: null,
-
-		message: null
+		dialog: null
 	},
 	mutations: {
 
@@ -16,19 +15,23 @@ export default new Vuex.Store({
 	actions: {
 		apiError(context, apiError)
 		{
-			context.state.message = {
+			context.state.dialog = {
 				type: apiError.error == 'ApiException' ? 'ApiException' : apiError.type,
 				message: apiError.message
 			};
 		},
-		message(context, message)
+
+		dialog(context, dialog)
 		{
-			if (message == null) context.state.message = null;
-			else context.state.message = {
-				type: 'message',
-				message: message
+			if (dialog == null) context.state.dialog = null;
+			else context.state.dialog = {
+				message: dialog.message,
+				type: dialog.type,
+				buttons: dialog.buttons == undefined ? null : dialog.buttons,
 			};
 		},
+
+
 		login(context, params)
 		{
 			return new Promise((resolve, reject) => {

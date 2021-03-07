@@ -6,10 +6,16 @@ import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Clients from '../views/Clients.vue'
 import MyAccount from '../views/MyAccount.vue'
+import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+	{
+		path: '/test',
+		name: 'Test',
+		component: Test
+	},
 	{
 		path: '/',
 		name: 'Home',

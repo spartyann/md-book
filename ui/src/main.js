@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import MixinModal from './MixinModal'
+
+
 import 'bootstrap';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -19,6 +22,8 @@ library.add( fas )
 Vue.component('fa', FontAwesomeIcon);
 
 Vue.config.productionTip = false
+
+Vue.mixin(MixinModal);
 
 new Vue({
 	router,

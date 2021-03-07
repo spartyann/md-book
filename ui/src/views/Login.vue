@@ -60,7 +60,7 @@ export default {
 		{
 			let self = this;
 
-			this.storeLogin({
+			this.storeUserLogin({
 				email: this.email,
 				pwd: this.pwd
 			}).then(function(user)
@@ -71,12 +71,12 @@ export default {
 		},
 
 		...mapActions({
-			storeLogin: 'login',
+			storeUserLogin: 'user/login',
 		}),
 	},
 	computed: {
 		...mapState({
-			user: state => state.user,
+			user: state => state.user.user.loggedUser,
 		})
 	}
 }

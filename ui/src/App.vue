@@ -23,8 +23,8 @@
 
 <script>
 	import { mapActions, mapState } from 'vuex';
-	import PageTemplate from './template/page_template';
-	import ApiMsgModale from './components/msg_modale';
+	import PageTemplate from './template/PageTemplate';
+	import ApiMsgModale from './components/MsgModal';
 
 	export default {
 
@@ -67,7 +67,7 @@
 		},
 		computed: {
 			...mapState({
-				user: state => state.user,
+				user: state => state.user.loggedUser,
 			})
 		}
 	}

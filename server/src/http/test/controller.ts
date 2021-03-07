@@ -11,10 +11,7 @@ export class TestController {
 	@ApiExcludeEndpoint()
 	async getApi2(@Req() req: Request, @Session() session) {
 		
-		console.log(await this.connection.query("SELECT 1"));
-		
 		session.test = 1;
-
 		session.views = (session.views || 0) + 1;
 
     	return session.views;

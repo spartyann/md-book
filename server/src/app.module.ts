@@ -8,6 +8,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiUserController } from './http/api/ApiUserController';
+import { ApiClientController } from './http/api/ApiClientController';
+import { ApiConsultController } from './http/api/ApiConsultController';
 
 @Module({
 	imports: [
@@ -42,6 +44,8 @@ import { ApiUserController } from './http/api/ApiUserController';
 	controllers: [
 		AppController,
 		ApiUserController,
+		ApiClientController,
+		ApiConsultController,
 		TestController
 	],
 	providers: [ ApiService ],

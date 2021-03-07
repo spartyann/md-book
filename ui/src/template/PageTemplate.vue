@@ -15,8 +15,12 @@
 					<template v-if="user != null">
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item" >
-								<router-link :to="{ name: 'Clients' }" class="nav-link">Clients</router-link>
+								<router-link :to="{ name: 'Clients' }" class="nav-link"><fa icon="users"></fa> Clients</router-link>
 							</li>
+							<li class="nav-item" v-if="isDebug">
+								<router-link :to="{ name: 'Test' }" class="nav-link"><fa icon="cogs"></fa>  Test</router-link>
+							</li>
+							
 						</ul>
 					</template>
 					<!-- Right Side Of Navbar -->
@@ -86,20 +90,19 @@ export default {
 		logout()
 		{
 			let self = this;
-			this.storeLogout().then(function(){
+			this.storeUserLogout().then(function(){
 				self.$router.push({ name: 'Login'});
 			});
 		},
 		...mapActions({
-			storeLogout: 'logout',
+			storeUserLogout: 'user/logout',
 		}),
 	},
 
 	computed: {
-
-
+		isDebug() { return process.env.VUE_APP_ENV == "development"; },
 		...mapState({
-			user: state => state.user,
+			user: state => state.user.loggedUser,
 		})
 	}
 }

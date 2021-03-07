@@ -17,11 +17,12 @@ export class UserHelper extends AppBase {
 		return null;
 	}
 
-	async update(id: Number, first_name: string, last_name: string, email: string, clearPwd: string)
+	async update(id: Number, name: string, first_name: string, last_name: string, email: string, clearPwd: string)
 	{
 		let values = [];
 		let strings = [];
 
+		if (name !== null) { values.push("name = ?"); strings.push(name); }
 		if (first_name !== null) { values.push("first_name = ?"); strings.push(first_name); }
 		if (last_name !== null) { values.push("last_name = ?"); strings.push(last_name); }
 		if (email !== null) { values.push("email = ?"); strings.push(email); }

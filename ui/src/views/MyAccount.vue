@@ -82,7 +82,7 @@ export default {
 
 			this.dialogWaiting(true);
 
-			this.storeUpdate({
+			this.storeUserUpdate({
 				id: this.user.id,
 				first_name: this.first_name,
 				last_name: this.last_name,
@@ -95,7 +95,7 @@ export default {
 		},
 
 		...mapActions({
-			storeUpdate: 'update',
+			storeUserUpdate: 'user/update',
 		}),
 	},
 	computed: {
@@ -111,7 +111,7 @@ export default {
 			return this.pwd == this.pwdConfirm;
 		},
 		...mapState({
-			user: state => state.user,
+			user: state => state.user.loggedUser,
 		})
 	}
 

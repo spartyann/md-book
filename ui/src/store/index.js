@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Communication from '../lib/Communication'
+//import Communication from '../lib/Communication'
+import UserModule from './user';
+import ClientModule from './client';
+import ConsultModule from './consult';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		user: null,
 		dialog: null
 	},
 	mutations: {
@@ -31,89 +33,21 @@ export default new Vuex.Store({
 			};
 		},
 
-
-		login(context, params)
+		async init(context)
 		{
 			return new Promise((resolve, reject) => {
 
-				const apiParams = {
-					email: params.email,
-					pwd: params.pwd,
-				};
-
-				Communication.call("user", "login", apiParams).then(function(user)
-				{
-					context.state.user = user;
-					resolve(user);
-
-				}).catch(function(data)
-				{
-					context.dispatch("apiError", data);
-					reject(data);
+				context.dispatch('user/init').then(() => {
+					resolve();
+				}).catch((reason) => {
+					reject(reason);
 				});
 			})
 		},
-		logout(context)
-		{
-			return new Promise((resolve, reject) => {
-
-				Communication.call("user", "logout").then(function(data)
-				{
-					context.state.user = null;
-					resolve(data);
-
-				}).catch(function(data)
-				{
-					context.dispatch("apiError", data);
-					reject(data);
-				});
-			})
-		},
-
-		init(context)
-		{
-			return new Promise((resolve) => {
-
-				Communication.call("user", "get_user").then(function(user)
-				{
-					context.state.user = user;
-					resolve(user);
-
-				}).catch(function(data)
-				{
-					context.state.user = null;
-					resolve(data);
-				});
-			})
-		},
-
-		update(context, params)
-		{
-			return new Promise((resolve, reject) => {
-
-				const apiParams = {
-					id: params.id,
-					first_name: params.first_name,
-					last_name: params.last_name,
-					email: params.email,
-					pwd: params.pwd,
-				};
-
-				Communication.call("user", "update", apiParams).then(function(user)
-				{
-					context.state.user = user;
-					resolve(user);
-
-				}).catch(function(data)
-				{
-					context.dispatch("apiError", data);
-					reject(data);
-				});
-			})
-		
-		}
 	},
 	modules: {
-		
+		user: UserModule,
+		client: ClientModule,
+		consult: ConsultModule
 	}
 })

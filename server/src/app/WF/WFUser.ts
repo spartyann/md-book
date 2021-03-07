@@ -45,10 +45,19 @@ export class WFUser extends AppBase {
 		// Not current User ?
 		if (this.session.userId != id) throw new AccessDeniedException();
 
-		// Update User
-		await this.UserHelper.update(id, first_name, last_name, email, clearPwd);
+		// Current User
+		let currentUser = await this.UserHelper.getUser(id);
 
-		return 'ok';
+		if (first_name == null) first_name = currentUser.first_name;
+		if (last_name == null) last_name = currentUser.last_name;
+		if (email == null) email = currentUser.email;
+		let name = first_name + " " + last_name;
+
+		// Update User
+		await this.UserHelper.update(id, name, first_name, last_name, email, clearPwd);
+
+		// Return user
+		return await this.UserHelper.getUser(id);
 	}
 
 }

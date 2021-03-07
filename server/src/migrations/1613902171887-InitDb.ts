@@ -74,7 +74,7 @@ export class InitDb1613902171887 implements MigrationInterface {
             id int(11) NOT NULL AUTO_INCREMENT,
 			user_id int(11) NOT NULL,
             name varchar(200) NOT NULL,
-            first_namme varchar(100) NOT NULL,
+            first_name varchar(100) NOT NULL,
             last_name varchar(100) NOT NULL,
 			email varchar(100) NOT NULL,
             comment longtext NOT NULL,

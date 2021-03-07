@@ -1,12 +1,13 @@
 import { All, Body, Controller, Get, HttpStatus, Param, Post, Req, Res, Session } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiBody, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AppException } from 'src/app/Exceptions/AppException';
 import { ApiService } from 'src/app/Services/Api/api.service';
 import { ApiContext } from 'src/app/Services/Api/ApiContext';
 
 @Controller('api/user')
+@ApiTags('User')
 export class ApiUserController {
 	constructor(
 		private readonly apiService: ApiService,

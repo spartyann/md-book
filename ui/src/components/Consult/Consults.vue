@@ -89,7 +89,7 @@ export default {
 					label: "Date",
 					sortable: true,
 					formatter: (value) => {
-						return self.$d(new Date(value), 'short')
+						return self.$d(new Date(value), 'longDate')
 					}
 				}
 			],

@@ -24,9 +24,9 @@ export default {
 			},
 			longDate: {
 				year: 'numeric',
-				month: 'long',
+				month: 'short',
 				day: 'numeric',
-				weekday: 'long',
+				weekday: 'short',
 			},
 			long: {
 				year: 'numeric',

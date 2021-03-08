@@ -10,8 +10,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
       - MYSQL_DATABASE=md-book
+      - MYSQL_USER=md-book
+      - MYSQL_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
     networks:
       - local_network
   

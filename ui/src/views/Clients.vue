@@ -2,10 +2,12 @@
 	<div class="page-clients">
 		<div class="container">
 
+			<NewClientModal ref="NewClientModal"></NewClientModal>
+
 			<h2><fa icon="users"></fa> Clients</h2>
 
 			<p class="tar">
-				<button class="btn btn-primary"><fa icon="plus-circle"></fa> Nouveau client</button>
+				<button class="btn btn-primary" @click="newClient"><fa icon="plus-circle"></fa> Nouveau client</button>
 			</p>
 
 			<b-table 
@@ -52,6 +54,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import NewClientModal from '../components/Client/NewClientModal';
+
 // @ is an alias to /src
 
 export default {
@@ -59,6 +63,7 @@ export default {
 	name: 'Clients',
 
 	components: {
+		NewClientModal: NewClientModal
 	},
 
 	data()
@@ -99,7 +104,9 @@ export default {
 		this.storeClientList();
 	},
 	methods: {
-		
+		newClient(){
+			this.$refs.NewClientModal.open();
+		},
 		...mapActions({
 			storeClientList: 'client/list',
 		}),

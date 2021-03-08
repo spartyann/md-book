@@ -29,4 +29,18 @@ export class WFClient extends AppBase {
 	}
 
 
+	async create(firstName: string, lastName: string)
+	{
+		// User logged ?
+		if (this.session.userId == null) throw new AccessDeniedException();
+
+		let name = firstName + " " + lastName;
+
+		// Update User
+		const id = await this.ClientHelper.create(name, firstName, lastName);
+
+		// Return user
+		return await this.ClientHelper.get(id);
+	}
+
 }

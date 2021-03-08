@@ -1,5 +1,5 @@
 <template>
-	<b-modal id="MsgModale" centered v-model="modelVisible" data-keyboard="false"
+	<b-modal id="MsgModale" centered v-model="modalVisible" data-keyboard="false"
 		no-close-on-esc
 		no-close-on-backdrop
 		hide-header-close
@@ -107,7 +107,7 @@
 				if (this.effectiveMsg == null) return false;
 				return this.effectiveMsg.type == 'waiting' || this.effectiveMsg.type == 'success';
 			},
-			modelVisible: {
+			modalVisible: {
 				get() { return this.dialog != null; },
 				set(value) { if (value == false) this.storeMessage(null); }
 			},

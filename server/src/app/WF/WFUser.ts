@@ -31,10 +31,10 @@ export class WFUser extends AppBase {
 	{
 		if (this.session.userId == null) return null;
 
-		return this.UserHelper.getUser(this.session.userId);
+		return this.UserHelper.get(this.session.userId);
 	}
 
-	async update(id: Number, first_name: string, last_name: string, email: string, clearPwd: string)
+	async update(id: Number, firstName: string, lastName: string, email: string, clearPwd: string)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
@@ -46,18 +46,18 @@ export class WFUser extends AppBase {
 		if (this.session.userId != id) throw new AccessDeniedException();
 
 		// Current User
-		let currentUser = await this.UserHelper.getUser(id);
+		let currentUser = await this.UserHelper.get(id);
 
-		if (first_name == null) first_name = currentUser.first_name;
-		if (last_name == null) last_name = currentUser.last_name;
+		if (firstName == null) firstName = currentUser.firstName;
+		if (lastName == null) lastName = currentUser.lastName;
 		if (email == null) email = currentUser.email;
-		let name = first_name + " " + last_name;
+		let name = firstName + " " + lastName;
 
 		// Update User
-		await this.UserHelper.update(id, name, first_name, last_name, email, clearPwd);
+		await this.UserHelper.update(id, name, firstName, lastName, email, clearPwd);
 
 		// Return user
-		return await this.UserHelper.getUser(id);
+		return await this.UserHelper.get(id);
 	}
 
 }

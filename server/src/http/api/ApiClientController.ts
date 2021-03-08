@@ -33,4 +33,18 @@ export class ApiClientController {
 		});
 	}
 
+	@Post('create')
+	@ApiQuery({ name: 'firstName', required: false })
+	@ApiQuery({ name: 'lastName', required: false })
+	async create(@Req() request: Request, @Res() response: Response, @Session() session) {
+
+		this.apiService.runApi(request, response, session, async function(app, context)
+		{
+			const firstName = context.getParam('firstName', ApiContext.TYPE_STRING, null);
+			const lastName = context.getParam('lastName', ApiContext.TYPE_STRING, null);
+
+			return await app.WFClient.create(firstName, lastName);
+		});
+	}
+
 }

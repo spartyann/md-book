@@ -78,8 +78,8 @@ export default {
 
 				const apiParams = {
 					id: params.id,
-					first_name: params.first_name,
-					last_name: params.last_name,
+					firstName: params.firstName,
+					lastName: params.lastName,
 					email: params.email,
 					pwd: params.pwd,
 				};

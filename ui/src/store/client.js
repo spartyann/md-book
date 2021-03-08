@@ -59,6 +59,34 @@ export default {
 				});
 			})
 		
+		},
+
+		create(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = {
+					firstName: params.firstName,
+					lastName: params.lastName,
+				};
+
+				Communication.call("client", "create", apiParams).then(function(user)
+				{
+					context.dispatch("list").then(function(){
+						resolve(user);
+					}).catch(function(data)
+					{
+						reject(data);
+					});
+					
+					
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
 		}
 	}
 

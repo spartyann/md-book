@@ -12,11 +12,11 @@
 							<form class="">
 								<div class="form-group">
 									<label>Prénom</label>
-									<input v-model="first_name" type="text" class="form-control">
+									<input v-model="firstName" type="text" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Nom</label>
-									<input v-model="last_name" type="text" class="form-control">
+									<input v-model="lastName" type="text" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Email</label>
@@ -58,8 +58,8 @@ export default {
 	data()
 	{
 		return {
-			last_name: '',
-			first_name: '',
+			lastName: '',
+			firstName: '',
 			email: '',
 			pwd: '',
 			pwdConfirm : ''
@@ -68,8 +68,8 @@ export default {
 
 	mounted()
 	{
-		this.last_name = this.user.last_name;
-		this.first_name = this.user.first_name;
+		this.lastName = this.user.last_name;
+		this.firstName = this.user.first_name;
 		this.email = this.user.email;
 	},
 
@@ -84,8 +84,8 @@ export default {
 
 			this.storeUserUpdate({
 				id: this.user.id,
-				first_name: this.first_name,
-				last_name: this.last_name,
+				firstName: this.firstName,
+				lastName: this.lastName,
 				email: this.email,
 				pwd: this.pwd == '' ? null : this.pwd,
 			}).then(function()

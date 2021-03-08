@@ -55,8 +55,8 @@ export class ApiUserController {
 
 	@Post('update')
 	@ApiQuery({ name: 'id', required: false })
-	@ApiQuery({ name: 'first_name', required: false })
-	@ApiQuery({ name: 'last_name', required: false })
+	@ApiQuery({ name: 'firstName', required: false })
+	@ApiQuery({ name: 'lastName', required: false })
 	@ApiQuery({ name: 'email', required: false })
 	@ApiQuery({ name: 'pwd', required: false })
 	async update(@Req() request: Request, @Res() response: Response, @Session() session) {
@@ -64,12 +64,12 @@ export class ApiUserController {
 		this.apiService.runApi(request, response, session, async function(app, context)
 		{
 			const id = context.getParam('id', ApiContext.TYPE_INT, null);
-			const first_name = context.getParam('first_name', ApiContext.TYPE_STRING, null);
-			const last_name = context.getParam('last_name', ApiContext.TYPE_STRING, null);
+			const firstName = context.getParam('firstName', ApiContext.TYPE_STRING, null);
+			const lastName = context.getParam('lastName', ApiContext.TYPE_STRING, null);
 			const email = context.getParam('email', ApiContext.TYPE_STRING, null);
 			const pwd = context.getParam('pwd', ApiContext.TYPE_STRING, null);
 
-			return await app.WFUser.update(id, first_name, last_name, email, pwd);
+			return await app.WFUser.update(id, firstName, lastName, email, pwd);
 		});
 	}
 

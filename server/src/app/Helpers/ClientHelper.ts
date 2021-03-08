@@ -23,4 +23,16 @@ export class ClientHelper extends AppBase {
 		return res[0];
 	}
 
+
+	async create(name: string, firstName: string, lastName: string)
+	{
+		let sql = 'INSERT INTO clients(name, first_name, last_name, user_id) VALUES (?,?,?,?) RETURNING id';
+
+		let res = await this.queryRunner.query(sql, [
+			name, firstName, lastName, this.session.userId
+		]);
+
+		return res[0].id;
+	}
+
 }

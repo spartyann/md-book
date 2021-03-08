@@ -8,8 +8,10 @@ services:
     volumes:
       - ./volumes/db1:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
       - MYSQL_DATABASE=md-book
+      - MYSQL_USER=md-book
+      - MYSQL_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
+      - MYSQL_ROOT_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
     networks:
       - local_network
 
@@ -25,7 +27,7 @@ services:
       - DB_HOST=md-book-db
       - DB_PORT=3306
       - DB_PASSWORD=yuj4f6ghj514d6fj516gh51sdgh
-      - DB_USERNAME=root
+      - DB_USERNAME=md-book
       - DB_DATABASE=md-book
     depends_on:
       - "md-book-db"

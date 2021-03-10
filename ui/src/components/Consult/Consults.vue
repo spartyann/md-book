@@ -1,12 +1,13 @@
 <template>
 	<div>
+		<NewConsultModal ref="newConsultModal"></NewConsultModal>
 
 		<div class="tbl-100 mb-1">
 			<div class="td vab">
 				<b>Consultations</b>
 			</div>
 			<div class="td-50 tar">
-				<button class="btn btn-primary float-right"><fa icon="plus-circle"></fa> Nouvelle consultation</button>
+				<button class="btn btn-primary float-right" @click="openNewConsultModal"><fa icon="plus-circle"></fa> Nouvelle séance</button>
 			</div>
 		</div>
 
@@ -64,6 +65,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import NewConsultModal from './NewConsultModal';
 // @ is an alias to /src
 
 export default {
@@ -72,6 +74,7 @@ export default {
 		clientId: { type: Number }
 	},
 	components: {
+		NewConsultModal
 	},
 
 	data()
@@ -101,7 +104,10 @@ export default {
 		this.storeConsultList(this.clientId);
 	},
 	methods: {
-		
+		openNewConsultModal()
+		{
+			this.$refs.newConsultModal.open();
+		},
 		...mapActions({
 			storeConsultList: 'consult/list',
 		}),

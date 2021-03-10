@@ -6,7 +6,7 @@ export default {
 
 	state: () => ({
 		clients: null,
-		client: null
+		clientFile: null,
 	}),
 	mutations: {
 
@@ -39,18 +39,15 @@ export default {
 		
 		},
 
-		get(context, id)
+		file(context, id)
 		{
 			return new Promise((resolve, reject) => {
 
-				const apiParams = {
-					id: id
-				};
 
-				Communication.call("client", "get", apiParams).then(function(client)
+				Communication.call("client", id + "/file").then(function(clientFile)
 				{
-					context.state.client = client;
-					resolve(client);
+					context.state.clientFile = clientFile;
+					resolve(clientFile);
 
 				}).catch(function(data)
 				{
@@ -79,6 +76,36 @@ export default {
 						reject(data);
 					});
 					
+					
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		},
+
+		update(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = {
+					name: params.name,
+					firstName: params.firstName,
+					lastName: params.lastName,
+					email: params.email,
+					comment: params.comment,
+				};
+
+				Communication.call("client", params.id +"/update", apiParams).then(function()
+				{
+					context.dispatch("file", params.id).then(function(user){
+						resolve(user);
+					}).catch(function(data)
+					{
+						reject(data);
+					});
 					
 				}).catch(function(data)
 				{

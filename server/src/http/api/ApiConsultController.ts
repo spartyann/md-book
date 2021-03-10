@@ -15,9 +15,9 @@ export class ApiConsultController {
 
 	@Post('list')
 	@ApiQuery({ name: 'client_id', required: true })
-	async list(@Req() request: Request, @Res() response: Response, @Session() session) {
+	async list(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
 
-		this.apiService.runApi(request, response, session, async function(app, context)
+		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
 			const clientId = context.getParam('client_id', ApiContext.TYPE_INT, null);
 			return await app.WFConsult.list(clientId);

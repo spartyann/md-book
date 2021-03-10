@@ -48,10 +48,18 @@ export class WFUser extends AppBase {
 		// Current User
 		let currentUser = await this.UserHelper.get(id);
 
+		// Check length
+		if (firstName != null && firstName.length < 1) throw new UserException("Veuillez indiquer un prénom.");
+		if (lastName == null && lastName.length < 1) throw new UserException("Veuillez indiquer un nom.");
+		if (email == null && email.length < 1) throw new UserException("Veuillez indiquer un email.");
+
+
 		if (firstName == null) firstName = currentUser.firstName;
 		if (lastName == null) lastName = currentUser.lastName;
 		if (email == null) email = currentUser.email;
 		let name = firstName + " " + lastName;
+
+
 
 		// Update User
 		await this.UserHelper.update(id, name, firstName, lastName, email, clearPwd);

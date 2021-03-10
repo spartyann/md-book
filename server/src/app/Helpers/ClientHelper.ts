@@ -35,4 +35,24 @@ export class ClientHelper extends AppBase {
 		return res[0].id;
 	}
 
+	async update(id: Number, name: string, firstName: string, lastName: string, email: string, comment: string)
+	{
+
+		let values = [];
+		let strings = [];
+
+		if (name !== null) { values.push("name = ?"); strings.push(name); }
+		if (firstName !== null) { values.push("first_name = ?"); strings.push(firstName); }
+		if (lastName !== null) { values.push("last_name = ?"); strings.push(lastName); }
+		if (email !== null) { values.push("email = ?"); strings.push(email); }
+		if (comment !== null) { values.push("comment = ?"); strings.push(comment); }
+		
+		if (values.length == 0) return;
+
+		let sql = 'UPDATE clients SET ' + values.join(',') + " WHERE id = " + id;
+
+		await this.queryRunner.query(sql, strings);
+
+	}
+
 }

@@ -5,6 +5,7 @@ import store from './store'
 import MixinModal from './MixinModal'
 import VueI18n from 'vue-i18n'
 import I18nParam from './i18n'
+import CKEditor from '@ckeditor/ckeditor5-vue2'
 
 
 import 'bootstrap';
@@ -19,6 +20,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+
+Vue.use( CKEditor );
 
 // I18n
 Vue.use(VueI18n)

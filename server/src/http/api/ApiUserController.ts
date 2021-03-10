@@ -15,8 +15,8 @@ export class ApiUserController {
 	) { }
 
 	@Post('get_user')
-	async getUser(@Req() request: Request, @Res() response: Response, @Session() session) {
-		this.apiService.runApi(request, response, session, async function(app, context)
+	async getUser(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
+		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
 			return await app.WFUser.get();
 		});
@@ -27,11 +27,11 @@ export class ApiUserController {
 	//@ApiBody({ email: String, pwd: String })
 	@ApiQuery({ name: 'email' })
 	@ApiQuery({ name: 'pwd' })
-	async login(@Req() request: Request, @Res() response: Response, @Session() session,
+	async login(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session,
 		) {
 
 		//console.log(b);
-		this.apiService.runApi(request, response, session, async function(app, context)
+		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
 			const email = context.getParam('email', ApiContext.TYPE_STRING);
 			const pwd = context.getParam('pwd', ApiContext.TYPE_STRING);
@@ -44,9 +44,9 @@ export class ApiUserController {
 
 
 	@Post('logout')
-	async logout(@Req() request: Request, @Res() response: Response, @Session() session) {
+	async logout(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
 
-		this.apiService.runApi(request, response, session, async function(app, context)
+		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
 			return await app.WFUser.logout();
 		});
@@ -59,9 +59,9 @@ export class ApiUserController {
 	@ApiQuery({ name: 'lastName', required: false })
 	@ApiQuery({ name: 'email', required: false })
 	@ApiQuery({ name: 'pwd', required: false })
-	async update(@Req() request: Request, @Res() response: Response, @Session() session) {
+	async update(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
 
-		this.apiService.runApi(request, response, session, async function(app, context)
+		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
 			const id = context.getParam('id', ApiContext.TYPE_INT, null);
 			const firstName = context.getParam('firstName', ApiContext.TYPE_STRING, null);

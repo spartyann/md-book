@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Dashboard from '../views/Dashboard.vue'
-import Clients from '../views/Clients.vue'
-import MyAccount from '../views/MyAccount.vue'
-import Consults from '../views/Consults.vue'
-import Test from '../views/Test.vue'
+import Home from '../views/Home'
+import Login from '../views/Login'
+import Register from '../views/Register'
+import Dashboard from '../views/Dashboard'
+import Clients from '../views/Client/Clients'
+import Client from '../views/Client/Client'
+import MyAccount from '../views/MyAccount'
+import Test from '../views/Test'
 
 Vue.use(VueRouter)
 
@@ -48,9 +48,9 @@ const routes = [
 		component: Clients
 	},
 	{
-		path: '/client/:clientId/consults',
-		name: 'Consults',
-		component: Consults
+		path: '/client/:clientId',
+		name: 'Client',
+		component: Client
 	},
 	
 ]

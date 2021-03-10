@@ -34,13 +34,14 @@
 				<template #row-details="row">
 					<b-card>
 						<p>
-							<button class="btn btn-light"><fa icon="edit"></fa> Editer</button>
-							&nbsp;
-							<router-link :to="{ name: 'Consults', params: { clientId:row.item.id } }" class="btn btn-light">
-								<fa icon="book"></fa> Séances
+
+							<router-link :to="{ name: 'Client', params: { clientId:row.item.id } }" class="btn btn-light">
+								<fa icon="address-card"></fa> Ouvrir la fiche
 							</router-link>
 							&nbsp;
-							<button class="btn btn-light"><fa icon="plus"></fa> Nouvelle séance</button>
+							<router-link :to="{ name: 'Client', params: { clientId:row.item.id }, query: {tab : 1} }" class="btn btn-light">
+								<fa icon="book"></fa> Séances
+							</router-link>
 						</p>
 						<h4>Commentaire</h4>
 						<div v-html="row.item.comment"></div>
@@ -54,7 +55,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import NewClientModal from '../components/Client/NewClientModal';
+import NewClientModal from '@/components/Client/NewClientModal';
 
 // @ is an alias to /src
 

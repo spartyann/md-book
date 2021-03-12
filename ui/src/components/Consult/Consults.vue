@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NewConsultModal ref="newConsultModal"></NewConsultModal>
+		<NewConsultModal ref="newConsultModal" :clientId="clientId"></NewConsultModal>
 
 		<div class="tbl-100 mb-1">
 			<div class="td vab">

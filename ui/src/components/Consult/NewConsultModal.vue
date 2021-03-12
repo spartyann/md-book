@@ -53,7 +53,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
 
 	props: {
-
+		clientId: { type: Number}
 	},
 	components: {
 	},
@@ -90,9 +90,9 @@ export default {
 			
 			this.dialogWaiting(true);
 
-			this.storeClientCreate({
-				firstName: this.firstName,
-				lastName: this.lastName,
+			this.storeConsultCreate({
+				clientId: this.clientId,
+				date: this.date + " " + this.time,
 			}).then(function()
 			{
 				self.dialogSuccess();
@@ -102,7 +102,7 @@ export default {
 		},
 
 		...mapActions({
-			storeClientCreate: "client/create"
+			storeConsultCreate: "consult/create"
 		}),
 	},
 

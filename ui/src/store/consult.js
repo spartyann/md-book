@@ -16,12 +16,12 @@ export default {
 			context.dispatch("apiError", apiError, { root: true });
 		},
 
-		list(context, client_id)
+		list(context, clientId)
 		{
 			return new Promise((resolve, reject) => {
 
 				const apiParams = {
-					client_id: client_id
+					clientId: clientId
 				};
 
 				Communication.call("consult", "list", apiParams).then(function(consults)
@@ -36,7 +36,37 @@ export default {
 				});
 			})
 		
-		}
+		},
+
+		create(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = {
+					clientId: params.clientId,
+					date: params.date,
+				};
+
+				Communication.call("consult", "create", apiParams).then(function(user)
+				{
+					context.dispatch("list", params.clientId).then(function(){
+						resolve(user);
+					}).catch(function(data)
+					{
+						reject(data);
+					});
+					
+					
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		},
+
+
 	}
 
 	

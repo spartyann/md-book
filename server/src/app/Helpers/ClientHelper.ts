@@ -26,11 +26,13 @@ export class ClientHelper extends AppBase {
 
 	async create(name: string, firstName: string, lastName: string)
 	{
-		let sql = 'INSERT INTO clients(name, first_name, last_name, user_id) VALUES (?,?,?,?) RETURNING id';
+		let sql = 'INSERT INTO clients(name, first_name, last_name, user_id) VALUES (?,?,?,?)';
 
 		let res = await this.queryRunner.query(sql, [
 			name, firstName, lastName, this.session.userId
 		]);
+
+		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');
 
 		return res[0].id;
 	}

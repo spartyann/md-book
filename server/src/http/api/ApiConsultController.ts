@@ -14,15 +14,29 @@ export class ApiConsultController {
 	) { }
 
 	@Post('list')
-	@ApiQuery({ name: 'client_id', required: true })
+	@ApiQuery({ name: 'clientId', required: true })
 	async list(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
 
 		this.apiService.runApi(params, request, response, session, async function(app, context)
 		{
-			const clientId = context.getParam('client_id', ApiContext.TYPE_INT, null);
+			const clientId = context.getParam('clientId', ApiContext.TYPE_INT, null);
 			return await app.WFConsult.list(clientId);
 		});
 	}
 
+
+	@Post('create')
+	@ApiQuery({ name: 'clientId', required: true })
+	@ApiQuery({ name: 'date', required: true })
+	async create(@Param() params, @Req() request: Request, @Res() response: Response, @Session() session) {
+
+		this.apiService.runApi(params, request, response, session, async function(app, context)
+		{
+			const clientId = context.getParam('clientId', ApiContext.TYPE_INT, null);
+			const date = context.getParam('date', ApiContext.TYPE_STRING, null);
+
+			return await app.WFConsult.create(clientId, date);
+		});
+	}
 
 }

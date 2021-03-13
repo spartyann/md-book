@@ -1,8 +1,12 @@
 import { HttpStatus, Injectable, RequestMapping } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
 import { App } from 'src/app/App';
-import { Connection } from 'typeorm';
+import { Client } from 'src/app/Models/Client.entity';
+import { Consult } from 'src/app/Models/Consult.entity';
+import { User } from 'src/app/Models/User.entity';
+import { Connection, Repository } from 'typeorm';
 import { ApiException } from '../../Exceptions/ApiException';
 import { AppException } from '../../Exceptions/AppException';
 import { UserException } from '../../Exceptions/UserException';
@@ -13,21 +17,35 @@ export class ApiService {
 
 	constructor(
 		private readonly connection: Connection,
-		private readonly configService: ConfigService
+		private readonly configService: ConfigService,
+		@InjectRepository(User)
+    	private userRepository: Repository<User>,
+		@InjectRepository(Client)
+    	private clientRepository: Repository<Client>,
+		@InjectRepository(Consult)
+    	private consultRepository: Repository<Consult>,
 	) { }
 	
-	async runApi(params: any, request: Request, res: Response, session: any, func: (app: App, context: ApiContext) => any)
+	async runApi(params: any, body: any, request: Request, res: Response, session: any, func: (app: App, context: ApiContext) => any)
 	{
 		const debug = this.configService.get('DEBUG') == "true";
 
 		// Get post and Get params
-		const allParams = Object.assign({}, params, request.query, request.body);
+		const allParams = Object.assign({}, params, request.query, body == null ? request.body : body);
 
 		// Create a query runner
 		const queryRunner = this.connection.createQueryRunner();
 
 		// Create App
-		const app = new App(this.configService, this.connection, queryRunner, session);
+		const app = new App(
+			this.configService,
+			this.connection,
+			queryRunner,
+			session,
+			this.userRepository,
+			this.clientRepository,
+			this.consultRepository
+		);
 
 		// Connect and create transaction
 		await queryRunner.connect();
@@ -54,7 +72,7 @@ export class ApiService {
 			if (ex instanceof AppException)
 			{
 				const resp = ex.getResponse();
-				res.status(resp.code).json(resp);
+				res.status(resp.statusCode).json(resp);
 			}
 			else if (debug)
 			{

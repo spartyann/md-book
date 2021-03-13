@@ -24,51 +24,6 @@ export class InitDb1613902171887 implements MigrationInterface {
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
 
 
-		// SSO
-		await queryRunner.query(`CREATE TABLE sso_providers (
-			id int(11) unsigned NOT NULL AUTO_INCREMENT,
-			name varchar(100) NOT NULL,
-			enabled tinyint(1) NOT NULL DEFAULT 1,
-			type varchar(10) NOT NULL DEFAULT 'oauth2',
-			provider varchar(100) NOT NULL,
-			oauth2_authorization_options mediumtext NOT NULL,
-			oauth2_provider_params mediumtext NOT NULL,
-			saml2_settings mediumtext NOT NULL DEFAULT '{}',
-			mapping_params mediumtext NOT NULL,
-			params mediumtext NOT NULL,
-			PRIMARY KEY (id),
-			UNIQUE KEY idx_sso_providers_name (name)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
-
-
-		await queryRunner.query(`CREATE TABLE sso_links (
-			id int(11) unsigned NOT NULL AUTO_INCREMENT,
-			user_id int(11) NOT NULL,
-			sso_providers_id int(11) unsigned NOT NULL,
-			last_response mediumtext NOT NULL,
-			last_token mediumtext NOT NULL,
-			last_expires varchar(100) NOT NULL,
-			provider_internal_id varchar(200) NOT NULL,
-			picture_url varchar(500) NOT NULL DEFAULT '',
-			public_profile_url varchar(500) NOT NULL DEFAULT '',
-			first_name varchar(200) NOT NULL DEFAULT '',
-			last_name varchar(200) NOT NULL DEFAULT '',
-			email varchar(200) NOT NULL DEFAULT '',
-			created datetime NOT NULL DEFAULT current_timestamp(),
-			modified datetime NOT NULL DEFAULT current_timestamp(),
-			PRIMARY KEY (id),
-			UNIQUE KEY idx_sso_links_account (sso_providers_id,provider_internal_id),
-			KEY idx_sso_links_user (user_id),
-			KEY idx_sso_links_provider (sso_providers_id),
-			KEY idx_sso_links_provider_internal_id (provider_internal_id),
-			KEY idx_sso_links_email (email),
-			KEY idx_sso_links_created (created),
-			KEY idx_sso_links_modified (modified),
-			CONSTRAINT fk_sso_links_provider FOREIGN KEY (sso_providers_id) REFERENCES sso_providers (id) ON DELETE CASCADE ON UPDATE CASCADE,
-			CONSTRAINT fk_sso_links_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
-		  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
-
-
 		  
 		await queryRunner.query(`CREATE TABLE clients (
             id int(11) NOT NULL AUTO_INCREMENT,

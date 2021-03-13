@@ -12,7 +12,7 @@ export class ApiException extends AppException {
 		return {
 			error: this.name,
 			message: this.message,
-			code: 540
+			statusCode: 540
 		};
 	}
 }

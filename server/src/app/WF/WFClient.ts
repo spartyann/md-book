@@ -1,3 +1,4 @@
+import { ClientCreate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
@@ -25,30 +26,28 @@ export class WFClient extends AppBase {
 		
 		if (client == null) throw new ApiException("Client not found");
 
-		if (client.user_id != this.session.userId) throw new AccessDeniedException();
+		if (client.userId != this.session.userId) throw new AccessDeniedException();
 
 		return client;
 	}
 
 
-	async create(firstName: string, lastName: string)
+	async create(client: ClientCreate)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
 
 		// Check length
-		if (firstName.length < 1 || lastName.length < 1) throw new UserException("Veuillez indiquer un nom et un prénom.");
-
-		let name = firstName + " " + lastName;
+		if (client.firstName.length < 1 || client.lastName.length < 1) throw new UserException("Veuillez indiquer un nom et un prénom.");
 
 		// Update User
-		const id = await this.ClientHelper.create(name, firstName, lastName);
+		const id = await this.ClientHelper.create(client);
 
 		// Return user
 		return await this.ClientHelper.get(id);
 	}
 
-	async update(id: Number, name: string, firstName: string, lastName: string, email: string, comment: string)
+	async update(id: number, name: string, firstName: string, lastName: string, email: string, comment: string)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
@@ -57,7 +56,7 @@ export class WFClient extends AppBase {
 		const client = await this.ClientHelper.get(id);
 
 		// Acl
-		if (client.user_id != this.session.userId) throw new AccessDeniedException();
+		if (client.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Check length
 		if (firstName.length < 1 || lastName.length < 1 || name.length < 1) throw new UserException("Veuillez indiquer un nom et un prénom.");

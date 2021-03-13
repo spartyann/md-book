@@ -14,7 +14,7 @@ export class AccessDeniedException extends AppException {
 		return {
 			error: this.name,
 			message: this.message,
-			code: 403
+			statusCode: 403
 		};
 	}
 }

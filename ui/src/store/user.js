@@ -81,8 +81,9 @@ export default {
 					firstName: params.firstName,
 					lastName: params.lastName,
 					email: params.email,
-					pwd: params.pwd,
 				};
+
+				if (params.pwd != null) apiParams.pwd = params.pwd;
 
 				Communication.call("user", "update", apiParams).then(function(user)
 				{

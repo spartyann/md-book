@@ -10,6 +10,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiUserController } from './http/api/ApiUserController';
 import { ApiClientController } from './http/api/ApiClientController';
 import { ApiConsultController } from './http/api/ApiConsultController';
+import { User } from './app/Models/User.entity';
+import { Consult } from './app/Models/Consult.entity';
+import { Client } from './app/Models/Client.entity';
 
 @Module({
 	imports: [
@@ -24,15 +27,16 @@ import { ApiConsultController } from './http/api/ApiConsultController';
 				password: configService.get('DB_PASSWORD'),
 				database: configService.get('DB_DATABASE'),
 				//entities: ["dist/**/*.entity{.ts,.js}"],
-				entities: [],
-				synchronize: true,
+				entities: [ User, Consult, Client ],
+				synchronize: false,
+				autoLoadEntities: true,
 				migrations: ["dist/migrations/*{.ts,.js}"],
 				migrationsTableName: "migrations",
 				migrationsRun: true,
 			}),
 		  	inject: [ConfigService],
 		}),
-
+		TypeOrmModule.forFeature([ User, Consult, Client ]),
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, '../../ui/dist'),
 			serveStaticOptions: {

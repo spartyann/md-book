@@ -30,12 +30,21 @@ export default {
 			},
 			long: {
 				year: 'numeric',
-				month: 'long',
+				month: 'short',
 				day: 'numeric',
-				weekday: 'long',
+				weekday: 'short',
 				hour: 'numeric',
 				minute: 'numeric',
-				hour12: true
+				hour12: false
+			},
+			longNumeric: {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+				weekday: 'short',
+				hour: 'numeric',
+				minute: 'numeric',
+				hour12: false
 			}
 		},
 	}

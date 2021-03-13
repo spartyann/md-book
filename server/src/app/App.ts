@@ -1,11 +1,11 @@
 import { ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { TestController } from "src/http/test/controller";
-import { Connection, QueryRunner } from "typeorm";
-import { AppBase } from "./AppBase";
+import { Connection, QueryRunner, Repository } from "typeorm";
 import { ClientHelper } from "./Helpers/ClientHelper";
 import { ConsultHelper } from "./Helpers/ConsultHelper";
 import { UserHelper } from "./Helpers/UserHelper";
+import { Client } from "./Models/Client.entity";
+import { Consult } from "./Models/Consult.entity";
+import { User } from "./Models/User.entity";
 import { WFClient } from "./WF/WFClient";
 import { WFConsult } from "./WF/WFConsult";
 import { WFUser } from "./WF/WFUser";
@@ -18,7 +18,11 @@ export class App{
 		readonly configService: ConfigService,
 		readonly connection: Connection,
 		readonly queryRunner: QueryRunner,
-		readonly session: any)
+		readonly session: any,
+    	readonly userRepository: Repository<User>,
+    	readonly clientRepository: Repository<Client>,
+    	readonly consultRepository: Repository<Consult>,
+	)
 	{
 
 	}

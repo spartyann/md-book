@@ -20,7 +20,7 @@ export class UserException extends AppException {
 			error: this.name,
 			message: this.message,
 			type: this.type,
-			code: 550
+			statusCode: 550
 		};
 	}
 }

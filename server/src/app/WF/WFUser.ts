@@ -1,3 +1,4 @@
+import { UserUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
@@ -34,10 +35,12 @@ export class WFUser extends AppBase {
 		return this.UserHelper.get(this.session.userId);
 	}
 
-	async update(id: Number, firstName: string, lastName: string, email: string, clearPwd: string)
+	async update(user: UserUpdate)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
+
+		let id = user.id;
 
 		// Current user
 		if (id === null) id = this.session.userId;
@@ -45,24 +48,8 @@ export class WFUser extends AppBase {
 		// Not current User ?
 		if (this.session.userId != id) throw new AccessDeniedException();
 
-		// Current User
-		let currentUser = await this.UserHelper.get(id);
-
-		// Check length
-		if (firstName != null && firstName.length < 1) throw new UserException("Veuillez indiquer un prénom.");
-		if (lastName == null && lastName.length < 1) throw new UserException("Veuillez indiquer un nom.");
-		if (email == null && email.length < 1) throw new UserException("Veuillez indiquer un email.");
-
-
-		if (firstName == null) firstName = currentUser.firstName;
-		if (lastName == null) lastName = currentUser.lastName;
-		if (email == null) email = currentUser.email;
-		let name = firstName + " " + lastName;
-
-
-
 		// Update User
-		await this.UserHelper.update(id, name, firstName, lastName, email, clearPwd);
+		await this.UserHelper.update(user);
 
 		// Return user
 		return await this.UserHelper.get(id);

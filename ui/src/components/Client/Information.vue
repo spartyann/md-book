@@ -73,8 +73,8 @@ export default {
 		refresh()
 		{
 			this.name = this.clientFile.name;
-			this.lastName = this.clientFile.last_name;
-			this.firstName = this.clientFile.first_name;
+			this.lastName = this.clientFile.lastName;
+			this.firstName = this.clientFile.firstName;
 			this.email = this.clientFile.email;
 
 			let self = this;

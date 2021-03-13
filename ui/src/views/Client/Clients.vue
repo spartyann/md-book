@@ -82,12 +82,12 @@ export default {
 				sortable: true
 			},
 			{
-				key: 'last_name',
+				key: 'lastName',
 				label: "Nom",
 				sortable: true
 			},
 			{
-				key: 'first_name',
+				key: 'firstName',
 				label: "Prénom",
 				sortable: true
 			},

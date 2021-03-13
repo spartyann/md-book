@@ -3,7 +3,7 @@ import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 
 export class WFConsult extends AppBase {
 
-	async list(clientId: Number)
+	async list(clientId: number)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();;
@@ -11,12 +11,12 @@ export class WFConsult extends AppBase {
 		// ACL
 		let client = await this.ClientHelper.get(clientId);
 
-		if (client.user_id != this.session.userId) throw new AccessDeniedException();
+		if (client.userId != this.session.userId) throw new AccessDeniedException();
 
 		return this.ConsultHelper.list(clientId);
 	}
 
-	async create(clientId: Number, date: string)
+	async create(clientId: number, date: string)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
@@ -24,7 +24,7 @@ export class WFConsult extends AppBase {
 		// ACL
 		let client = await this.ClientHelper.get(clientId);
 
-		if (client.user_id != this.session.userId) throw new AccessDeniedException();
+		if (client.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Update User
 		const id = await this.ConsultHelper.create(clientId, date);

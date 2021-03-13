@@ -68,8 +68,8 @@ export default {
 
 	mounted()
 	{
-		this.lastName = this.user.last_name;
-		this.firstName = this.user.first_name;
+		this.lastName = this.user.lastName;
+		this.firstName = this.user.firstName;
 		this.email = this.user.email;
 	},
 

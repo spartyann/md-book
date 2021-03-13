@@ -17,6 +17,13 @@ export default new Vuex.Store({
 	actions: {
 		apiError(context, apiError)
 		{
+			if (apiError.statusCode == 400)
+			{
+				apiError.type = 'warning';				
+			}
+
+			if (Array.isArray(apiError.message)) apiError.message = apiError.message.join('\n')
+
 			context.state.dialog = {
 				type: apiError.error == 'ApiException' ? 'ApiException' : apiError.type,
 				message: apiError.message

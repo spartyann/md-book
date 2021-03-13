@@ -4,12 +4,16 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as compression from 'compression';
+import { ValidationPipe } from '@nestjs/common';
+const FileStore = require('session-file-store')(session);
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	const configService: ConfigService = app.get(ConfigService);
 
-	if (configService.get('DEBUG', 'false') == 'true')
+	const isDebug = configService.get('DEBUG', 'false') == 'true';
+
+	if (isDebug)
 	{
 		app.enableCors({
 			origin : "http://localhost:8080",
@@ -21,16 +25,24 @@ async function bootstrap() {
 		//app.enableCors();
 	}
 
-	app.use(
-		session({
-			secret: configService.get('SECRET', 'my-secret'),
-			resave: false,
-			saveUninitialized: false,
-			/*cookie: {
-				secure: true
-			}*/
-		}),
-	);
+	let sessionOptions: session.SessionOptions = {
+		secret: configService.get('SECRET', 'my-secret'),
+		resave: false,
+		saveUninitialized: false,
+		/*cookie: {
+			secure: true
+		}*/
+	};
+
+	if (isDebug)
+	{
+		// Set file session storage to avoid session delete after code update
+		sessionOptions.store = new FileStore({
+			path: './sessions'
+		});
+	}
+
+	app.use(session(sessionOptions));
 	app.use(compression());
 
 	// Swagger
@@ -40,14 +52,17 @@ async function bootstrap() {
 		.setVersion('1.0')
 		//.addTag('api')
 		.build();
-	const document = SwaggerModule.createDocument(app, config, {
+	const document = SwaggerModule.createDocument(app, config, { });
+	SwaggerModule.setup('api', app, document, { });
 
-	});
-	SwaggerModule.setup('api', app, document, {
+	// Validation Pipe
+	app.useGlobalPipes(new ValidationPipe({
+		whitelist: true,
+		forbidNonWhitelisted: true,
+		transform: true
+	}));
 
-	});
-
-	// Run		
+	// Run
 	await app.listen(configService.get<number>('PORT', 3000));
 }
 bootstrap();

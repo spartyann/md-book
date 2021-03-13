@@ -41,7 +41,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h4>Entretien</h4>
-							<div v-html="row.item.pre_consult"></div>
+							<div v-html="row.item.preConsult"></div>
 						</div>
 						<div class="col-md-6">
 							<h4>Rapport de séance</h4>
@@ -49,11 +49,11 @@
 						</div>
 						<div class="col-md-6">
 							<h4>Retour du client</h4>
-							<div v-html="row.item.report_client"></div>
+							<div v-html="row.item.reportClient"></div>
 						</div>
 						<div class="col-md-6">
 							<h4>Retour du client quelques jours après</h4>
-							<div v-html="row.item.report_client_post_consult"></div>
+							<div v-html="row.item.reportClientPostConsult"></div>
 						</div>
 					</div>
 				</b-card>
@@ -92,7 +92,7 @@ export default {
 					label: "Date",
 					sortable: true,
 					formatter: (value) => {
-						return self.$d(new Date(value), 'longDate')
+						return self.$d(new Date(value), 'long')
 					}
 				}
 			],

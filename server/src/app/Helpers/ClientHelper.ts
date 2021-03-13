@@ -1,6 +1,7 @@
-import { ClientCreate } from "src/http/api/Schemas";
+import { ClientCreate, ClientUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
+import { Client } from "../Models/Client.entity";
 
 export class ClientHelper extends AppBase {
 
@@ -11,7 +12,7 @@ export class ClientHelper extends AppBase {
 
 		if (userId == null) throw new AppException('No user given');
 
-		let res = await this.app.clientRepository.query("SELECT * FROM client WHERE userId = ?", [ userId ]);
+		let res = await this.queryRunner.query("SELECT * FROM client WHERE userId = ?", [ userId ]);
 
 		return res;
 	}
@@ -19,7 +20,7 @@ export class ClientHelper extends AppBase {
 
 	public async get(clientId: number): Promise<any>
 	{
-		return await this.app.clientRepository.findOne(clientId);
+		return await this.queryRunner.manager.findOne(Client, clientId);
 	}
 
 
@@ -38,24 +39,17 @@ export class ClientHelper extends AppBase {
 		return res[0].id;
 	}
 
-	async update(id: number, name: string, firstName: string, lastName: string, email: string, comment: string)
+	async update(clientUpdate: ClientUpdate)
 	{
-		let values = [];
-		let strings = [];
+		let client = await this.queryRunner.manager.findOne(Client, clientUpdate.id);
 
-		if (name !== null) { values.push("name = ?"); strings.push(name); }
-		if (firstName !== null) { values.push("firstName = ?"); strings.push(firstName); }
-		if (lastName !== null) { values.push("lastName = ?"); strings.push(lastName); }
-		if (email !== null) { values.push("email = ?"); strings.push(email); }
-		if (comment !== null) { values.push("comment = ?"); strings.push(comment); }
-		
-		if (values.length == 0) return;
+		for (let field in clientUpdate)
+		{
+			let val = clientUpdate[field];
+			if (val !== null) client[field] = clientUpdate[field];
+		}
 
-		
-		let sql = 'UPDATE client SET ' + values.join(',') + " WHERE id = " + id;
-
-		await this.queryRunner.query(sql, strings);
-
+		return await this.app.queryRunner.manager.save(client);
 	}
 
 }

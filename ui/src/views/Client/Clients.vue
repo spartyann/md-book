@@ -14,6 +14,7 @@
 				striped
 				hover
 				small
+				bordered
 				:items="clients === null ? [] : clients"
 				:fields="fields"
 				:busy="clients === null"
@@ -26,7 +27,7 @@
 				</template>
 
 				<template #cell(name)="row">
-					<a :href="`#${row.value.replace(/[^a-z]+/i,'-').toLowerCase()}`" @click="row.toggleDetails">
+					<a @click="row.toggleDetails">
 						{{ row.value }}
 					</a>
 				</template>

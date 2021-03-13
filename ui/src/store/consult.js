@@ -5,7 +5,12 @@ export default {
 	namespaced: true,
 
 	state: () => ({
-		consults: null
+		consults: null,
+
+		consult: null,
+
+		fieldsUpdating: [],
+		updateStatus: false
 	}),
 	mutations: {
 
@@ -47,15 +52,9 @@ export default {
 					date: params.date,
 				};
 
-				Communication.call("consult", "create", apiParams).then(function(user)
+				Communication.call("consult", "create", apiParams).then(function(consult)
 				{
-					context.dispatch("list", params.clientId).then(function(){
-						resolve(user);
-					}).catch(function(data)
-					{
-						reject(data);
-					});
-					
+					resolve(consult);
 					
 				}).catch(function(data)
 				{
@@ -65,6 +64,57 @@ export default {
 			})
 		
 		},
+
+		get(context, id)
+		{
+			return new Promise((resolve, reject) => {
+
+				Communication.call("consult", id).then(function(consult)
+				{
+					context.state.consult = consult;
+					resolve(consult);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		},
+
+
+		update(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const fields = ['date','preConsult','hypothesis','report','reportClient','reportClientPostConsult','data'];
+				context.state.fieldsUpdating = [];
+
+				const apiParams = { };
+				for (let i in fields)
+				{
+					const field = fields[i];
+					if (params[field] == undefined) continue;
+					context.state.fieldsUpdating.push(field);
+					apiParams[field] = params[field];
+				}
+
+				context.state.updateStatus = 'updating';
+				Communication.call("consult", params.id +"/update", apiParams).then(function(consult)
+				{
+					context.state.updateStatus = 'updated';
+					context.state.consult = consult;
+					resolve(consult);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		}
 
 
 	}

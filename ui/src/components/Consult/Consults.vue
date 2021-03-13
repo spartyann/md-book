@@ -15,6 +15,7 @@
 			striped
 			hover
 			small
+			bordered
 			:items="consults === null ? [] : consults"
 			:fields="fields"
 			:busy="consults === null"
@@ -27,12 +28,16 @@
 			</template>
 
 			<template #cell(date)="row">
-				<a :href="`#${row.value.replace(/[^a-z]+/i,'-').toLowerCase()}`" @click="row.toggleDetails">
+				<!--<a @click="row.toggleDetails">
 					{{ row.value }}
-				</a>
+				</a>-->
+
+				<router-link :to="{ name: 'Consult', params: { consultId: row.item.id } }">
+					{{ row.value }}
+				</router-link>
 			</template>
 
-			<template #row-details="row">
+			<!--<template #row-details="row">
 				<b-card>
 					<p>
 						<button class="btn btn-light"><fa icon="edit"></fa> Editer</button>
@@ -57,7 +62,7 @@
 						</div>
 					</div>
 				</b-card>
-			</template>
+			</template>-->
 		</b-table>
 			
 	</div>
@@ -91,6 +96,8 @@ export default {
 					key: 'date',
 					label: "Date",
 					sortable: true,
+					sortKey: 'date',
+					sortByFormatted: false,
 					formatter: (value) => {
 						return self.$d(new Date(value), 'long')
 					}

@@ -14,6 +14,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Directives from "./Directives"
+import GlobalComponents from "./components/global/register"
 
 
 // Make BootstrapVue available throughout your project
@@ -32,6 +34,10 @@ Vue.component('fa', FontAwesomeIcon);
 Vue.config.productionTip = false
 
 Vue.mixin(MixinModal);
+
+Directives.registerDirectives();
+GlobalComponents.registerGlobalComponents();
+
 
 // I18n
 const i18n = new VueI18n(I18nParam);

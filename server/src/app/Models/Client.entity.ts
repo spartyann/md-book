@@ -44,10 +44,9 @@ export class Client {
 	@Column()
 	country: string;
 
-
-	@OneToMany(type => Consult, consult => consult.clientId)
+	/*@OneToMany(type => Consult, consult => consult.clientId)
   	consults: Consult[];
 
 	@ManyToOne(type => User, user => user.id)
-	user: User;
+	user: User;*/
 }

@@ -28,10 +28,10 @@ export class UserHelper extends AppBase {
 		values.push("name = ?");
 		strings.push(name);
 
-		values.push("first_name = ?");
+		values.push("firstName = ?");
 		strings.push(user.firstName);
 
-		values.push("last_name = ?");
+		values.push("lastName = ?");
 		strings.push(user.lastName);
 
 		values.push("email = ?");

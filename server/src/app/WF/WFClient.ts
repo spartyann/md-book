@@ -1,4 +1,4 @@
-import { ClientCreate } from "src/http/api/Schemas";
+import { ClientCreate, ClientUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
@@ -47,28 +47,22 @@ export class WFClient extends AppBase {
 		return await this.ClientHelper.get(id);
 	}
 
-	async update(id: number, name: string, firstName: string, lastName: string, email: string, comment: string)
+	async update(clientUpdate: ClientUpdate)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
 
 		// Update User
-		const client = await this.ClientHelper.get(id);
+		const currentClient = await this.ClientHelper.get(clientUpdate.id);
 
 		// Acl
-		if (client.userId != this.session.userId) throw new AccessDeniedException();
-
-		// Check length
-		if (firstName.length < 1 || lastName.length < 1 || name.length < 1) throw new UserException("Veuillez indiquer un nom et un prénom.");
+		if (currentClient.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Sanitize comment
-		comment = sanitizeHtml(comment);
+		clientUpdate.comment = sanitizeHtml(clientUpdate.comment);
 
 		// Update
-		await this.ClientHelper.update(id, name, firstName, lastName, email, comment);
-
-		// Retur client
-		return await this.ClientHelper.get(id);
+		return await this.ClientHelper.update(clientUpdate);
 	}
 
 	

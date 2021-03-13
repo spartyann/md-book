@@ -42,7 +42,7 @@
 					<fa icon="check-circle" size="2x" class="text-success"></fa>
 				</div>
 				<div class="td-100">
-					<p class="my-4">{{ effectiveMsg.message }}</p>
+					<p class="my-4" v-text-ml="effectiveMsg.message"></p>
 				</div>
 			</div>
 		</template>

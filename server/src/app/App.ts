@@ -18,10 +18,7 @@ export class App{
 		readonly configService: ConfigService,
 		readonly connection: Connection,
 		readonly queryRunner: QueryRunner,
-		readonly session: any,
-    	readonly userRepository: Repository<User>,
-    	readonly clientRepository: Repository<Client>,
-    	readonly consultRepository: Repository<Consult>,
+		readonly session: any
 	)
 	{
 

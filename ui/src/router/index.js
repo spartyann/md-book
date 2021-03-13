@@ -8,6 +8,7 @@ import Clients from '../views/Client/Clients'
 import Client from '../views/Client/Client'
 import MyAccount from '../views/MyAccount'
 import Test from '../views/Test'
+import Consult from '../views/Consult/Consult'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,12 @@ const routes = [
 		path: '/client/:clientId',
 		name: 'Client',
 		component: Client
+	},
+
+	{
+		path: '/consult/:consultId',
+		name: 'Consult',
+		component: Consult
 	},
 	
 ]

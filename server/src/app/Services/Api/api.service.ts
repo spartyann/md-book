@@ -17,13 +17,7 @@ export class ApiService {
 
 	constructor(
 		private readonly connection: Connection,
-		private readonly configService: ConfigService,
-		@InjectRepository(User)
-    	private userRepository: Repository<User>,
-		@InjectRepository(Client)
-    	private clientRepository: Repository<Client>,
-		@InjectRepository(Consult)
-    	private consultRepository: Repository<Consult>,
+		private readonly configService: ConfigService
 	) { }
 	
 	async runApi(params: any, body: any, request: Request, res: Response, session: any, func: (app: App, context: ApiContext) => any)
@@ -35,20 +29,17 @@ export class ApiService {
 
 		// Create a query runner
 		const queryRunner = this.connection.createQueryRunner();
-
+	
 		// Create App
 		const app = new App(
 			this.configService,
 			this.connection,
 			queryRunner,
-			session,
-			this.userRepository,
-			this.clientRepository,
-			this.consultRepository
+			session
 		);
 
 		// Connect and create transaction
-		await queryRunner.connect();
+		//await queryRunner.connect();
 		await queryRunner.startTransaction();
 
 		try {

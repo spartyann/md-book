@@ -1,37 +1,36 @@
+import { ConsultCreate, ConsultUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { ApiException } from "../Exceptions/ApiException";
 import { AppException } from "../Exceptions/AppException";
+import { Consult } from "../Models/Consult.entity";
 
 export class ConsultHelper extends AppBase {
 
-	public async list(clientId: number): Promise<any>
+	public async list(clientId: number): Promise<Consult[]>
 	{
 		if (clientId == null) throw new AppException('No Client given');
 
-		let res = await this.queryRunner.query("SELECT * FROM consult WHERE clientId = ?", [ clientId ]);
-		
+		let res = await this.queryRunner.query("SELECT id, userId, clientId, date FROM consult WHERE clientId = ?", [ clientId ]);
+
 		return res;
 	}
 
 
-	public async get(id: number): Promise<any>
+	public async get(id: number): Promise<Consult>
 	{
-		let res = await this.queryRunner.query("SELECT * FROM consult WHERE id = ?", [ id ]);
-		if (res.length != 1) return null;
-		return res[0];
+		return await this.queryRunner.manager.findOne(Consult, id);
 	}
 
-
-	async create(clientId: number, date: string)
+	async create(consult: ConsultCreate):  Promise<number>
 	{
-		const client = await this.ClientHelper.get(clientId);
+		const client = await this.ClientHelper.get(consult.clientId);
 
 		if (client == null) throw new ApiException("Client not found");
 
 		let sql = 'INSERT INTO consult(userId, clientId, date) VALUES (?,?,?)';
 
 		let res = await this.queryRunner.query(sql, [
-			client.user_id, clientId, date
+			client.userId, consult.clientId, consult.date
 		]);
 
 		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');
@@ -39,5 +38,17 @@ export class ConsultHelper extends AppBase {
 		return res[0].id;
 	}
 
+	async update(consultUpdate: ConsultUpdate)
+	{
+		let consult = await this.queryRunner.manager.findOne(Consult, consultUpdate.id);
+
+		for (let field in consultUpdate)
+		{
+			let val = consultUpdate[field];
+			if (val !== null) consult[field] = consultUpdate[field];
+		}
+
+		return await this.app.queryRunner.manager.save(consult);
+	}
 
 }

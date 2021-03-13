@@ -27,6 +27,11 @@
 						Dernière réponse: {{ lastAnswer }}
 					</p>
 
+					<p>
+						<CopyText>Text à copier</CopyText>
+						<DeleteBtn text="Supprimer"></DeleteBtn>
+					</p>
+
 				</div>
 			</div>
 		</div>

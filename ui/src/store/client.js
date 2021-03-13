@@ -90,13 +90,14 @@ export default {
 		{
 			return new Promise((resolve, reject) => {
 
-				const apiParams = {
-					name: params.name,
-					firstName: params.firstName,
-					lastName: params.lastName,
-					email: params.email,
-					comment: params.comment,
-				};
+				const fields = ['name','firstName','lastName','email','comment','mobilePhone','phone','address','cp','city','country'];
+
+				const apiParams = { };
+				for (let i in fields)
+				{
+					const field = fields[i];
+					apiParams[field] = params[field];
+				}
 
 				Communication.call("client", params.id +"/update", apiParams).then(function()
 				{

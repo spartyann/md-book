@@ -4,3 +4,25 @@
 		max-height: 50px;
 	}
 }
+
+a:not([href]):not([class]) {
+	color: $link-color;
+}
+a:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+@keyframes iconHideAnimation {
+	0% {
+	  opacity: 0; }
+	5% {
+	  opacity: 1; }
+	90% {
+	  opacity: 1; }
+	100% {
+	  opacity: 0; } }
+  
+.icon-fade-out {
+	animation: iconHideAnimation 3s forwards;
+}

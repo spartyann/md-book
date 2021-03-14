@@ -20,6 +20,9 @@ export class Consult {
 	preConsult: string;
 
 	@Column()
+	currentClientLevel: number;
+
+	@Column()
 	hypothesis: string;
 
 	@Column()
@@ -29,10 +32,16 @@ export class Consult {
 	reportClient: string;
 
 	@Column()
+	reportClientLevel: number;
+	
+	@Column()
 	reportClientPostConsult: string;
 
 	@Column()
-	data: string;
+	reportClientPostConsultLevel: number;
+
+	@Column({ type: 'json' })
+	data: object;
 
 
 	@ManyToOne(type => Client, client => client.id)

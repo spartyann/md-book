@@ -3,35 +3,37 @@
 		<form class="" v-if="consult != null && cloneConsult != null">
 
 			<div class="row">
-				
-				<div class="col-md-12">
-					<DateTime v-model="cloneConsult.date"></DateTime>
-					<div class="tar mt-1">
-						<span v-if="fieldsUpdating.indexOf('date') != -1" class="mr-3">
-							<UpdatingIconItem :status="updateStatus"></UpdatingIconItem>
-						</span>
 
-						<button type="button" class="btn btn-success" @click="save('date')">Enregistrer</button>
-					</div>
-				</div>
-
-				<template v-for="(title, field) in fields">
+				<template v-for="(fieldParams, field) in fields">
 					<div class="form-group col-md-12" :key="field">
-						<label>{{title}}</label>
-						<ckeditor :editor="editor" v-model="cloneConsult[field]" :config="editorConfig"></ckeditor>
+
+						<label class="mb-0"><strong>{{fieldParams.title }}</strong></label>
+						<div class="text-muted mb-1"><small>{{fieldParams.description }}</small></div>
+
+						<div v-if="fieldParams.level != false" class="mb-2">
+							<IconLevels v-model="cloneConsult[fieldParams.level]"></IconLevels>
+						</div>
+
+						<template v-if="field == 'date'">
+							<DateTime v-model="cloneConsult.date"></DateTime>
+						</template>
+						<template v-else>
+							<ckeditor :editor="editor" v-model="cloneConsult[field]" :config="editorConfig"></ckeditor>
+						</template>
+
 						<div class="tar mt-1">
 							<span v-if="fieldsUpdating.indexOf(field) != -1" class="mr-3">
 								<UpdatingIconItem :status="updateStatus"></UpdatingIconItem>
 							</span>
-
-							<button type="button" class="btn btn-success" @click="save(field)">Enregistrer</button>
+							<!--<button type="button" class="btn btn-success" @click="save(fieldParams.level ? [ field, field + 'Level']: [ field ])">Enregistrer</button>-->
+							<button type="button" class="btn btn-success" @click="save">Enregistrer</button>
 						</div>
 					</div>
 				</template>
 
-				<div class="col-md-12">
+				<!--<div class="col-md-12">
 					<button type="button" class="btn btn-success" @click="save()">Enregistrer tout</button>
-				</div>
+				</div>-->
 			</div>
 
 			
@@ -62,12 +64,39 @@ export default {
 			cloneConsult: null,
 
 			fields: {
-				preConsult: "Entretien",
-				hypothesis: "Hypothèses",
-				report: "Comtpe rendu de séance",
-				reportClient: "Retour immédiat du client",
-				reportClientPostConsult: "Retour post-séance du client",
-			}
+				date: { 
+					title: "Date",
+					description: "",
+					level: false
+				},
+				preConsult: { 
+					title: "Entretien",
+					description: "Notez l'état actuel dui client et l'entretien de début de séance.",
+					level: "currentClientLevel"
+				},
+
+				hypothesis: {
+					title:"Hypothèses",
+					description: "Notez vos hypothèses sur les problèmatiques du client, ses déséquilibres énergétiques.",
+					level: false
+				},
+				report: { 
+					title:"Compte rendu de séance",
+					description: "Notez ce qu'il s'est passé pendant la séance, ce que vous avez fait.",
+					level: false
+				},
+				reportClient: {
+					title:"Retour immédiat du client",
+					description: "Notez ce que le client a ressenti, ses impressions sur la séance.",
+					level: "reportClientLevel"
+				},
+				reportClientPostConsult: {
+					title:"Retour post-séance du client",
+					description: "Notez les retours du client plusieurs jours après la séance.",
+					level: "reportClientPostConsultLevel"
+				},
+			},
+			
 		};
 	},
 
@@ -88,24 +117,27 @@ export default {
 			for (let field in this.consult)
 			{
 				if (field == 'date') self.cloneConsult.date = new Date(this.consult.date);
+				else if (field == 'data') self.cloneConsult.data = this.consult.data;
 				else setTimeout(() => { Vue.set(self.cloneConsult, field, self.consult[field]); }, 10);
 			}
 		},
-		save(field = null)
+		save()//fields = null)
 		{
-			this.fieldSaving = field;
-
 			let params = {
 				id: this.consult.id,
 			}
-			if (field != null)
+			/*if (fields != null)
 			{
-				params[field] = this.cloneConsult[field];
+				for (let i in fields) params[fields[i]] = this.cloneConsult[fields[i]];
 			}
 			else
-			{
-				for (let i in this.cloneConsult) params[i] = this.cloneConsult[i];
-			}
+			{*/
+				for (let field in this.cloneConsult)
+				{
+					if (field == 'data') continue;
+					params[field] = this.cloneConsult[field];
+				}
+			//}
 
 			this.storeConsultUpdate(params);
 		},

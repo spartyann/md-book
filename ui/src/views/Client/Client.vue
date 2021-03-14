@@ -14,6 +14,11 @@
 
 						<Consults :clientId="clientId"></Consults>
 					</b-tab>
+
+					<b-tab title="Stats">
+
+						<GlobalClientsStatesChart :clientId="clientId"></GlobalClientsStatesChart>
+					</b-tab>
 				</b-tabs>
 			</b-card>
 		</div>
@@ -24,13 +29,15 @@
 import { mapActions, mapState } from 'vuex';
 import Consults from '@/components/Consult/Consults';
 import ClientInformation from '@/components/Client/Information';
+import GlobalClientsStatesChart from '@/components/Client/Stats/GlobalClientsStatesChart'
 
 export default {
 
 
 	components: {
-		Consults: Consults,
-		ClientInformation: ClientInformation
+		Consults,
+		ClientInformation,
+		GlobalClientsStatesChart
 	},
 
 	data()

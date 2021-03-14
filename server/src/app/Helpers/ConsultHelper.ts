@@ -10,7 +10,7 @@ export class ConsultHelper extends AppBase {
 	{
 		if (clientId == null) throw new AppException('No Client given');
 
-		let res = await this.queryRunner.query("SELECT id, userId, clientId, date FROM consult WHERE clientId = ?", [ clientId ]);
+		let res = await this.queryRunner.query("SELECT id, userId, clientId, date, currentClientLevel, reportClientLevel, reportClientPostConsultLevel FROM consult WHERE clientId = ?", [ clientId ]);
 
 		return res;
 	}

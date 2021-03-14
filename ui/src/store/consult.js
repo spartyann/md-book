@@ -88,7 +88,7 @@ export default {
 		{
 			return new Promise((resolve, reject) => {
 
-				const fields = ['date','preConsult','hypothesis','report','reportClient','reportClientPostConsult','data'];
+				const fields = ['date','preConsult', 'currentClientLevel', 'hypothesis','report','reportClient', 'reportClientLevel','reportClientPostConsult', 'reportClientPostConsultLevel','data'];
 				context.state.fieldsUpdating = [];
 
 				const apiParams = { };

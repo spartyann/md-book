@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsDate, IsEmail, IsInt, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
+import { IsDate, IsEmail, IsInt, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
 
 export class ClientCreate {
 	
@@ -92,6 +92,9 @@ export class ConsultUpdate {
 	@ApiProperty({ description: 'Nom' }) @IsOptional() @IsString()
 	preConsult: string;
 
+	@ApiProperty({ description: 'Etat actuel du client - Niveau' }) @IsOptional() @IsInt()
+	currentClientLevel: number;
+
 	@ApiProperty({ description: 'Email' }) @IsOptional() @IsString()
 	hypothesis: string;
 
@@ -101,9 +104,16 @@ export class ConsultUpdate {
 	@ApiProperty({ description: 'Retour immédiat du client' }) @IsOptional() @IsString()
 	reportClient: string;
 
+	@ApiProperty({ description: 'Retour immédiat du client - Niveau' }) @IsOptional() @IsInt()
+	reportClientLevel: number;
+
 	@ApiProperty({ description: 'Retour du client post-séance' }) @IsOptional() @IsString()
 	reportClientPostConsult: string;
 
-	@ApiProperty({ description: 'Données' }) @IsOptional() @IsString()
-	data: string;
+	@ApiProperty({ description: 'Retour du client post-séance - Niveau' }) @IsOptional() @IsInt()
+	reportClientPostConsultLevel: number;
+
+
+	@ApiProperty({ description: 'Données' }) @IsOptional() @IsObject()
+	data: object;
 }

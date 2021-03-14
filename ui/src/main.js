@@ -12,7 +12,9 @@ import 'bootstrap';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
+
 import { fas } from '@fortawesome/free-solid-svg-icons'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Directives from "./Directives"
 import GlobalComponents from "./components/global/register"
@@ -30,6 +32,7 @@ Vue.use(VueI18n)
 
 library.add( fas )
 Vue.component('fa', FontAwesomeIcon);
+
 
 Vue.config.productionTip = false
 

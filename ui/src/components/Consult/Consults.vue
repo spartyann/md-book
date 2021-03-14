@@ -37,34 +37,21 @@
 				</router-link>
 			</template>
 
-			<!--<template #row-details="row">
-				<b-card>
-					<p>
-						<button class="btn btn-light"><fa icon="edit"></fa> Editer</button>
-					</p>
+			<template #cell(currentClientLevel)="row">
+				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+			</template>
 
-					<div class="row">
-						<div class="col-md-6">
-							<h4>Entretien</h4>
-							<div v-html="row.item.preConsult"></div>
-						</div>
-						<div class="col-md-6">
-							<h4>Rapport de séance</h4>
-							<div v-html="row.item.report"></div>
-						</div>
-						<div class="col-md-6">
-							<h4>Retour du client</h4>
-							<div v-html="row.item.reportClient"></div>
-						</div>
-						<div class="col-md-6">
-							<h4>Retour du client quelques jours après</h4>
-							<div v-html="row.item.reportClientPostConsult"></div>
-						</div>
-					</div>
-				</b-card>
-			</template>-->
+			<template #cell(reportClientPostConsultLevel)="row">
+				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+			</template>
+
+			<template #cell(reportClientLevel)="row">
+				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+			</template>
 		</b-table>
-			
+
+
+
 	</div>
 </template>
 
@@ -101,7 +88,22 @@ export default {
 					formatter: (value) => {
 						return self.$d(new Date(value), 'long')
 					}
-				}
+				},
+				{
+					key: 'currentClientLevel',
+					label: "Etat courant du client",
+					sortable: true
+				},
+				{
+					key: 'reportClientLevel',
+					label: "Retour client immédiat",
+					sortable: true
+				},
+				{
+					key: 'reportClientPostConsultLevel',
+					label: "Retour post-séance",
+					sortable: true
+				},
 			],
 		};
 	},

@@ -41,7 +41,10 @@ export class Mig21615634916236 implements MigrationInterface {
             CHANGE COLUMN report report longtext NOT NULL DEFAULT '',
             CHANGE COLUMN report_client reportClient longtext NOT NULL DEFAULT '',
             CHANGE COLUMN report_client_post_consult reportClientPostConsult longtext NOT NULL DEFAULT '',
-			ADD COLUMN data longtext NOT NULL DEFAULT ''
+			ADD COLUMN data longtext NOT NULL DEFAULT '{}',
+			ADD COLUMN currentClientLevel int(11) NOT NULL DEFAULT '0' AFTER preConsult,
+			ADD COLUMN reportClientLevel int(11) NOT NULL DEFAULT '0' AFTER reportClient,
+			ADD COLUMN reportClientPostConsultLevel int(11) NOT NULL DEFAULT '0' AFTER reportClientPostConsult
         `);
 
 		await queryRunner.query(`ALTER TABLE consults

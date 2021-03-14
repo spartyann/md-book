@@ -49,12 +49,21 @@
 				<div>Commentaire</div>
 				<RichText v-model="mtcData.langue.global.commentaire"></RichText>
 			</div>
+
+
+			<div class="col-md-6 mt-5" v-for="(text, zone) in zones" :key="zone">
+				<label class="mb-0"><strong>Zone: {{ text }}</strong></label>
+
+				<template v-for="(params, field) in zoneDetail" >
+					<div :class="field == 'enduit' ? 'mt-2' : 'd-inline-block mr-4 mb-2'" :key="field">
+						<div v-if="field == 'enduit'">Enduit</div>
+						<rating v-model="mtcData.langue.zones[zone][field]" :texts="params.texts" :levels="params.levels"></rating>
+					</div>
+				</template>
+				
+			</div>
+
 		</div>
-
-		
-
-		<pre>{{ mtcData.langue }}</pre>
-
 
 	</div>
 </template>
@@ -99,6 +108,23 @@ export default {
 				rate: "Rate, Estomac",
 				poumon: "Poumon",
 				coeur: "Coeur",
+			},
+
+			zones: {
+				rein: "Rein, Vessie, Intestins",
+				vb: "VB",
+				rate: "Rate, Estomac",
+				foie: "Foie",
+				poumon: "Poumon",
+				coeur: "Coeur",
+			},
+
+			zoneDetail: {
+				couleur:  { levels: [ ['Blanche'], ['Rose' ], ['Rouge', 'Rouge foncé', 'Pourpre', 'Bleue'] ], },
+				humidite:  { texts: ['Sèche', 'Humide', 'Très humide'] },
+				pointsRouges:  { levels: [ ['Aucun'], ['Petits' ], ['Gros'] ], },
+				enduit:  { levels: [ ['Aucun'], ['Fin' ], ['Epais'] ], },
+				enduitCouleur:  { levels: [ ['Blanc'], ["Jaune clair", 'Jaune' ], ['Gris', 'Noir'] ], },
 			}
 		};
 	},

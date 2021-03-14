@@ -18,6 +18,8 @@
 @import 'styles/variables/app';
 @import "./styles/app.scss";
 @import "./styles/tools.scss";
+@import "./styles/panel.scss";
+@import "./styles/interactivity.scss";
 
 </style>
 
@@ -73,4 +75,5 @@
 	}
 
 </script>
+
 

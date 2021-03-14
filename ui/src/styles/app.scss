@@ -14,15 +14,18 @@ a:hover{
 }
 
 @keyframes iconHideAnimation {
-	0% {
-	  opacity: 0; }
-	5% {
-	  opacity: 1; }
-	90% {
-	  opacity: 1; }
-	100% {
-	  opacity: 0; } }
+	0% { opacity: 0; }
+	5% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; display: none; }
+}
   
 .icon-fade-out {
 	animation: iconHideAnimation 3s forwards;
 }
+
+.btn-level{
+	border-bottom: solid 5px transparent;
+}
+
+

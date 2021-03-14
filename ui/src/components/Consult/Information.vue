@@ -11,22 +11,25 @@
 						<div class="text-muted mb-1"><small>{{fieldParams.description }}</small></div>
 
 						<div v-if="fieldParams.level != false" class="mb-2">
-							<IconLevels v-model="cloneConsult[fieldParams.level]"></IconLevels>
+							<SmileyLevels v-model="cloneConsult[fieldParams.level]"></SmileyLevels>
 						</div>
 
 						<template v-if="field == 'date'">
 							<DateTime v-model="cloneConsult.date"></DateTime>
 						</template>
 						<template v-else>
-							<ckeditor :editor="editor" v-model="cloneConsult[field]" :config="editorConfig"></ckeditor>
+							<RichText v-model="cloneConsult[field]"></RichText>
 						</template>
 
 						<div class="tar mt-1">
 							<span v-if="fieldsUpdating.indexOf(field) != -1" class="mr-3">
 								<UpdatingIconItem :status="updateStatus"></UpdatingIconItem>
 							</span>
+							
 							<!--<button type="button" class="btn btn-success" @click="save(fieldParams.level ? [ field, field + 'Level']: [ field ])">Enregistrer</button>-->
-							<button type="button" class="btn btn-success" @click="save">Enregistrer</button>
+							<button type="button" class="btn btn-success" @click="save">
+								Enregistrer
+							</button>
 						</div>
 					</div>
 				</template>
@@ -43,7 +46,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Vue from 'vue';
 // @ is an alias to /src
 
@@ -55,10 +57,6 @@ export default {
 	data()
 	{
 		return {
-			editor: ClassicEditor,
-			editorConfig: {
-				// The configuration of the editor.
-			},
 
 			date: null,
 			cloneConsult: null,

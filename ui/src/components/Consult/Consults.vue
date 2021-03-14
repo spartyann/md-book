@@ -38,15 +38,15 @@
 			</template>
 
 			<template #cell(currentClientLevel)="row">
-				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+				<SmileyLevels :level="row.value" :readonly="true"></SmileyLevels>
 			</template>
 
 			<template #cell(reportClientPostConsultLevel)="row">
-				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+				<SmileyLevels :level="row.value" :readonly="true"></SmileyLevels>
 			</template>
 
 			<template #cell(reportClientLevel)="row">
-				<IconLevels :level="row.value" :readonly="true"></IconLevels>
+				<SmileyLevels :level="row.value" :readonly="true"></SmileyLevels>
 			</template>
 		</b-table>
 

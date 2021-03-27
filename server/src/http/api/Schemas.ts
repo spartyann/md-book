@@ -10,6 +10,8 @@ export class ClientCreate {
 	@ApiProperty({ description: 'Nom' }) @IsString() @MinLength(2)
 	lastName: string;
 
+	@ApiProperty({ description: 'Genre (m: Homme,f: Femme, o: Autre)' }) @IsString() @ValidateIf(c =>  { return c.gender == 'm' || c.gender == 'f' || c.gender == 'o'; } )
+	gender: string;
 }
 
 export class ClientUpdate {
@@ -24,6 +26,13 @@ export class ClientUpdate {
 
 	@ApiProperty({ description: 'Nom' }) @IsString()
 	lastName: string;
+
+	@ApiProperty({ description: 'Date de naissance' }) @IsDate() @IsOptional()
+	@Type(() => Date)
+	birthday: Date;
+
+	@ApiProperty({ description: 'Genre (m: Homme,f: Femme, o: Autre)' }) @IsString() @ValidateIf(c =>  { return c.gender == 'm' || c.gender == 'f' || c.gender == 'o'; } )
+	gender: string;
 
 	@ApiProperty({ description: 'Email' }) @IsEmail() @ValidateIf(o => o.email !== '')
 	email: string;

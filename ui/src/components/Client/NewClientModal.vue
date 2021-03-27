@@ -17,6 +17,14 @@
 						<label>Nom</label>
 						<input v-model="lastName" type="text" class="form-control">
 					</div>
+					<div class="form-group">
+						<label>Genre</label>
+						<select v-model="gender" class="form-control">
+							<option value="m">Homme</option>
+							<option value="f">Femme</option>
+							<option value="o">Autre</option>
+						</select>
+					</div>
 				</form>
 			</div>
 		</template>
@@ -47,6 +55,7 @@ export default {
 			modalVisible: false,
 			firstName: "",
 			lastName: "",
+			gender: ""
 		};
 	},
 
@@ -72,10 +81,13 @@ export default {
 			this.storeClientCreate({
 				firstName: this.firstName,
 				lastName: this.lastName,
-			}).then(function()
+				gender: this.gender,
+			}).then(function(client)
 			{
 				self.dialogSuccess();
 				self.modalVisible = false;
+
+				self.$router.push({ name: 'Client', params: { clientId: client.id }, query: { tab : 0 } });
 			});
 			
 		},

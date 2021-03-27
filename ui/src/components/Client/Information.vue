@@ -9,8 +9,12 @@
 				</div>
 
 				<div class="form-group col-md-6">
-					<label>Email</label>
-					<input v-model="cloneClient.email" type="email" class="form-control" :disabled="edit == false">
+					<label>Genre</label>
+					<select v-model="cloneClient.gender" class="form-control" :disabled="edit == false">
+						<option value="m">Homme</option>
+						<option value="f">Femme</option>
+						<option value="o">Autre</option>
+					</select>
 				</div>
 
 				<div class="form-group col-md-6">
@@ -23,7 +27,32 @@
 					<input v-model="cloneClient.lastName" type="text" class="form-control" :disabled="edit == false">
 				</div>
 
-				
+				<div class="form-group col-md-6">
+					<label>Email</label>
+					<input v-model="cloneClient.email" type="email" class="form-control" :disabled="edit == false">
+				</div>
+
+				<div class="col-md-6">
+					<label>Date de naissance</label>
+					<b-input-group class="mb-3">
+						<b-form-input
+							id="birthday-input"
+							v-model="birthday"
+							:disabled="edit == false"
+							type="text"
+							placeholder="YYYY-MM-DD"
+							autocomplete="off"
+						></b-form-input>
+						<b-form-datepicker
+							button-only
+							:disabled="edit == false"
+							v-model="birthday"
+							right
+							locale="fr"
+							aria-controls="birthday-input"
+						></b-form-datepicker>
+					</b-input-group>
+				</div>
 
 				<div class="form-group col-md-6">
 					<label>Téléphone mobile</label>
@@ -135,6 +164,22 @@ export default {
 		}),
 	},
 	computed: {
+		birthday:{
+			get()
+			{
+				if (this.cloneClient == null || this.cloneClient.birthday == null) return null;
+				if (isNaN(Date.parse(this.cloneClient.birthday)) == false && this.cloneClient.birthday.indexOf('T') > 0)
+				{
+					return new Date(this.cloneClient.birthday).toISOString().split('T')[0];
+				}
+				return this.cloneClient.birthday;
+			},
+
+			set(val)
+			{
+				this.cloneClient.birthday = val;
+			}
+		},
 		...mapState({
 			clientFile: state => state.client.clientFile,
 		})

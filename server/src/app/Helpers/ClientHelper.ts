@@ -28,10 +28,10 @@ export class ClientHelper extends AppBase {
 	{
 		const name = client.firstName + " " + client.lastName;
 
-		let sql = 'INSERT INTO client(name, firstName, lastName, userId) VALUES (?,?,?,?)';
+		let sql = 'INSERT INTO client(name, firstName, lastName, gender, userId) VALUES (?,?,?,?,?)';
 
 		let res = await this.queryRunner.query(sql, [
-			name, client.firstName, client.lastName, this.session.userId
+			name, client.firstName, client.lastName, client.gender, this.session.userId
 		]);
 
 		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');

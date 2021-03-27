@@ -21,6 +21,12 @@ export class Client {
 	lastName: string;
 
 	@Column()
+	birthday: Date;
+
+	@Column()
+	gender: string;
+
+	@Column()
 	email: string;
 
 	@Column()

@@ -2,7 +2,11 @@
 	<div class="page-client" v-if="clientFile != null">
 		<div class="container">
 
-			<h2><fa icon="address-card"></fa> {{clientFile.name}}</h2>
+			<h2>
+				<fa icon="address-card"></fa>
+				{{clientFile.name}}
+				<template v-if="age != ''">( {{ age }} ans )</template>
+			</h2>
 
 			
 			<b-card no-body class="mt-4">
@@ -30,6 +34,7 @@ import { mapActions, mapState } from 'vuex';
 import Consults from '@/components/Consult/Consults';
 import ClientInformation from '@/components/Client/Information';
 import GlobalClientsStatesChart from '@/components/Client/Stats/GlobalClientsStatesChart'
+import Tools from "@/lib/Tools";
 
 export default {
 
@@ -55,13 +60,14 @@ export default {
 
 	},
 	methods: {
-		
+
 		...mapActions({
 			storeClientFile: 'client/file'
 		}),
 	},
 
 	computed: {
+		age() { return Tools.calculateAge(this.clientFile.birthday); },
 		clientId() { return parseInt(this.$route.params.clientId); },
 		...mapState({
 			clientFile: state => state.client.clientFile

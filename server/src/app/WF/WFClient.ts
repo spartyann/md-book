@@ -3,7 +3,7 @@ import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
 import { UserException } from "../Exceptions/UserException";
-const sanitizeHtml = require('sanitize-html');
+import { Sanitizer } from "../Tools/Sanitizer";
 
 export class WFClient extends AppBase {
 
@@ -59,7 +59,7 @@ export class WFClient extends AppBase {
 		if (currentClient.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Sanitize comment
-		clientUpdate.comment = sanitizeHtml(clientUpdate.comment);
+		clientUpdate.comment = Sanitizer.clean(clientUpdate.comment);
 
 		// Update
 		return await this.ClientHelper.update(clientUpdate);

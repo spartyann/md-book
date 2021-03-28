@@ -2,6 +2,7 @@ import { ConsultCreate, ConsultUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { Consult } from "../Models/Consult.entity";
+import { Sanitizer } from "../Tools/Sanitizer";
 
 export class WFConsult extends AppBase {
 
@@ -56,6 +57,15 @@ export class WFConsult extends AppBase {
 
 		// ACL
 		if (consult.userId != this.session.userId) throw new AccessDeniedException();
+
+		// Sanitize html
+		consultUpdate.preConsult = Sanitizer.clean(consultUpdate.preConsult);
+		consultUpdate.hypothesis = Sanitizer.clean(consultUpdate.hypothesis);
+		consultUpdate.report = Sanitizer.clean(consultUpdate.report);
+		consultUpdate.reportClient = Sanitizer.clean(consultUpdate.reportClient);
+		consultUpdate.reportClientPostConsult = Sanitizer.clean(consultUpdate.reportClientPostConsult);
+
+		//consultUpdate.data.langue.global.commentaire = Sanitizer.clean(consultUpdate.data.langue.global.commentaire);
 
 		// Update
 		return await this.ConsultHelper.update(consultUpdate);

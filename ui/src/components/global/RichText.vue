@@ -4,8 +4,7 @@
 
 <script>
 
-//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-//import FontPlugin from '@ckeditor/ckeditor5-font/src/font';
+// https://ckeditor.com/ckeditor-5/online-builder/
 
 export default {
 

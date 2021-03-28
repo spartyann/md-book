@@ -14,7 +14,7 @@
 					<b-tab title="Informations générales">
 						<ConsultInformation></ConsultInformation>
 					</b-tab>
-					<b-tab title="MTC">
+					<b-tab title="MTC" >
 						<MtcIndex></MtcIndex>
 					</b-tab>
 				</b-tabs>
@@ -50,8 +50,11 @@ export default {
 	{
 		let self = this;
 
+		this.dialogWaiting();
+
 		this.storeConsultGet(this.consultId).then((consult) => {
 			self.storeClientFile(consult.clientId);
+			self.dialogHide();
 		});
 
 		this.refresh();

@@ -45,7 +45,7 @@
 							</router-link>
 						</p>
 						<h4>Commentaire</h4>
-						<div v-html="row.item.comment"></div>
+						<div class="ck-content" v-html="row.item.comment"></div>
 					</b-card>
 				</template>
 			</b-table>

@@ -11,7 +11,8 @@ export class Sanitizer {
 				"ul", "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn",
 				"em", "i", "kbd", "mark", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp",
 				"small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr", "caption",
-				"col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "input"
+				"col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "input",
+				"iframe", "oembed"
 			],
 			disallowedTagsMode: 'discard',
 			allowedAttributes: {
@@ -20,6 +21,8 @@ export class Sanitizer {
 				// would make sense if we did. You could add srcset here,
 				// and if you do the URL is checked for safety
 				img: ['src'],
+				oembed: ['url'],
+				iframe: ['src', 'frameborder', 'allow', "allowfullscreen"],
 				'*': [ 'class', 'checked',  'type', 'title', 'style', 'align', 'alt', 'center', 'bgcolor', 'colspan','rowspan','scope',
 					'border','cellpadding','cellspacing','summary','width', 'height' ]
 			},
@@ -32,7 +35,8 @@ export class Sanitizer {
 			allowProtocolRelative: true,
 			enforceHtmlBoundary: false,
 
-			allowedIframeHostnames: ['www.youtube.com', 'player.vimeo.com']
+			allowedIframeHostnames: ['www.youtube.com', 'player.vimeo.com'],
+			allowIframeRelativeUrls: false
 		});
 	}
 

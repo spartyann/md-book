@@ -49,6 +49,9 @@ export class Client {
 
 	@Column()
 	country: string;
+	
+	@Column({ type: 'json' })
+	data: object;
 
 	/*@OneToMany(type => Consult, consult => consult.clientId)
   	consults: Consult[];

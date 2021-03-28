@@ -57,6 +57,7 @@ export default {
 		},
 		save()
 		{
+			let self = this;
 			let data = this.consult.data;
 			data.mtc = this.mtcData;
 
@@ -65,7 +66,9 @@ export default {
 				data: data
 			}
 
-			this.storeConsultUpdate(params);
+			this.storeConsultUpdate(params).then(() => {
+				self.dialogSuccess();
+			});
 		},
 		...mapActions({
 			storeConsultUpdate: 'consult/update',

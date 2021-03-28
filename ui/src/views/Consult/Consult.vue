@@ -5,7 +5,7 @@
 			<h2><fa icon="book"></fa> {{ $d(new Date(consult.date), 'long' ) }} - {{ clientFile.name }}</h2>
 
 			<div class="mb-2 mt-3">
-				<router-link :to="{ name: 'Client', params: { clientId: clientFile.id }, query: {tab : 1} }" class="">
+				<router-link :to="{ name: 'Client', params: { clientId: clientFile.id }, query: {tab : 2} }" class="">
 					<fa icon="arrow-left"></fa> Séances
 				</router-link>
 			</div>

@@ -87,12 +87,12 @@
 
 				<div class="form-group col-md-12">
 					<label>Commentaire</label>
-					<ckeditor :editor="editor" v-model="cloneClient.comment" :config="editorConfig" :disabled="edit == false"></ckeditor>
+					<RichText v-model="cloneClient.comment"></RichText>
 				</div>
 			</div>
 
 			<p class="tar" v-if="edit">
-				<button type="button" class="btn btn-success" @click="save">Enregistrer</button>
+				<button type="button" class="btn btn-success ctrl-s" @click="save">Enregistrer</button>
 			</p>
 			<p class="tar" v-else>
 				<button type="button" class="btn btn-primary" @click="edit = true"><fa icon="edit"></fa> Modifier</button>
@@ -103,7 +103,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Vue from 'vue';
 // @ is an alias to /src
 
@@ -115,13 +114,9 @@ export default {
 	data()
 	{
 		return {
-			editor: ClassicEditor,
-			editorConfig: {
-				// The configuration of the editor.
-			},
 			cloneClient: null,
 
-			edit: false
+			edit: true
 		};
 	},
 
@@ -140,12 +135,8 @@ export default {
 			if (this.cloneClient == null) this.cloneClient = {};
 			for (let field in this.clientFile)
 			{
-				if (field == 'comment') continue;
 				Vue.set(this.cloneClient, field, this.clientFile[field]);
 			}
-			
-			let self = this;
-			setTimeout(() => { Vue.set(this.cloneClient, 'comment', self.clientFile.comment); }, 10);
 		},
 		save()
 		{

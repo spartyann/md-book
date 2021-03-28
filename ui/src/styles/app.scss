@@ -29,3 +29,32 @@ a:hover{
 }
 
 
+@keyframes indicator-success-animation {
+	0% { opacity: 0; right: -250px }
+	100% { opacity: 1; right: 10px }
+}
+@keyframes indicator-success-hide-animation {
+	0% { opacity: 1; right: 10px }
+	100% { opacity: 0; right: -250px }
+}
+
+.indicator-success {
+	animation: indicator-success-animation 0.2s none;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+
+	border: solid 1px $success;
+	border-radius: 5px;
+	background-color: theme-color-level(success, -10);
+
+	z-index: 1000;
+	display: inline-block;
+	width: 250px;
+	padding: 10px;
+
+	&.hidden{
+		animation: indicator-success-hide-animation 0.3s none;
+		opacity: 0;
+	}
+}

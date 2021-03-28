@@ -27,10 +27,12 @@
 	import { mapActions, mapState } from 'vuex';
 	import PageTemplate from './template/PageTemplate';
 	import ApiMsgModale from './components/MsgModal';
+	import $ from 'jquery'
 
 	export default {
 
-		data(){
+		data()
+		{
 			return {
 				loaded: false
 			}
@@ -52,6 +54,25 @@
 			this.storeInit().then(function() {
 				self.checkRoute();
 				self.loaded = true;
+			});
+
+			$(document).keydown(function(event)
+			{
+				if (!(event.which == 83 && event.ctrlKey) && !(event.which == 19)) return true;
+
+				let btns = $('.ctrl-s')
+				let found = false;
+				btns.each(function(index)
+				{
+					if (found == false && $(btns[index]).is(':visible'))
+					{
+						found = true;
+						$(btns[index]).click();
+					}
+				});
+				
+				event.preventDefault();
+				return false;
 			});
 		},
 		methods: {

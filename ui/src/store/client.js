@@ -91,7 +91,7 @@ export default {
 		{
 			return new Promise((resolve, reject) => {
 
-				const fields = ['name','firstName','lastName', 'gender', 'birthday','email','comment','mobilePhone','phone','address','cp','city','country'];
+				const fields = ['name','firstName','lastName', 'gender', 'birthday','email','comment','mobilePhone','phone','address','cp','city','country', 'data'];
 
 				const apiParams = { };
 				for (let i in fields)

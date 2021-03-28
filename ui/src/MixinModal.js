@@ -65,7 +65,7 @@ export default {
 			{
 				if (self.$store.state.dialog != null 
 					&& self.$store.state.dialog.type == 'success') self.dialogHide();
-			}, isCutomMessage ? 2000 : 1000);
+			}, isCutomMessage ? 3000 : 1500);
 		},
 
 

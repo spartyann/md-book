@@ -40,7 +40,7 @@
 								<fa icon="address-card"></fa> Ouvrir la fiche
 							</router-link>
 							&nbsp;
-							<router-link :to="{ name: 'Client', params: { clientId:row.item.id }, query: {tab : 1} }" class="btn btn-light">
+							<router-link :to="{ name: 'Client', params: { clientId:row.item.id }, query: {tab : 2} }" class="btn btn-light">
 								<fa icon="book"></fa> Séances
 							</router-link>
 						</p>

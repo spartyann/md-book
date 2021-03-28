@@ -38,8 +38,20 @@ export class Mig51616850322262 implements MigrationInterface {
 
 		await queryRunner.query(`ALTER TABLE client
 			ADD COLUMN gender varchar(1) NOT NULL DEFAULT 'o' AFTER lastName,
-			ADD COLUMN birthday datetime NULL DEFAULT NULL AFTER lastName
+			ADD COLUMN birthday datetime NULL DEFAULT NULL AFTER lastName,
+			ADD COLUMN data longtext NOT NULL DEFAULT '{}'
 		`);
+
+		const data = {
+			enneagramme: {
+				enneatype: 0,
+				aile: 0,
+				variante: '',
+				comment: ''
+			}
+		};
+
+		await queryRunner.query(`UPDATE client SET data = ?`, [ JSON.stringify(data) ]);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

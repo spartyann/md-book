@@ -1,6 +1,6 @@
 <template>
 	<div class="mt-2">
-		<button type="button" class="btn btn-success" @click="$emit('click')">
+		<button type="button" class="btn btn-success ctrl-s" @click="$emit('click')">
 			Enregistrer
 		</button>
 		<span v-if="fieldsUpdating.indexOf('data') != -1" class="ml-3">

@@ -14,13 +14,16 @@
 					<b-tab title="Informations">
 						<ClientInformation></ClientInformation>
 					</b-tab>
-					<b-tab title="Séances">
 
+					<b-tab title="Ennéagramme">
+						<ClientEnneagram></ClientEnneagram>
+					</b-tab>
+
+					<b-tab title="Séances">
 						<Consults :clientId="clientId"></Consults>
 					</b-tab>
 
 					<b-tab title="Stats">
-
 						<GlobalClientsStatesChart :clientId="clientId"></GlobalClientsStatesChart>
 					</b-tab>
 				</b-tabs>
@@ -33,6 +36,8 @@
 import { mapActions, mapState } from 'vuex';
 import Consults from '@/components/Consult/Consults';
 import ClientInformation from '@/components/Client/Information';
+import ClientEnneagram from '@/components/Client/Enneagram';
+
 import GlobalClientsStatesChart from '@/components/Client/Stats/GlobalClientsStatesChart'
 import Tools from "@/lib/Tools";
 
@@ -42,7 +47,8 @@ export default {
 	components: {
 		Consults,
 		ClientInformation,
-		GlobalClientsStatesChart
+		GlobalClientsStatesChart,
+		ClientEnneagram
 	},
 
 	data()

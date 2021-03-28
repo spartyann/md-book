@@ -1,65 +1,75 @@
 <template>
-	<b-modal id="MsgModale" centered v-model="modalVisible" data-keyboard="false"
-		no-close-on-esc
-		no-close-on-backdrop
-		hide-header-close
-		:hide-header="hideHeader"
-		:hide-footer="hideFooter"
-		>
-		<template #modal-header v-if="effectiveMsg != null && hideHeader == false">
-
-			<h5 v-if="effectiveMsg.type=='ApiException'">
-				<fa icon="exclamation-triangle" class="text-danger"></fa>
-				Api Error
-			</h5>
-			<h5 v-else-if="effectiveMsg.type=='error'">
-				<fa icon="exclamation-triangle" class="text-danger"></fa>
-				Attention
-			</h5>
-			<h5 v-else-if="effectiveMsg.type=='warning'">
-				<fa icon="exclamation-circle" class="text-warning"></fa>
-				Attention
-			</h5>
-			<h5 v-else-if="effectiveMsg.type=='message'">
-				<fa icon="info-circle" class="text-primary"></fa>
-				Information
-			</h5>
-			<h5 v-else-if="effectiveMsg.type=='question'">
-				<fa icon="question-circle" class="text-primary"></fa>
-				Question
-			</h5>
-			<h5 v-else>
-				<fa icon="exclamation-triangle" class="text-danger"></fa>
-				Erreur inattendue
-			</h5>
-		</template>
-		<template #default v-if="effectiveMsg != null">
+	<div v-if="isSuccess">
+		<div v-if="effectiveMsg != null && isSuccess" :class="'indicator-success ' + (modalVisible ? '' : 'hidden')">
 			<div class="tbl-100">
-				<div class="td vam pr-3" v-if="isWaiting">
-					<div class="spinner-border text-primary"></div>
-				</div>
-				<div class="td vam pr-3" v-if="isSuccess">
+				<div class="td vam pr-3">
 					<fa icon="check-circle" size="2x" class="text-success"></fa>
 				</div>
-				<div class="td-100">
-					<p class="my-4" v-text-ml="effectiveMsg.message"></p>
-				</div>
+				<div class="td-100 vam" v-text-ml="effectiveMsg.message"></div>
 			</div>
-		</template>
-		<template #modal-footer="{ ok }" v-if="effectiveMsg != null && hideFooter == false">
-			<template v-if="isQuestion">
-				<template v-for="(btn, index) in effectiveMsg.buttons">
-					<b-button :key="index" size="sm" :variant="btn.variant" @click="answerQuestion(btn)">
-						<fa v-if="btn.icon != undefined" :icon="btn.icon"></fa> {{ btn.text }}
-					</b-button>
+		</div>
+	</div>
+	<div v-else>
+		<b-modal id="MsgModale" centered v-model="modalVisible" data-keyboard="false"
+			no-close-on-esc
+			no-close-on-backdrop
+			hide-header-close
+			:hide-header="hideHeader"
+			:hide-footer="hideFooter"
+			>
+			<template #modal-header v-if="effectiveMsg != null && hideHeader == false">
+				<h5 v-if="effectiveMsg.type=='ApiException'">
+					<fa icon="exclamation-triangle" class="text-danger"></fa>
+					Api Error
+				</h5>
+				<h5 v-else-if="effectiveMsg.type=='error'">
+					<fa icon="exclamation-triangle" class="text-danger"></fa>
+					Attention
+				</h5>
+				<h5 v-else-if="effectiveMsg.type=='warning'">
+					<fa icon="exclamation-circle" class="text-warning"></fa>
+					Attention
+				</h5>
+				<h5 v-else-if="effectiveMsg.type=='message'">
+					<fa icon="info-circle" class="text-primary"></fa>
+					Information
+				</h5>
+				<h5 v-else-if="effectiveMsg.type=='question'">
+					<fa icon="question-circle" class="text-primary"></fa>
+					Question
+				</h5>
+				<h5 v-else>
+					<fa icon="exclamation-triangle" class="text-danger"></fa>
+					Erreur inattendue
+				</h5>
+			</template>
+			<template #default v-if="effectiveMsg != null">
+				<div class="tbl-100">
+					<div class="td vam pr-3" v-if="isWaiting">
+						<div class="spinner-border text-primary"></div>
+					</div>
+					<div class="td vam pr-3" v-if="isSuccess">
+						<fa icon="check-circle" size="2x" class="text-success"></fa>
+					</div>
+					<div class="td-100">
+						<p class="my-4" v-text-ml="effectiveMsg.message"></p>
+					</div>
+				</div>
+			</template>
+			<template #modal-footer="{ ok }" v-if="effectiveMsg != null && hideFooter == false">
+				<template v-if="isQuestion">
+					<template v-for="(btn, index) in effectiveMsg.buttons">
+						<b-button :key="index" size="sm" :variant="btn.variant" @click="answerQuestion(btn)">
+							<fa v-if="btn.icon != undefined" :icon="btn.icon"></fa> {{ btn.text }}
+						</b-button>
+					</template>
+				</template>
+				<template v-else>
+					<b-button size="sm" variant="success" @click="ok()">OK</b-button>
 				</template>
 			</template>
-			<template v-else>
-				<b-button size="sm" variant="success" @click="ok()">OK</b-button>
-			</template>
-
-		</template>
-	</b-modal>
+		</b-modal>
+	</div>
 
 </template>
 

@@ -4,7 +4,76 @@ import { ApiException } from "../Exceptions/ApiException";
 import { AppException } from "../Exceptions/AppException";
 import { Consult } from "../Models/Consult.entity";
 
+const poulMain = {
+	regularite: null,
+	force: null,
+	profondeur: null,
+	diametre: null,
+	tension: null,
+	longueur: null,
+	racine: null,
+	glissant: null,
+	rugueux: null,
+	index: '',
+	majeur: '',
+	annulaire: ''
+}
+
+const langueZone = {
+	humidite: null,
+	couleur: null,
+	enduit: null,
+	enduitCouleur: null,
+	pointsRouges: null
+}
+
+const consultData = {
+	mtc: {
+		poul: {
+			vitesse: null,
+			vitesseEval: null,
+			commentaire: null,
+
+			gauche: poulMain,
+			droit: poulMain
+		},
+		langue: {
+			global: {
+				epaisseur: null,
+				longueur: null,
+				durete: null,
+				indentee: null,
+				humidite: null,
+				couleur: null,
+				enduit: null,
+				enduitCouleur: null,
+				pointsRouges: null,
+				commentaire: null,
+			},
+			fissure: {
+				profondeur: null,
+				zones: {
+					rein: null,
+					rate: null,
+					poumon: null,
+					coeur: null,
+				}
+			},
+			zones: {
+				rein: langueZone,
+				vb: langueZone,
+				rate: langueZone,
+				foie: langueZone,
+				poumon: langueZone,
+				coeur: langueZone,
+			}
+
+		}
+	}
+};
+
 export class ConsultHelper extends AppBase {
+	
 
 	public async list(clientId: number): Promise<Consult[]>
 	{
@@ -21,16 +90,16 @@ export class ConsultHelper extends AppBase {
 		return await this.queryRunner.manager.findOne(Consult, id);
 	}
 
-	async create(consult: ConsultCreate):  Promise<number>
+	async create(consult: ConsultCreate): Promise<number>
 	{
 		const client = await this.ClientHelper.get(consult.clientId);
 
 		if (client == null) throw new ApiException("Client not found");
 
-		let sql = 'INSERT INTO consult(userId, clientId, date) VALUES (?,?,?)';
+		let sql = 'INSERT INTO consult(userId, clientId, date, data) VALUES (?,?,?,?)';
 
 		let res = await this.queryRunner.query(sql, [
-			client.userId, consult.clientId, consult.date
+			client.userId, consult.clientId, consult.date, JSON.stringify(consultData)
 		]);
 
 		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');

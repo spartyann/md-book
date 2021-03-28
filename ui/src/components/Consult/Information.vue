@@ -27,7 +27,7 @@
 							</span>
 							
 							<!--<button type="button" class="btn btn-success" @click="save(fieldParams.level ? [ field, field + 'Level']: [ field ])">Enregistrer</button>-->
-							<button type="button" class="btn btn-success" @click="save">
+							<button type="button" class="btn btn-success ctrl-s" @click="save">
 								Enregistrer
 							</button>
 						</div>
@@ -121,6 +121,7 @@ export default {
 		},
 		save()//fields = null)
 		{
+			let self = this;
 			let params = {
 				id: this.consult.id,
 			}
@@ -137,7 +138,9 @@ export default {
 				}
 			//}
 
-			this.storeConsultUpdate(params);
+			this.storeConsultUpdate(params).then(() => {
+				self.dialogSuccess();
+			});
 		},
 
 		...mapActions({

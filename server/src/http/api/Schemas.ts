@@ -57,6 +57,9 @@ export class ClientUpdate {
 
 	@ApiProperty({ description: 'Pays' }) @IsString()
 	country: string;
+	
+	@ApiProperty({ description: 'Données' }) @IsOptional() @IsObject()
+	data: object;
 
 }
 

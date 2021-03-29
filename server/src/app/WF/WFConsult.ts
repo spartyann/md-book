@@ -59,11 +59,11 @@ export class WFConsult extends AppBase {
 		if (consult.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Sanitize html
-		consultUpdate.preConsult = Sanitizer.clean(consultUpdate.preConsult);
-		consultUpdate.hypothesis = Sanitizer.clean(consultUpdate.hypothesis);
-		consultUpdate.report = Sanitizer.clean(consultUpdate.report);
-		consultUpdate.reportClient = Sanitizer.clean(consultUpdate.reportClient);
-		consultUpdate.reportClientPostConsult = Sanitizer.clean(consultUpdate.reportClientPostConsult);
+		if (consultUpdate.preConsult != undefined) consultUpdate.preConsult = Sanitizer.clean(consultUpdate.preConsult);
+		if (consultUpdate.hypothesis != undefined) consultUpdate.hypothesis = Sanitizer.clean(consultUpdate.hypothesis);
+		if (consultUpdate.report != undefined) consultUpdate.report = Sanitizer.clean(consultUpdate.report);
+		if (consultUpdate.reportClient != undefined) consultUpdate.reportClient = Sanitizer.clean(consultUpdate.reportClient);
+		if (consultUpdate.reportClientPostConsult != undefined) consultUpdate.reportClientPostConsult = Sanitizer.clean(consultUpdate.reportClientPostConsult);
 
 		//consultUpdate.data.langue.global.commentaire = Sanitizer.clean(consultUpdate.data.langue.global.commentaire);
 

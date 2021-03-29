@@ -114,7 +114,7 @@ export class ConsultHelper extends AppBase {
 		for (let field in consultUpdate)
 		{
 			let val = consultUpdate[field];
-			if (val !== null) consult[field] = consultUpdate[field];
+			if (val !== null && val !== undefined) consult[field] = consultUpdate[field];
 		}
 
 		return await this.app.queryRunner.manager.save(consult);

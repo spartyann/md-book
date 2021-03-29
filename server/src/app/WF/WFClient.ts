@@ -59,7 +59,7 @@ export class WFClient extends AppBase {
 		if (currentClient.userId != this.session.userId) throw new AccessDeniedException();
 
 		// Sanitize comment
-		clientUpdate.comment = Sanitizer.clean(clientUpdate.comment);
+		if (clientUpdate.comment !== undefined) clientUpdate.comment = Sanitizer.clean(clientUpdate.comment);
 
 		// Update
 		return await this.ClientHelper.update(clientUpdate);

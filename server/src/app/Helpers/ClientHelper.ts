@@ -55,7 +55,7 @@ export class ClientHelper extends AppBase {
 		for (let field in clientUpdate)
 		{
 			let val = clientUpdate[field];
-			if (val !== null) client[field] = clientUpdate[field];
+			if (val !== null && val !== undefined) client[field] = clientUpdate[field];
 		}
 
 		return await this.app.queryRunner.manager.save(client);

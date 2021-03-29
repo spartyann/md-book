@@ -2,6 +2,9 @@ const sanitizeHtml = require('sanitize-html');
 
 export class Sanitizer {
 	static clean(html: string) {
+		if (html === undefined) return undefined;
+		if (html === null) return null;
+		if (html === '') return '';
 
 		return sanitizeHtml(html, {
 			allowedTags: [

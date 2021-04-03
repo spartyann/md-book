@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
-import Login from '../views/Login'
-import Register from '../views/Register'
-import Dashboard from '../views/Dashboard'
-import Clients from '../views/Client/Clients'
-import Client from '../views/Client/Client'
-import MyAccount from '../views/MyAccount'
-import Test from '../views/Test'
-import Consult from '../views/Consult/Consult'
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import Dashboard from '../pages/Dashboard'
+import Clients from '../pages/Client/Clients'
+import Client from '../pages/Client/Client'
+import MyAccount from '../pages/MyAccount'
+import Test from '../pages/Test'
+import Consult from '../pages/Consult/Consult'
 
 Vue.use(VueRouter)
 

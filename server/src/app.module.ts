@@ -10,9 +10,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiUserController } from './http/api/ApiUserController';
 import { ApiClientController } from './http/api/ApiClientController';
 import { ApiConsultController } from './http/api/ApiConsultController';
+import { ApiWikiController } from './http/api/ApiWikiController';
 import { User } from './app/Models/User.entity';
 import { Consult } from './app/Models/Consult.entity';
 import { Client } from './app/Models/Client.entity';
+import { WikiPage } from './app/Models/WikiPage.entity';
+import { WikiCat } from './app/Models/WikiCat.entity';
+import { WikiPageCat } from './app/Models/WikiPageCat.entity';
 
 @Module({
 	imports: [
@@ -36,7 +40,7 @@ import { Client } from './app/Models/Client.entity';
 			}),
 		  	inject: [ConfigService],
 		}),
-		TypeOrmModule.forFeature([ User, Consult, Client ]),
+		TypeOrmModule.forFeature([ User, Consult, Client, WikiPage, WikiCat, WikiPageCat ]),
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, '../../ui/dist'),
 			serveStaticOptions: {
@@ -50,6 +54,7 @@ import { Client } from './app/Models/Client.entity';
 		ApiUserController,
 		ApiClientController,
 		ApiConsultController,
+		ApiWikiController,
 		TestController
 	],
 	providers: [ ApiService ],

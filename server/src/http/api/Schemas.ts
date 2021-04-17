@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsDate, IsEmail, IsInt, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
+import { IsBoolean, IsDate, IsEmail, IsInt, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
 
 export class ClientCreate {
 	
@@ -60,6 +60,9 @@ export class ClientUpdate {
 	
 	@ApiProperty({ description: 'Données' }) @IsOptional() @IsObject()
 	data: object;
+
+	@ApiProperty({ description: 'Sensible à l\'anonymat' }) @IsBoolean()
+	anonymitySensitive: boolean;
 
 }
 

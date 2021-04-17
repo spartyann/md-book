@@ -53,6 +53,9 @@ export class Client {
 	@Column({ type: 'json' })
 	data: object;
 
+	@Column()
+	anonymitySensitive: boolean;
+	
 	/*@OneToMany(type => Consult, consult => consult.clientId)
   	consults: Consult[];
 

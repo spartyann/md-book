@@ -8,12 +8,20 @@
 					<input v-model="cloneClient.name" type="text" class="form-control" :disabled="edit == false">
 				</div>
 
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-3">
 					<label>Genre</label>
 					<select v-model="cloneClient.gender" class="form-control" :disabled="edit == false">
 						<option value="m">Homme</option>
 						<option value="f">Femme</option>
 						<option value="o">Autre</option>
+					</select>
+				</div>
+
+				<div class="form-group col-md-3">
+					<label>Anonymat</label>
+					<select v-model="anonymitySensitive" class="form-control" :disabled="edit == false">
+						<option value="1">Sensible</option>
+						<option value="0">Non sensible</option>
 					</select>
 				</div>
 
@@ -155,6 +163,17 @@ export default {
 		}),
 	},
 	computed: {
+		anonymitySensitive: {
+			get()
+			{
+				if (this.cloneClient == null) return null;
+				return this.cloneClient.anonymitySensitive ? "1" : "0";
+			},
+			set(val)
+			{
+				this.cloneClient.anonymitySensitive = val == "1";
+			}
+		},
 		birthday:{
 			get()
 			{

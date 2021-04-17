@@ -3,12 +3,11 @@ import { Connection, QueryRunner, Repository } from "typeorm";
 import { ClientHelper } from "./Helpers/ClientHelper";
 import { ConsultHelper } from "./Helpers/ConsultHelper";
 import { UserHelper } from "./Helpers/UserHelper";
-import { Client } from "./Models/Client.entity";
-import { Consult } from "./Models/Consult.entity";
-import { User } from "./Models/User.entity";
+import { WikiHelper } from "./Helpers/WikiHelper";
 import { WFClient } from "./WF/WFClient";
 import { WFConsult } from "./WF/WFConsult";
 import { WFUser } from "./WF/WFUser";
+import { WFWiki } from "./WF/WFWiki";
 
 export class App{
 
@@ -30,11 +29,13 @@ export class App{
 		if (name == 'WFUser') return new WFUser(this);
 		if (name == 'WFClient') return new WFClient(this);
 		if (name == 'WFConsult') return new WFConsult(this);
+		if (name == 'WFWiki') return new WFWiki(this);
 
 		// Helpers
 		if (name == 'UserHelper') return new UserHelper(this);
 		if (name == 'ClientHelper') return new ClientHelper(this);
 		if (name == 'ConsultHelper') return new ConsultHelper(this);
+		if (name == 'WikiHelper') return new WikiHelper(this);
 	}
 
 	public getModule(name: string): any {
@@ -46,10 +47,13 @@ export class App{
 	get WFUser(): WFUser { return this.getModule('WFUser'); }
 	get WFClient(): WFClient { return this.getModule('WFClient'); }
 	get WFConsult(): WFConsult { return this.getModule('WFConsult'); }
+	get WFWiki(): WFWiki { return this.getModule('WFWiki'); }
+
 
 	// Helpers
 	get UserHelper(): UserHelper { return this.getModule('UserHelper'); }
 	get ClientHelper(): ClientHelper { return this.getModule('ClientHelper'); }
 	get ConsultHelper(): ConsultHelper { return this.getModule('ConsultHelper'); }
+	get WikiHelper(): WikiHelper { return this.getModule('WikiHelper'); }
 
 }

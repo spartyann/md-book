@@ -50,11 +50,8 @@ export default {
 	{
 		let self = this;
 
-		this.dialogWaiting();
-
 		this.storeConsultGet(this.consultId).then((consult) => {
 			self.storeClientFile(consult.clientId);
-			self.dialogHide();
 		});
 
 		this.refresh();

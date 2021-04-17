@@ -31,6 +31,10 @@
 						{{ row.value }}
 					</a>
 				</template>
+				
+				<template #cell(anonymitySensitive)="row">
+					{{ row.value ? 'Sensible' : '' }}
+				</template>
 
 				<template #row-details="row">
 					<b-card>
@@ -96,6 +100,10 @@ export default {
 				key: 'email',
 				label: 'Email',
 				sortable: true,
+			},
+			{
+				key: 'anonymitySensitive',
+				label: 'Anonymat'
 			}
 		],
 		};

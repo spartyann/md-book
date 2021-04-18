@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-			<div class="container">
+			<div :class="fullBody ? 'container-fluid' : 'container-fluid' ">
 
 				<a class="navbar-brand" href="/">
 					<img alt="Vue logo" src="@/assets/logo.png" height="100%"> MD-Book
@@ -68,7 +68,7 @@
 			</div>
 		</nav>
 
-		<main :class="fullBody ? '' : 'py-4'">
+		<main :class="fullBody ? 'py-4' : 'py-4'">
 			<slot></slot>
 		</main>
 	</div>

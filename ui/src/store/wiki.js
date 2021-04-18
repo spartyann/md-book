@@ -52,6 +52,10 @@ export default {
 		
 		},
 
+		resetPage(context){
+			context.state.page = null;
+		},
+
 		getPage(context, id)
 		{
 			return new Promise((resolve, reject) => {

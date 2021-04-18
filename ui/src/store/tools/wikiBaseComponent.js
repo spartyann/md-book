@@ -6,6 +6,7 @@ export default {
 			storeWikiList: 'wiki/list',
 			storeGetPage: 'wiki/getPage',
 			storePageUpdate: 'wiki/pageUpdate',
+			storeResetPage: 'wiki/resetPage',
 			
 		}),
 	},

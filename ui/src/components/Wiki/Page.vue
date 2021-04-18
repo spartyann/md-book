@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="row mt-3">
-			<div class="col-lg-7 col-md-11 col-sm-11 col-xs-11">
+			<div class="col-lg-7 ">
 
 				<div class="form-group d-print-none">
 					<input v-model="clonePage.title" type="text" class="form-control">

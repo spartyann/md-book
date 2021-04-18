@@ -1,15 +1,13 @@
 <template>
-	<div class="page-wiki container-fluid" v-if="wikiPages !== null">
+	<div class="page-wiki" v-if="wikiPages !== null">
 		
-		<div class="row">
-			<div class="wiki-sidebar col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12">
-				<WikiTree></WikiTree>
-			</div>
-			<div class="wiki-content col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12">
-				<template v-if="currentPageId != null">
-					<WikiPage v-if="wikiPage != null" :page="wikiPage" :key="wikiPage.id"></WikiPage>
-				</template>
-			</div>
+		<div class="wiki-sidebar">
+			<WikiTree></WikiTree>
+		</div>
+		<div class="wiki-content">
+			<template v-if="currentPageId != null">
+				<WikiPage v-if="wikiPage != null" :page="wikiPage" :key="wikiPage.id"></WikiPage>
+			</template>
 		</div>
 		
 	</div>
@@ -58,11 +56,6 @@ export default {
 			if (this.currentPageId != null && (this.wikiPage == null || this.wikiPage.id != this.currentPageId))
 			{
 				this.storeGetPage(this.currentPageId)
-			}
-
-			if (this.currentPageId == null)
-			{
-				this.storeResetPage()
 			}
 		}
 	},

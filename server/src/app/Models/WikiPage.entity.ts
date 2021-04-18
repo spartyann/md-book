@@ -10,6 +10,9 @@ export class WikiPage {
 	userId: Number;
 
 	@Column()
+	ordering: Number;
+
+	@Column()
 	shareAlias: string;
 
 	@Column()

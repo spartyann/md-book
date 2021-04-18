@@ -9,6 +9,7 @@ import Client from '../pages/Client/Client'
 import MyAccount from '../pages/MyAccount'
 import Test from '../pages/Test'
 import Consult from '../pages/Consult/Consult'
+import WikiHome from '../pages/Wiki/Home'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,9 @@ const routes = [
 		name: 'Home',
 		component: Home
 	},
+
+	// Login / Register
+
 	{
 		path: '/login',
 		name: 'Login',
@@ -33,6 +37,9 @@ const routes = [
 		name: 'Register',
 		component: Register
 	},
+
+	// homes
+
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
@@ -43,6 +50,9 @@ const routes = [
 		name: 'MyAccount',
 		component: MyAccount
 	},
+
+	// Client
+
 	{
 		path: '/clients',
 		name: 'Clients',
@@ -54,10 +64,26 @@ const routes = [
 		component: Client
 	},
 
+	// Consult
+
 	{
 		path: '/consult/:consultId',
 		name: 'Consult',
 		component: Consult
+	},
+
+	// Wiki
+	{
+		path: '/wiki',
+		name: 'WikiHome',
+		component: WikiHome,
+		meta: { fullBody: true }
+	},
+	{
+		path: '/wiki/:pageId',
+		name: 'WikiPage',
+		component: WikiHome,
+		meta: { fullBody: true }
 	},
 	
 ]

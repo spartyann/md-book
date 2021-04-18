@@ -31,11 +31,26 @@ export class AppBase {
 		return this.entityManager.find(entityClass, options);
 	}
 	
+	protected async query(query: string, parameters?: any[]): Promise<any[]> {
+		return await this.queryRunner.query(query, parameters);
+	}
+	
 	protected async findIndexedById<Entity>(entityClass: EntityTarget<Entity>, options?: FindManyOptions<Entity>): Promise<{ [id:string] : Entity }> {
 		return ObjectTools.arrayToObjectIndexed(
 			await this.find(entityClass, options ),
 			'id');
 	}
+
+
+	protected async queryIndexedById(query: string, parameters?: any[]): Promise<{ [id:string] : any }> {
+		return ObjectTools.arrayToObjectIndexed(
+			await this.query(query, parameters),
+			'id');
+	}
+
+	
+
+
 	
 	get WFUser(): WFUser { return this.app.WFUser; }
 	get WFClient(): WFClient { return this.app.WFClient; }

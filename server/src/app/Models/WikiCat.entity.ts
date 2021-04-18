@@ -8,6 +8,9 @@ export class WikiCat {
 
 	@Column()
 	userId: Number;
+	
+	@Column()
+	ordering: Number;
 
 	@Column()
 	parentId: Number;

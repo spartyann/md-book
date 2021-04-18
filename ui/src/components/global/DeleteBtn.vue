@@ -30,7 +30,7 @@
 			return {
 				deleting: false,
 				popoverShow: false,
-				popoverId: this.$uuid()
+				popoverId: this.uuid()
 			};
 		},
 

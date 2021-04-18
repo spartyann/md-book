@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import MixinModal from './MixinModal'
+import MixinTools from './MixinTools'
 import VueI18n from 'vue-i18n'
 import I18nParam from './i18n'
 import CKEditor from '@ckeditor/ckeditor5-vue2'
@@ -14,6 +15,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Directives from "./Directives"
@@ -31,12 +33,14 @@ Vue.use( CKEditor );
 Vue.use(VueI18n)
 
 library.add( fas )
+library.add( far )
 Vue.component('fa', FontAwesomeIcon);
 
 
 Vue.config.productionTip = false
 
 Vue.mixin(MixinModal);
+Vue.mixin(MixinTools);
 
 Directives.registerDirectives();
 GlobalComponents.registerGlobalComponents();

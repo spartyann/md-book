@@ -1,5 +1,5 @@
 <template>
-    <span :key="'st' + status">
+    <span :key="'st' + status" class="d-print-none">
 		<fa v-if="status == 'updating'" spin icon="spinner" ></fa>
 		<span v-if="status == 'updated'" class="icon-fade-out">
 			<fa icon="check" class="text-success"></fa>

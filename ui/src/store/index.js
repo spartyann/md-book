@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import UserModule from './user';
 import ClientModule from './client';
 import ConsultModule from './consult';
+import WikiModule from './wiki';
 
 Vue.use(Vuex)
 
@@ -55,6 +56,7 @@ export default new Vuex.Store({
 	modules: {
 		user: UserModule,
 		client: ClientModule,
-		consult: ConsultModule
+		consult: ConsultModule,
+		wiki: WikiModule
 	}
 })

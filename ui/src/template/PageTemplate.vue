@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 			<div class="container">
 
@@ -17,16 +17,18 @@
 							<li class="nav-item" >
 								<router-link :to="{ name: 'Clients' }" class="nav-link"><fa icon="users"></fa> Clients</router-link>
 							</li>
-							<li class="nav-item" v-if="isDebug">
-								<router-link :to="{ name: 'Test' }" class="nav-link"><fa icon="cogs"></fa>  Test</router-link>
+							<li class="nav-item" >
+								<router-link :to="{ name: 'WikiHome' }" class="nav-link"><fa icon="book"></fa> Wiki</router-link>
 							</li>
-							
 						</ul>
 					</template>
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto">
 					<!-- Authentication Links -->
-					
+						<li class="nav-item" v-if="isDebug">
+							<router-link :to="{ name: 'Test' }" class="nav-link"><fa icon="flask"></fa>  Tests</router-link>
+						</li>
+
 						<template v-if="user == null">
 							<li class="nav-item">
 								<router-link :to="{ name: 'Login' }" class="nav-link">Se connecter</router-link>
@@ -38,10 +40,10 @@
 					
 						<template v-else>
 							<li class="nav-item dropdown">
-								<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									{{ user.name }}
 								</a>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<div class="dropdown-menu dropdown-menu-right">
 									<router-link :to="{ name: 'MyAccount' }" class="dropdown-item">
 										Mon compte
 									</router-link>
@@ -51,16 +53,24 @@
 								</div>
 								
 							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link"
+									href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<fa icon="cog"></fa>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<a class="dropdown-item" :href="isDebug ? 'http://localhost:3000/api' : '/api'" target="_blank"><fa icon="cogs"></fa> API</a>
+								</div>
+							</li>
 						</template>
 					</ul>
 				</div>
 			</div>
 		</nav>
 
-		<main class="py-4">
+		<main :class="fullBody ? '' : 'py-4'">
 			<slot></slot>
 		</main>
-		
 	</div>
 </template>
 
@@ -101,6 +111,7 @@ export default {
 
 	computed: {
 		isDebug() { return process.env.VUE_APP_ENV == "development"; },
+		fullBody() { return this.$route.meta.fullBody === true },
 		...mapState({
 			user: state => state.user.loggedUser,
 		})

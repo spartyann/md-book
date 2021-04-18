@@ -1,12 +1,8 @@
 <template>
-  <div id="app" v-if="loaded">
-
-	<ApiMsgModale></ApiMsgModale>
-
-    <PageTemplate>
+    <PageTemplate v-if="loaded">
+		<ApiMsgModale></ApiMsgModale>
 		<router-view />
 	</PageTemplate>
-  </div>
 </template>
 
 <style lang="scss">
@@ -20,6 +16,7 @@
 @import "./styles/tools.scss";
 @import "./styles/panel.scss";
 @import "./styles/interactivity.scss";
+@import "./styles/wiki.scss";
 
 </style>
 
@@ -96,5 +93,6 @@
 	}
 
 </script>
+
 
 

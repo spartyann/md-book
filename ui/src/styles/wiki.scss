@@ -1,0 +1,50 @@
+
+@media print {
+	.page-wiki .wiki-sidebar{ display: none;}
+}
+
+
+.page-wiki
+{
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+
+	.wiki-sidebar, .wiki-content{
+		
+	}
+
+	.wiki-sidebar {
+		padding: 24px 15px 15px 15px;
+		min-width: 250px;
+		width: 20vw;
+		border-right: solid 1px $gray-200;
+	}
+
+	.wiki-content{
+		flex: 1;
+		padding: 24px;
+	}
+
+	.wiki-tree-item>.wiki-tree-item {
+		padding-left: 20px;
+	}
+
+	.wiki-tree-item{
+
+		.label, .wiki-tree-page {
+			cursor: pointer;
+			border-radius: $border-radius;
+			&:hover {
+				background-color: $gray-200;
+			}
+
+			&.active {
+				background-color: $primary;
+				color: white;
+			}
+		}
+	}
+
+}
+

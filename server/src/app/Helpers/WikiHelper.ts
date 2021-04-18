@@ -1,3 +1,4 @@
+import { wikiPageUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
 import { WikiCat } from "../Models/WikiCat.entity";
@@ -15,7 +16,7 @@ export class WikiHelper extends AppBase {
 		if (userId == null) throw new AppException('No user given');
 		
 		const pages = await this.findIndexedById(WikiPage, { select: ["id", "title", "shareAlias"], where: { userId } });
-		const cats = await this.findIndexedById(WikiCat, { where: { userId } });
+		const cats = await this.queryIndexedById("SELECT * FROM wiki_cat WHERE userId = " + userId);
 		const maps = await this.find(WikiPageCat, { where: "catId IN (" + Object.keys(cats).join(',') + ")" });
 
 		let pageCatMap = {};
@@ -46,6 +47,9 @@ export class WikiHelper extends AppBase {
 		for (let id in cats)
 		{	
 			let cat = cats[id];
+			cat.fullNames = [ cat.name ];
+
+			// Clone
 			catsClone[cat.id.toString()] = { ...cat };
 		}
 
@@ -55,10 +59,17 @@ export class WikiHelper extends AppBase {
 			parent.children = [];
 
 			for (let id in catsClone)
-			{	
+			{
 				let child = catsClone[id];
 				
-				if (child.parentId == parent.id) {
+				if (child.parentId == parent.id)
+				{
+					let fullNames = [ ...parent.fullNames];
+					fullNames.push(child.name);
+
+					child.fullNames = fullNames;
+					cats[child.id].fullNames = fullNames;
+
 					child = fillChidren(child);
 					parent.children.push(child);
 				}
@@ -72,7 +83,8 @@ export class WikiHelper extends AppBase {
 		{	
 			let cat = catsClone[id];
 			
-			if (cat.parentId == null) {
+			if (cat.parentId == null)
+			{
 				cat = fillChidren(cat);
 				tree.push(cat);
 			}
@@ -90,5 +102,23 @@ export class WikiHelper extends AppBase {
 		};
 	}
 
+
+	async getPage(id: number): Promise<WikiPage>
+	{
+		return await this.queryRunner.manager.findOne(WikiPage, id);
+	}
+	
+	async update(pageUpdate: wikiPageUpdate)
+	{
+		let page = await this.queryRunner.manager.findOne(WikiPage, pageUpdate.id);
+
+		for (let field in pageUpdate)
+		{
+			let val = pageUpdate[field];
+			if (val !== null && val !== undefined) page[field] = pageUpdate[field];
+		}
+
+		return await this.app.queryRunner.manager.save(page);
+	}
 
 }

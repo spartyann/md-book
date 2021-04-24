@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsBoolean, IsDate, IsEmail, IsInt, IsNumber, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEmail, IsInt, IsNumber, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
 
 export class ClientCreate {
 	
@@ -138,11 +138,23 @@ export class wikiPageUpdate {
 	
 	id: number;
 
+	@ApiProperty({ description: 'Page parent' }) @IsNumber()
+	parentId: number;
+
 	@ApiProperty({ description: 'Ordre' }) @IsNumber()
 	ordering: number;
 
-	@ApiProperty({ description: 'Nom' }) @IsString() @MinLength(2)
+	@ApiProperty({ description: 'Titre' }) @IsString() @MinLength(2)
 	title: string;
+
+	@ApiProperty({ description: 'Sous-titre' }) @IsString()
+	subTitle: string;
+	
+	@ApiProperty({ description: 'Résumé' }) @IsString()
+	summary: any;
+
+	@ApiProperty({ description: 'Mots clés' }) @IsOptional() @IsArray()
+	keyWords: any;
 
 	@ApiProperty({ description: 'Content' }) @IsOptional() @IsObject()
 	content: any;

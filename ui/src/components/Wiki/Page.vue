@@ -2,21 +2,41 @@
 	<div class="wiki-page container-fluid">
 		<div class="row">
 			<div class="col-12">
-				<h2><fa :icon="['fas', 'file-alt']"></fa> {{ page.title }}</h2>
-
-				<div>
-					<div v-for="(catId) in wikiPageCatMaps[page.id]" :key="catId">
-						<fa :icon="['far', 'folder']"></fa> {{ wikiCats[catId].fullNames.join(' / ') }}
-					</div>
-				</div>
+				<h2>
+					<fa :icon="['fas', 'file-alt']"></fa> {{ page.title }}
+					
+				</h2>
+				<p>
+					<i>{{ page.subTitle }}</i>
+				</p>
+				<p>
+					<fa :icon="['far', 'folder']"></fa> {{ fullNames.join(' / ') }}
+				</p>
 			</div>
 		</div>
 		<div class="row mt-3">
-			<div class="col-lg-7 ">
+
+			<div class="col-lg-6 d-print-none">
+
+				<label for="">Titres</label>
+				<div class="form-group">
+					<input v-model="clonePage.title" type="text" class="form-control" placeholder="Titre">
+				</div>
+				<div class="form-group">
+					<input v-model="clonePage.subTitle" type="text" class="form-control form-control-sm" placeholder="Sous-titre">
+				</div>
+			</div>
+			<div class="col-lg-6 ">
 
 				<div class="form-group d-print-none">
-					<input v-model="clonePage.title" type="text" class="form-control">
+					<label for="">Résumé</label>
+					<textarea v-model="clonePage.summary" type="text" class="form-control form-control-sm" placeholder="Résumé"></textarea>
 				</div>
+				
+			</div>
+
+			<div class="col-lg-7 ">
+				
 
 				<RichText v-model="clonePage.content.text"></RichText>
 				<p class="tar mt-3">
@@ -91,6 +111,12 @@ export default {
 		addMediaLink(){
 			this.clonePage.content.media_links.push(this.newMediaLink);
 			this.newMediaLink = "";
+		}
+	},
+
+	computed:{
+		fullNames() {
+			return this.wikiPages[this.page.id].fullNames;
 		}
 	}
 }

@@ -1,7 +1,9 @@
 import { wikiPageUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
+import { WikiCat } from "../Models/WikiCat.entity";
 import { WikiPage } from "../Models/WikiPage.entity";
+import { WikiPageCat } from "../Models/WikiPageCat.entity";
 import { ObjectTools } from "../Tools/ObjectTools";
 
 export class WikiHelper extends AppBase {
@@ -13,7 +15,25 @@ export class WikiHelper extends AppBase {
 
 		if (userId == null) throw new AppException('No user given');
 		
-		const pages: any = await this.findIndexedById(WikiPage, { select: ["id", "parentId", "title", "subTitle", "summary", "keyWords", "shareAlias"], where: { userId } });
+		const pages = await this.findIndexedById(WikiPage, { select: ["id", "title", "shareAlias"], where: { userId } });
+		const cats = await this.queryIndexedById("SELECT * FROM wiki_cat WHERE userId = " + userId);
+		const maps = await this.find(WikiPageCat, { where: "catId IN (" + Object.keys(cats).join(',') + ")" });
+
+		let pageCatMap = {};
+		let catPageMap = {};
+		
+		for (let i in maps)
+		{
+			const map = maps[i];
+			let pageId = map.pageId.toString();
+			let catId = map.catId.toString();
+
+			if (pageCatMap[pageId] == undefined) pageCatMap[pageId] = [];
+			if (catPageMap[catId] == undefined) catPageMap[catId] = [];
+			
+			pageCatMap[pageId].push(map.catId);
+			catPageMap[catId].push(map.pageId);
+		}
 		
 		let tree = [];
 
@@ -22,14 +42,15 @@ export class WikiHelper extends AppBase {
 		//
 
 		// 1- Clone object
-		let lightPages = { };
-		for (let id in pages)
+		// Important to avoid cyclique depedences
+		let catsClone = {};
+		for (let id in cats)
 		{	
-			let page: any = pages[id];
-			page.fullNames = [ page.title ];
+			let cat = cats[id];
+			cat.fullNames = [ cat.name ];
 
 			// Clone
-			lightPages[page.id.toString()] = { ...page };
+			catsClone[cat.id.toString()] = { ...cat };
 		}
 
 		// 2 Function Children build
@@ -37,17 +58,17 @@ export class WikiHelper extends AppBase {
 			if (parent.children !== undefined) return parent; // Already done => cyclique
 			parent.children = [];
 
-			for (let id in lightPages)
+			for (let id in catsClone)
 			{
-				let child = lightPages[id];
+				let child = catsClone[id];
 				
 				if (child.parentId == parent.id)
 				{
 					let fullNames = [ ...parent.fullNames];
-					fullNames.push(child.title);
+					fullNames.push(child.name);
 
 					child.fullNames = fullNames;
-					pages[child.id].fullNames = fullNames;
+					cats[child.id].fullNames = fullNames;
 
 					child = fillChidren(child);
 					parent.children.push(child);
@@ -58,14 +79,14 @@ export class WikiHelper extends AppBase {
 		}
 
 		// 3 Buils tree
-		for (let id in lightPages)
+		for (let id in catsClone)
 		{	
-			let page = lightPages[id];
+			let cat = catsClone[id];
 			
-			if (page.parentId == null)
+			if (cat.parentId == null)
 			{
-				page = fillChidren(page);
-				tree.push(page);
+				cat = fillChidren(cat);
+				tree.push(cat);
 			}
 		}
 
@@ -74,6 +95,9 @@ export class WikiHelper extends AppBase {
 
 		return {
 			tree: tree,
+			cats: cats,
+			page_cat_maps: pageCatMap,
+			cat_page_maps: catPageMap,
 			pages: pages,
 		};
 	}

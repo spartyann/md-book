@@ -10,6 +10,9 @@ export class WikiPage {
 	userId: Number;
 
 	@Column()
+	parentId: Number;
+
+	@Column()
 	ordering: Number;
 
 	@Column()
@@ -17,6 +20,15 @@ export class WikiPage {
 
 	@Column()
 	title: string;
+
+	@Column()
+	subTitle: string;
+
+	@Column()
+	summary: string;
+	
+	@Column({ type: 'json' })
+	keyWords: object;
 
 	@Column({ type: 'json' })
 	content: object;

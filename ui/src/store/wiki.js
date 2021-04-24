@@ -6,10 +6,7 @@ export default {
 
 	state: () => ({
 		tree: null,
-		cats: null,
 		pages: null,
-		page_cat_maps: null,
-		cat_page_maps: null,
 
 		page: null,
 
@@ -36,10 +33,7 @@ export default {
 				Communication.call("wiki", "list", apiParams).then(function(data)
 				{
 					context.state.tree= data.tree;
-					context.state.cats = data.cats;
 					context.state.pages = data.pages;
-					context.state.page_cat_maps = data.page_cat_maps;
-					context.state.cat_page_maps = data.cat_page_maps;
 
 					resolve(data);
 
@@ -81,7 +75,7 @@ export default {
 		{
 			return new Promise((resolve, reject) => {
 
-				const fields = ['ordering','title', 'content'];
+				const fields = ['ordering', 'parentId', 'title', 'subTitle', 'summary', 'keyWords', 'content'];
 				context.state.fieldsUpdating = [];
 
 				const apiParams = { };

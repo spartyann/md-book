@@ -1,26 +1,36 @@
 <template>
-	<div :class="'wiki-tree-item ' + (item.children.length > 0 ? 'has-children' : 'no-children')">
-		<div @click="toogle" class="label">
-			<span :style="marginLeft">
-				<fa v-if="opened" icon="chevron-down"></fa>
-				<fa v-else icon="chevron-right"></fa>
-				{{ item.name }}
-			</span>
+	<div :class="'wiki-tree-page-container '
+		+ (item.children.length > 0 ? 'has-children ' : 'no-children ')">
+		
+		<div :class="'wiki-tree-page '
+			+ (wikiLoadingPageId == item.id || (wikiPage != null && wikiPage.id == item.id) ? ' active' : '')">
+			<div :style="marginLeft">
+				<div class="tbl-100">
+					<div class="td icon" @click="clickItem(true)">
+						<template v-if="item.children.length">
+							<fa v-if="opened" :icon="['far', 'minus-square']"></fa>
+							<fa v-else :icon="['fas', 'plus-square']"></fa>
+						</template>
+						<template v-else>
+							<fa :icon="['far', 'file-alt']"></fa>
+						</template>
+					</div>
+					<div class="td-100"  @click="clickItem(false)">
+						<div class="label">
+							{{ item.title }}
+							<fa v-if="wikiLoadingPageId == item.id" icon="spinner" pulse></fa>
+							<div v-if="item.subTitle != ''" class="page-sub-title">
+								{{ item.subTitle }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		
 		<div v-if="opened" class="">
 			<template v-for="(item) in item.children">
 				<TreeItem :item="item" :key="item.id" :deep="deep + 1"></TreeItem>
-			</template>
-
-			<template v-for="(page) in pages">
-				<div :key="page.id"
-					:class="'wiki-tree-page ' + (wikiPage != null && wikiPage.id == page.id ? 'active' : '')"
-					@click="pageClick(page)">
-					<span :style="marginLeftPage">
-						<fa :icon="['fas', 'file-alt']"></fa> {{ page.title }}
-						<fa v-if="wikiLoadingPageId == page.id" icon="spinner" pulse></fa>				
-					</span>
-				</div>
 			</template>
 		</div>
 	</div>
@@ -71,32 +81,30 @@ export default {
 		marginLeftPage(){ return 'margin-left: ' + ((this.deep + 1) * 20) + 'px'; },
 
 		pages(){
-			let res = [];
-			const map = this.wikiCatPageMaps[this.item.id];
+			return [];
 			
-			for (let i in map)
-			{
-				res.push(this.wikiPages[map[i]]);
-			}
-
-			return res;
 		}
 	},
 
 	methods:{
-		toogle(){
-			this.opened = !this.opened;
+		clickItem(onlyToogle)
+		{
+		
+			if (onlyToogle == false)
+			{
+				if (this.wikiPage != null && this.wikiPage.id == this.item.id) return;
+				this.$router.push({ name: "WikiPage", params: {pageId: this.item.id }});
+			}
+			else
+			{
+				this.opened = !this.opened;
 
-			let openedItems = this.localStorageGet('wiki.tree.opened', {});
-			openedItems[this.item.id] = this.opened;
-			this.localStorageSet('wiki.tree.opened', openedItems);
+				let openedItems = this.localStorageGet('wiki.tree.opened', {});
+				openedItems[this.item.id] = this.opened;
+				this.localStorageSet('wiki.tree.opened', openedItems);
+			}
 		},
 
-		pageClick(page)
-		{
-			if (this.wikiPage != null && this.wikiPage.id == page.id) return;
-			this.$router.push({ name: "WikiPage", params :{pageId: page.id }});
-		}
 	}
 }
 </script>

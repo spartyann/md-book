@@ -26,23 +26,46 @@
 		//padding: 24px;
 	}
 
-	.wiki-tree-item>.wiki-tree-item {
+	.wiki-tree-page>.wiki-tree-page {
 		padding-left: 20px;
 	}
 
-	.wiki-tree-item{
+	.wiki-tree-page-container.has-children>.wiki-tree-page {
+		.icon {
+			cursor: pointer;
+			&:hover { background-color: $gray-200; }
+		}
+	}
 
-		.label, .wiki-tree-page {
+	.wiki-tree-page{
+
+		.icon {
+			padding: 0 5px 5px 5px;
+			vertical-align: top;
+			border-radius: $border-radius;
+		}
+
+		.label {
+			padding: 0 0 0 5px;
+			vertical-align: middle;
 			cursor: pointer;
 			border-radius: $border-radius;
+
 			&:hover {
 				background-color: $gray-200;
 			}
 
-			&.active {
-				background-color: $primary;
-				color: white;
+			.page-sub-title{
+				font-size: 70%;
+				font-style: italic;
 			}
+
+			margin-bottom: 5px;
+		}
+
+		&.active .label{
+			background-color: $primary;
+			color: white;
 		}
 	}
 

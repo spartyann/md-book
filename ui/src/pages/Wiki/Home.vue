@@ -22,7 +22,7 @@
 // @ is an alias to /src
 
 import WikiBaseComponent from "@/store/tools/wikiBaseComponent";
-import WikiTree from '../../components/Wiki/Tree';
+import WikiTree from '../../components/Wiki/Tree/Tree';
 import WikiPage from '../../components/Wiki/Page';
 import WikiNewPageModal from '../../components/Wiki/NewPageModal';
 

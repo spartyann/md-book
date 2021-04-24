@@ -1,5 +1,5 @@
 <template>
-	<div :class="'wiki-tree-page-container '
+	<div  :class="'wiki-tree-page-container '
 		+ (item.children.length > 0 ? 'has-children ' : 'no-children ')">
 		
 		<div :class="'wiki-tree-page '
@@ -28,11 +28,8 @@
 			</div>
 		</div>
 		
-		<div v-if="opened" class="">
-			<template v-for="(item) in item.children">
-				<TreeItem :item="item" :key="item.id" :deep="deep + 1"></TreeItem>
-			</template>
-		</div>
+		<WikiTreeItems :list="item.children" :deep="deep + 1" :opened="opened"></WikiTreeItems>
+		
 	</div>
 </template>
 
@@ -40,7 +37,7 @@
 // @ is an alias to /src
 
 import WikiBaseComponent from "@/store/tools/wikiBaseComponent";
-import TreeItem from './TreeItem';
+import WikiTreeItems from './TreeItems'
 
 export default {
 
@@ -51,7 +48,7 @@ export default {
 	beforeCreate: function () {
 		// Using asynchronous import for :
 		// https://vuejs.org/v2/guide/components-edge-cases.html#Recursive-Components
-		this.$options.components.TreeItem = TreeItem;
+		this.$options.components.WikiTreeItems = WikiTreeItems;
 	},
 
 	props: {
@@ -60,7 +57,6 @@ export default {
 	},
 
 	components: {
-		
 	},
 
 	data()
@@ -77,12 +73,10 @@ export default {
 	},
 
 	computed:{
-		paddingLeft(){ return 'padding-left: ' + (this.deep * 20) + 'px'; },
-
-		pages(){
-			return [];
-			
-		}
+		paddingLeft(){
+			//return 'padding-left: 20px';
+			return 'padding-left: ' + (this.deep * 20) + 'px';
+		},
 	},
 
 	methods:{

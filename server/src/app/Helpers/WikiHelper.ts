@@ -127,7 +127,7 @@ export class WikiHelper extends AppBase {
 		const max = Object.keys(pages).length;
 
 		// Update new !
-		pages[page.parentId.toString()].parentId = page.parentId;
+		pages[page.id.toString()].parentId = page.parentId;
 
 		while(countTraversed < max)
 		{

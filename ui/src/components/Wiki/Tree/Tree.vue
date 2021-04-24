@@ -1,9 +1,6 @@
 <template>
 	<div class="wiki-tree">
-		
-		<template v-for="(item) in wikiTree">
-			<TreeItem :item="item" :key="item.id" :deep="0"></TreeItem>
-		</template>
+		<WikiTreeItems v-model="tree" :deep="0" :opened="true"></WikiTreeItems>
 	</div>
 </template>
 
@@ -11,7 +8,7 @@
 // @ is an alias to /src
 
 import WikiBaseComponent from "@/store/tools/wikiBaseComponent";
-import TreeItem from './TreeItem';
+import WikiTreeItems from './TreeItems';
 
 export default {
 
@@ -20,7 +17,7 @@ export default {
 	extends: WikiBaseComponent,
 
 	components: {
-		TreeItem
+		WikiTreeItems,
 	},
 
 	data()
@@ -33,6 +30,16 @@ export default {
 	mounted()
 	{
 
-	}
+	},
+	computed:{
+		tree:{
+			get() { return this.wikiTree; },
+			set() { 
+				// UPDATE
+
+			}
+		}
+	},	
 }
 </script>
+

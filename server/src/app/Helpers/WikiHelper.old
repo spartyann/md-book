@@ -1,4 +1,4 @@
-import { wikiPageUpdate } from "src/http/api/Schemas";
+import { WikiPageUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
 import { WikiCat } from "../Models/WikiCat.entity";
@@ -108,7 +108,7 @@ export class WikiHelper extends AppBase {
 		return await this.queryRunner.manager.findOne(WikiPage, id);
 	}
 	
-	async update(pageUpdate: wikiPageUpdate)
+	async update(pageUpdate: WikiPageUpdate)
 	{
 		let page = await this.queryRunner.manager.findOne(WikiPage, pageUpdate.id);
 

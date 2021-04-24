@@ -7,6 +7,7 @@ export default {
 			storeGetPage: 'wiki/getPage',
 			storePageUpdate: 'wiki/pageUpdate',
 			storeResetPage: 'wiki/resetPage',
+			storeCreatePage: 'wiki/createPage',
 			
 		}),
 	},
@@ -14,6 +15,8 @@ export default {
 		...mapState({
 			wikiTree: state => state.wiki.tree,
 			wikiPages: state => state.wiki.pages,
+			wikiOrderedPageIds: state => state.wiki.orderedPageIds,
+			
 			wikiPage: state => state.wiki.page,
 			wikiLoadingPageId: state => state.wiki.loadingPageId,
 

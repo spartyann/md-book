@@ -7,6 +7,7 @@ export default {
 	state: () => ({
 		tree: null,
 		pages: null,
+		orderedPageIds: [],
 
 		page: null,
 
@@ -34,7 +35,8 @@ export default {
 				{
 					context.state.tree= data.tree;
 					context.state.pages = data.pages;
-
+					context.state.orderedPageIds = data.orderedPageIds;
+					
 					resolve(data);
 
 				}).catch(function(data)
@@ -82,18 +84,56 @@ export default {
 				for (let i in fields)
 				{
 					const field = fields[i];
-					if (params[field] == undefined) continue;
+					if (params[field] === undefined) continue;
 					context.state.fieldsUpdating.push(field);
 					apiParams[field] = params[field];
 				}
 
 				context.state.updateStatus = 'updating';
-				Communication.call("wiki", "page/" + params.id +"/update", apiParams).then(function(page)
+				Communication.call("wiki", "page/" + params.id +"/update", apiParams).then(function(data)
 				{
 					context.state.updateStatus = 'updated';
 
-					context.state.page = page;
-					resolve(page);
+					context.state.tree = data.tree;
+					context.state.pages = data.pages;
+					context.state.orderedPageIds = data.orderedPageIds;
+					context.state.page = data.page;
+
+					resolve(data.page);
+
+				}).catch(function(data)
+				{
+					context.state.updateStatus = null;
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		},
+
+
+		createPage(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const fields = ['parentId', 'title'];
+				
+				const apiParams = { };
+				for (let i in fields)
+				{
+					const field = fields[i];
+					if (params[field] == undefined) continue;
+					apiParams[field] = params[field];
+				}
+
+				Communication.call("wiki", "page/create", apiParams).then(function(data)
+				{
+					context.state.tree = data.tree;
+					context.state.pages = data.pages;
+					context.state.orderedPageIds = data.orderedPageIds;
+					context.state.page = data.page;
+
+					resolve(data.page);
 
 				}).catch(function(data)
 				{
@@ -103,8 +143,7 @@ export default {
 			})
 		
 		}
-
-
+		
 
 	}
 }

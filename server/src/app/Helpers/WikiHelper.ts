@@ -1,8 +1,8 @@
-import { wikiPageUpdate } from "src/http/api/Schemas";
+import { WikiPageCreate, WikiPageUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
+import { UserException } from "../Exceptions/UserException";
 import { WikiPage } from "../Models/WikiPage.entity";
-import { ObjectTools } from "../Tools/ObjectTools";
 
 export class WikiHelper extends AppBase {
 
@@ -13,12 +13,15 @@ export class WikiHelper extends AppBase {
 
 		if (userId == null) throw new AppException('No user given');
 		
-		const pages: any = await this.findIndexedById(WikiPage, { select: ["id", "parentId", "title", "subTitle", "summary", "keyWords", "shareAlias"], where: { userId } });
+		const pages: any = await this.findIndexedById(WikiPage, 
+			{ select: ["id", "ordering", "parentId", "title", "subTitle", "summary", "keyWords", "shareAlias"],
+			where: { userId },
+		});
 		
 		let tree = [];
 
 		//
-		// Tre
+		// Tree
 		//
 
 		// 1- Clone object
@@ -54,6 +57,12 @@ export class WikiHelper extends AppBase {
 				}
 			}
 
+			parent.children.sort(function(pa, pb) {
+				if (pa.ordering < pb.ordering) return -1;
+				if (pa.ordering > pb.ordering) return 1;
+				return 0;
+			});
+	
 			return parent;
 		}
 
@@ -69,12 +78,26 @@ export class WikiHelper extends AppBase {
 			}
 		}
 
-		// 4 Sort
+		tree.sort(function(pa, pb) {
+			if (pa.ordering < pb.ordering) return -1;
+			if (pa.ordering > pb.ordering) return 1;
+			return 0;
+		});
 
+		// 4 Sort
+		let orderedPageIds = Object.keys(pages);
+		orderedPageIds.sort(function(a, b) {
+			let pa = pages[a];
+			let pb = pages[b];
+			if (pa.ordering < pb.ordering) return -1;
+			if (pa.ordering > pb.ordering) return 1;
+			return 0;
+		});
 
 		return {
 			tree: tree,
 			pages: pages,
+			orderedPageIds: orderedPageIds
 		};
 	}
 
@@ -84,17 +107,57 @@ export class WikiHelper extends AppBase {
 		return await this.queryRunner.manager.findOne(WikiPage, id);
 	}
 	
-	async update(pageUpdate: wikiPageUpdate)
+	async update(pageUpdate: WikiPageUpdate)
 	{
 		let page = await this.queryRunner.manager.findOne(WikiPage, pageUpdate.id);
 
 		for (let field in pageUpdate)
 		{
 			let val = pageUpdate[field];
-			if (val !== null && val !== undefined) page[field] = pageUpdate[field];
+			if (val !== undefined) page[field] = pageUpdate[field];
 		}
+
+		// Check parent
+		if (page.id == page.parentId) throw new UserException("La page ne peut pas être parente d'elle même");
+
+		let pages = await this.queryIndexedById("SELECT id, parentId FROM wiki_page WHERE userId = ?", [page.userId]);
+		let countTraversed = 0;
+		let rootFound = false;
+		let current = page;
+		const max = Object.keys(pages).length;
+
+		// Update new !
+		pages[page.parentId.toString()].parentId = page.parentId;
+
+		while(countTraversed < max)
+		{
+			countTraversed++;
+			if (current.parentId == null) { rootFound = true; break; }
+			current = pages[current.parentId.toString()];
+		}
+		if (rootFound == false) throw new UserException("Erreur de hiérarchie. Un enfant ne peut pas être son propre parent.");
+
 
 		return await this.app.queryRunner.manager.save(page);
 	}
 
+	async create(pageCreate: WikiPageCreate)
+	{
+		const content = {
+			text: '',
+			media_links: [],
+		};
+
+		const keyWords = [];
+
+		let sql = 'INSERT INTO wiki_page(userId, title, parentId, keyWords, content) VALUES (?,?,?,?,?)';
+
+		let res = await this.queryRunner.query(sql, [
+			this.session.userId, pageCreate.title, pageCreate.parentId, JSON.stringify(keyWords), JSON.stringify(content)
+		]);
+
+		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');
+
+		return res[0].id;
+	}
 }

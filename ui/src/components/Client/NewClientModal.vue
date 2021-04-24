@@ -29,8 +29,8 @@
 			</div>
 		</template>
 		<template #modal-footer="">
-			<b-button size="sm" variant="success" @click="create">Créer le client</b-button>
 			<b-button size="sm" variant="secondary" @click="cancel">Annuler</b-button>
+			<b-button size="sm" variant="success" @click="create">Créer le client</b-button>
 			
 		</template>
 	</b-modal>

@@ -134,11 +134,11 @@ export class ConsultUpdate {
 }
 
 
-export class wikiPageUpdate {
+export class WikiPageUpdate {
 	
 	id: number;
 
-	@ApiProperty({ description: 'Page parent' }) @IsNumber()
+	@ApiProperty({ description: 'Page parent' }) @IsNumber() @IsOptional()
 	parentId: number;
 
 	@ApiProperty({ description: 'Ordre' }) @IsNumber()
@@ -158,4 +158,14 @@ export class wikiPageUpdate {
 
 	@ApiProperty({ description: 'Content' }) @IsOptional() @IsObject()
 	content: any;
+
+}
+
+export class WikiPageCreate {
+	
+	@ApiProperty({ description: 'Page parent' }) @IsNumber() @IsOptional()
+	parentId: number;
+
+	@ApiProperty({ description: 'Titre' }) @IsString() @MinLength(2)
+	title: string;
 }

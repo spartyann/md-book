@@ -40,13 +40,14 @@
 	.wiki-tree-page{
 
 		.icon {
-			padding: 0 5px 5px 5px;
+			padding: 0 5px 0 5px;
 			vertical-align: top;
 			border-radius: $border-radius;
+			vertical-align: top;
 		}
 
 		.label {
-			padding: 0 0 0 5px;
+			padding: 1px 0 1px 5px;
 			vertical-align: middle;
 			cursor: pointer;
 			border-radius: $border-radius;
@@ -59,8 +60,6 @@
 				font-size: 70%;
 				font-style: italic;
 			}
-
-			margin-bottom: 5px;
 		}
 
 		&.active .label{

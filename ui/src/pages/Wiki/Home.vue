@@ -1,8 +1,11 @@
 <template>
 	<div class="page-wiki container-fluid" v-if="wikiPages !== null">
-		
+		<WikiNewPageModal ref="wikiNewPageModal"></WikiNewPageModal>
 		<div class="row">
 			<div class="wiki-sidebar col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12">
+				<div class="float-right">
+					<a @click="newPage">Nouvelle page</a>
+				</div>
 				<WikiTree></WikiTree>
 			</div>
 			<div class="wiki-content col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12">
@@ -21,6 +24,7 @@
 import WikiBaseComponent from "@/store/tools/wikiBaseComponent";
 import WikiTree from '../../components/Wiki/Tree';
 import WikiPage from '../../components/Wiki/Page';
+import WikiNewPageModal from '../../components/Wiki/NewPageModal';
 
 export default {
 
@@ -30,7 +34,8 @@ export default {
 
 	components: {
 		WikiPage,
-		WikiTree
+		WikiTree,
+		WikiNewPageModal
 	},
 
 	data()
@@ -64,6 +69,10 @@ export default {
 			{
 				this.storeResetPage()
 			}
+		},
+
+		newPage(){
+			this.$refs.wikiNewPageModal.open();
 		}
 	},
 

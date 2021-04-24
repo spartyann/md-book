@@ -4,13 +4,19 @@
 			<div class="col-12">
 				<h2>
 					<fa :icon="['fas', 'file-alt']"></fa> {{ page.title }}
-					
 				</h2>
 				<p>
 					<i>{{ page.subTitle }}</i>
 				</p>
-				<p>
+				<p class="hover-handler" v-if="editParent == false">
 					<fa :icon="['far', 'folder']"></fa> {{ fullNames.join(' / ') }}
+					<a class="hover-only" @click="editParent = true"><fa :icon="['far', 'edit']"></fa></a>
+				</p>
+				<p v-else>
+					<select v-model.number="clonePage.parentId" class="form-control form-control-sm">
+						<option :value="null">[Aucune]</option>
+						<option v-for="(id) in wikiOrderedPageIds" :key="id" :value="id">{{ wikiPages[id].fullNames.join(' / ')}}</option>
+					</select>
 				</p>
 			</div>
 		</div>
@@ -81,7 +87,8 @@ export default {
 	{
 		return {
 			clonePage: { ...this.page},
-			newMediaLink: ''
+			newMediaLink: '',
+			editParent: false
 		};
 	},
 

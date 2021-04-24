@@ -1,4 +1,4 @@
-import { ClientCreate, ClientUpdate, wikiPageUpdate } from "src/http/api/Schemas";
+import { ClientCreate, ClientUpdate, WikiPageCreate, WikiPageUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
@@ -28,7 +28,7 @@ export class WFWiki extends AppBase {
 		return page;
 	}
 
-	async update(pageUpdate: wikiPageUpdate)
+	async update(pageUpdate: WikiPageUpdate)
 	{
 		// User logged ?
 		if (this.session.userId == null) throw new AccessDeniedException();
@@ -46,5 +46,16 @@ export class WFWiki extends AppBase {
 		return await this.WikiHelper.update(pageUpdate);
 	}
 	
+	async create(pageCreate: WikiPageCreate)
+	{
+		// User logged ?
+		if (this.session.userId == null) throw new AccessDeniedException();
 
+		// Update Page
+		const id = await this.WikiHelper.create(pageCreate);
+
+		// Return Page
+		return await this.WikiHelper.getPage(id);
+	}
+	
 }

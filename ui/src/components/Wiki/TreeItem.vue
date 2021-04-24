@@ -4,9 +4,9 @@
 		
 		<div :class="'wiki-tree-page '
 			+ (wikiLoadingPageId == item.id || (wikiPage != null && wikiPage.id == item.id) ? ' active' : '')">
-			<div :style="marginLeft">
+			<div>
 				<div class="tbl-100">
-					<div class="td icon" @click="clickItem(true)">
+					<div :style="paddingLeft" class="td icon" @click="clickItem(true)">
 						<template v-if="item.children.length">
 							<fa v-if="opened" :icon="['far', 'minus-square']"></fa>
 							<fa v-else :icon="['fas', 'plus-square']"></fa>
@@ -77,8 +77,7 @@ export default {
 	},
 
 	computed:{
-		marginLeft(){ return 'margin-left: ' + (this.deep * 20) + 'px'; },
-		marginLeftPage(){ return 'margin-left: ' + ((this.deep + 1) * 20) + 'px'; },
+		paddingLeft(){ return 'padding-left: ' + (this.deep * 20) + 'px'; },
 
 		pages(){
 			return [];

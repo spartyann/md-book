@@ -81,7 +81,13 @@ DiagramEditor.prototype.libraries = true;
 /**
  * CSS style for the iframe.
  */
-DiagramEditor.prototype.frameStyle = 'position:absolute;border:0;width:100%;height:100%;';
+DiagramEditor.prototype.frameStyle = 'position:fixed; border:0; width:100%; height:100%; background-color: white; z-index: 10';
+
+/**
+ * Save with exit
+ */
+ DiagramEditor.prototype.exiting = false;
+
 
 /**
  * Adds the iframe and starts editing.
@@ -283,31 +289,49 @@ DiagramEditor.prototype.handleMessage = function (msg) {
 		this.initializeEditor();
 	}
 	else if (msg.event == 'autosave') {
-		this.save(msg.xml, true, this.startElement);
+		this.save(msg.xml, null, true, this.startElement);
 	}
 	else if (msg.event == 'export') {
+		let data = atob(msg.data.substring(msg.data.indexOf(',')+1))
+		let format = msg.data.substring(0, msg.data.indexOf(','))
+		
+		this.save(msg.xml,  {
+			data,
+			format
+		}, false, this.startElement);
+
+
 		this.setElementData(this.startElement, msg.data);
-		this.stopEditing();
-		this.xml = null;
+
+		this.setStatus('allChangesSaved', true);
+
+		if (this.exiting)
+		{
+			this.stopEditing();
+			this.xml = null;
+		}
 	}
 	else if (msg.event == 'save') {
-		this.save(msg.xml, false, this.startElement);
+
 		this.xml = msg.xml;
+		
+		this.postMessage({
+			action: 'export', format: this.format, xml: this.xml, spinKey: 'export'
+		});
 
 		if (msg.exit) {
-			msg.event = 'exit';
+			//msg.event = 'exit';
+			this.exiting = true;
 		}
 		else {
-			this.setStatus('allChangesSaved', false);
+			//this.setStatus('allChangesSaved', false);
 		}
 	}
-
-	if (msg.event == 'exit') {
-		if (this.format != 'xml') {
+	else if (msg.event == 'exit') {
+		/*if (this.format != 'xml') {
 			if (this.xml != null) {
 				this.postMessage({
-					action: 'export', format: this.format,
-					xml: this.xml, spinKey: 'export'
+					action: 'export', format: this.format, xml: this.xml, spinKey: 'export'
 				});
 			}
 			else {
@@ -316,11 +340,13 @@ DiagramEditor.prototype.handleMessage = function (msg) {
 		}
 		else {
 			if (msg.modified == null || msg.modified) {
-				this.save(msg.xml, false, this.startElement);
+				this.save(msg.xml, null, false, this.startElement);
 			}
 
 			this.stopEditing(msg);
-		}
+		}*/
+
+		this.stopEditing(msg);
 	}
 }
 
@@ -348,8 +374,8 @@ DiagramEditor.prototype.initializeEditor = function () {
 /**
  * Saves the given data.
  */
-DiagramEditor.prototype.save = function (data, draft, elt) {
-	this.done(data, draft, elt);
+DiagramEditor.prototype.save = function (data, image, draft, elt) {
+	this.done(data, image, draft, elt);
 }
 
 /**

@@ -4,7 +4,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as compression from 'compression';
+import { urlencoded, json } from 'express';
 import { ValidationPipe } from '@nestjs/common';
+
 const FileStore = require('session-file-store')(session);
 
 async function bootstrap() {
@@ -44,6 +46,8 @@ async function bootstrap() {
 
 	app.use(session(sessionOptions));
 	app.use(compression());
+	app.use(json({ limit: '500kb' }));
+	app.use(urlencoded({ extended: true, limit: '500kb' }));
 
 	// Swagger
 	const config = new DocumentBuilder()

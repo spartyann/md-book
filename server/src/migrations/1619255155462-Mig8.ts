@@ -18,8 +18,8 @@ export class Mig81619255155462 implements MigrationInterface {
 			subTitle text NOT NULL DEFAULT '',
 			keyWords longtext NOT NULL DEFAULT '[]',
 			summary text NOT NULL DEFAULT '',
-			content longtext NOT NULL,
-			image mediumblob NULL DEFAULT NULL,
+			content longtext NOT NULL DEFAULT '',
+			image longtext NULL DEFAULT NULL,
 
             PRIMARY KEY (id),
             CONSTRAINT fk_wiki_page_user FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,

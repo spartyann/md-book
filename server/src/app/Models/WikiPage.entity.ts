@@ -33,7 +33,6 @@ export class WikiPage {
 	@Column({ type: 'json' })
 	content: object;
 
-	@Column()
+	@Column({ type: 'json' })
 	image: string;
-
 }

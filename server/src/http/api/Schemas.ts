@@ -141,16 +141,16 @@ export class WikiPageUpdate {
 	@ApiProperty({ description: 'Page parent' }) @IsNumber() @IsOptional()
 	parentId: number;
 
-	@ApiProperty({ description: 'Ordre' }) @IsNumber()
+	@ApiProperty({ description: 'Ordre' }) @IsNumber() @IsOptional()
 	ordering: number;
 
-	@ApiProperty({ description: 'Titre' }) @IsString() @MinLength(2)
+	@ApiProperty({ description: 'Titre' }) @IsString() @MinLength(2) @IsOptional()
 	title: string;
 
-	@ApiProperty({ description: 'Sous-titre' }) @IsString()
+	@ApiProperty({ description: 'Sous-titre' }) @IsString() @IsOptional()
 	subTitle: string;
 	
-	@ApiProperty({ description: 'Résumé' }) @IsString()
+	@ApiProperty({ description: 'Résumé' }) @IsString() @IsOptional()
 	summary: any;
 
 	@ApiProperty({ description: 'Mots clés' }) @IsOptional() @IsArray()
@@ -159,6 +159,8 @@ export class WikiPageUpdate {
 	@ApiProperty({ description: 'Content' }) @IsOptional() @IsObject()
 	content: any;
 
+	@ApiProperty({ description: 'Image' }) @IsOptional() @IsObject()
+	image: string;
 }
 
 export class WikiPageCreate {

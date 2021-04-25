@@ -10,6 +10,18 @@
 	flex-direction: row;
 	flex: 1;*/
 
+	.wiki-diagram{
+		min-height: 100px;
+		min-width: 100px;
+		cursor: pointer;
+		border: solid 1px $gray-400;
+		padding: 10px;
+
+		&:hover {
+			background-color: $gray-100;
+		}
+	}
+
 	.wiki-sidebar, .wiki-content{
 		
 	}

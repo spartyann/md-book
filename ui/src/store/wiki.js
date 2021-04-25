@@ -77,7 +77,7 @@ export default {
 		{
 			return new Promise((resolve, reject) => {
 
-				const fields = ['ordering', 'parentId', 'title', 'subTitle', 'summary', 'keyWords', 'content'];
+				const fields = ['ordering', 'parentId', 'title', 'subTitle', 'summary', 'keyWords', 'content', 'image'];
 				context.state.fieldsUpdating = [];
 
 				const apiParams = { };

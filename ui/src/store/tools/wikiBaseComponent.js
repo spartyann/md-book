@@ -6,6 +6,7 @@ export default {
 			storeWikiList: 'wiki/list',
 			storeGetPage: 'wiki/getPage',
 			storePageUpdate: 'wiki/pageUpdate',
+			storePageUpdateOrdering: 'wiki/pageUpdateOrdering',
 			storeResetPage: 'wiki/resetPage',
 			storeCreatePage: 'wiki/createPage',
 			
@@ -23,6 +24,7 @@ export default {
 			wikiFieldsUpdating: state => state.wiki.fieldsUpdating,
 			wikiUpdateStatus: state => state.wiki.updateStatus,
 
+			
 
 		})
 	}

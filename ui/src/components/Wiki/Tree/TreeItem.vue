@@ -1,6 +1,8 @@
 <template>
-	<div  :class="'wiki-tree-page-container '
-		+ (item.children.length > 0 ? 'has-children ' : 'no-children ')">
+	<div :class="'wiki-tree-page-container '
+		+ (item.children.length > 0 ? 'has-children ' : 'no-children ')"
+		:data-page-id="item.id"
+	>
 		
 		<div :class="'wiki-tree-page '
 			+ (wikiLoadingPageId == item.id || (wikiPage != null && wikiPage.id == item.id) ? ' active' : '')">
@@ -17,10 +19,10 @@
 					</div>
 					<div class="td-100"  @click="clickItem(false)">
 						<div class="label">
-							{{ item.title }}
+							{{ title }}
 							<fa v-if="wikiLoadingPageId == item.id" icon="spinner" pulse></fa>
-							<div v-if="item.subTitle != ''" class="page-sub-title">
-								{{ item.subTitle }}
+							<div v-if="subTitle != ''" class="page-sub-title">
+								{{ subTitle }}
 							</div>
 						</div>
 					</div>
@@ -77,6 +79,9 @@ export default {
 			//return 'padding-left: 20px';
 			return 'padding-left: ' + (this.deep * 20) + 'px';
 		},
+		title() { return this.wikiPages[this.item.id].title; },
+		subTitle(){ return this.wikiPages[this.item.id].subTitle; },
+		ordering(){ return this.wikiPages[this.item.id].ordering; },
 	},
 
 	methods:{

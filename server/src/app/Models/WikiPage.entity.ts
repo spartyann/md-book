@@ -4,16 +4,16 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 export class WikiPage {
 	
 	@PrimaryGeneratedColumn()
-	id: Number;
+	id: number;
 
 	@Column()
-	userId: Number;
+	userId: number;
 
 	@Column()
-	parentId: Number;
+	parentId: number;
 
 	@Column()
-	ordering: Number;
+	ordering: number;
 
 	@Column()
 	shareAlias: string;

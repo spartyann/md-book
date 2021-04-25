@@ -1,6 +1,6 @@
 <template>
 	<div class="wiki-tree">
-		<WikiTreeItems v-model="tree" :deep="0" :opened="true"></WikiTreeItems>
+		<WikiTreeItems :list="tree" :deep="0" :opened="true"></WikiTreeItems>
 	</div>
 </template>
 

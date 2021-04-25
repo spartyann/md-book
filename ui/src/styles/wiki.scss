@@ -20,6 +20,10 @@
 		&:hover {
 			background-color: $gray-100;
 		}
+
+		img{
+			max-width: 100%;
+		}
 	}
 
 	.wiki-sidebar, .wiki-content{

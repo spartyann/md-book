@@ -41,7 +41,7 @@
 				
 			</div>
 
-			<div class="col-lg-7 ">
+			<div class="col-lg-12 ">
 				
 				<RichText v-model="clonePage.content.text"></RichText>
 
@@ -49,14 +49,8 @@
 					<UpdatingIconItem :status="wikiUpdateStatus"></UpdatingIconItem>
 					<button type="button" class="btn btn-success ctrl-s ml-3" @click="save">Enregistrer</button>
 				</p>
-
-				<div class="pt-4 pb-4">
-					<div class="wiki-diagram" @click='clickDiagram'>
-						<img ref="imgDiag" :src="imgSrc"/>
-					</div>
-				</div>
 			</div>
-			<div class="col-lg-5 d-print-none">
+			<!--<div class="col-lg-5 d-print-none">
 
 				<embed :src="link" 
 				v-for="(link) in clonePage.content.media_links" 
@@ -64,6 +58,14 @@
 				
 				<p><input v-model="newMediaLink" type="text" class="form-control" placeholder="https://www.youtube.com/watch?v=xxxxxxxx"></p>
 				<div class="tar"><button type="button" class="btn btn-primary" @click="addMediaLink">Ajouter</button></div>
+			</div>-->
+
+			<div class="col-12">
+				<div class="pt-4 pb-4 tac">
+					<div class="wiki-diagram" @click='clickDiagram'>
+						<img ref="imgDiag" :src="imgSrc"/>
+					</div>
+				</div>
 			</div>
 		</div>
 		
@@ -117,6 +119,7 @@ export default {
 
 			for (let field in this.clonePage)
 			{
+				if (field == 'image') continue;
 				params[field] = this.clonePage[field];
 			}
 
@@ -143,6 +146,8 @@ export default {
 						id: this.clonePage.id,
 						image: image
 					};
+
+					this.dialogWaiting(true);
 					self.storePageUpdate(params).then(() => {
 						self.dialogSuccess();
 					});

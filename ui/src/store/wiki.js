@@ -111,6 +111,32 @@ export default {
 		
 		},
 
+		pageUpdateOrdering(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = {
+					ordering: params.ordering,
+				};
+
+				Communication.call("wiki", "page/" + params.id +"/update", apiParams).then(function(data)
+				{
+					context.state.tree = data.tree;
+					context.state.pages = data.pages;
+					context.state.orderedPageIds = data.orderedPageIds;
+					if (context.state.page.id == data.page.id) context.state.page = data.page;
+
+					resolve(data.page);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		
+		},
+
 
 		createPage(context, params)
 		{

@@ -6,10 +6,10 @@ import { User } from "./User.entity";
 export class Client {
 	
 	@PrimaryGeneratedColumn()
-	id: Number;
+	id: number;
 
 	@Column()
-	userId: Number;
+	userId: number;
 
 	@Column()
 	name: string;

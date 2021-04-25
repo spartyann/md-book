@@ -46,8 +46,8 @@ async function bootstrap() {
 
 	app.use(session(sessionOptions));
 	app.use(compression());
-	app.use(json({ limit: '500kb' }));
-	app.use(urlencoded({ extended: true, limit: '500kb' }));
+	app.use(json({ limit: '2mb' }));
+	app.use(urlencoded({ extended: true, limit: '2mb' }));
 
 	// Swagger
 	const config = new DocumentBuilder()

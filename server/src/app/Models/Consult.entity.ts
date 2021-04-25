@@ -5,13 +5,13 @@ import { Client } from "./Client.entity";
 export class Consult {
 	
 	@PrimaryGeneratedColumn()
-	id: Number;
+	id: number;
 
 	@Column()
-	userId: Number;
+	userId: number;
 
 	@Column()
-	clientId: Number;
+	clientId: number;
 
 	@Column()
 	date: Date;

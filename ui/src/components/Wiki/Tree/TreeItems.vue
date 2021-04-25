@@ -6,12 +6,11 @@
 		style=""
 		@input="emitter"
 		:list="list"
-		:value="value"
 		>
 		<transition-group type="transition" :name="'flip-list'" v-if="opened">
 			<WikiTreeItem v-for="(item) in (list == null ? value : list)" 
-			:item="item" :key="item.id" 
-			:list="item.children"  :deep="deep"></WikiTreeItem>
+				:item="item" :key="item.id" 
+				:list="item.children" :deep="deep"></WikiTreeItem>
 		</transition-group>
 	</draggable>
 </template>
@@ -38,12 +37,6 @@ export default {
 
 
 	props: {
-		value: {
-			required: false,
-			type: Array,
-			default: null
-		},
-
 		list: {
 			required: false,
 			type: Array,
@@ -68,9 +61,9 @@ export default {
 	computed:{
 		dragOptions() {
 			return {
-				//animation: 200,
-				group: "wikiPage",
-				disabled: true,
+				animation: 200,
+				//group: "wikiPage",
+				//disabled: true,
 				ghostClass: "ghost"
 			};
 		}
@@ -78,7 +71,33 @@ export default {
 
 	methods:{
 		dragStart() { this.drag = true; },
-		dragStop() { this.drag = false; },
+		dragStop(evt) {
+			this.drag = false;
+			let self = this;
+
+			//console.log(evt);
+			let id = evt.item.attributes['data-page-id'].value;
+			let oldIndex = evt.oldIndex;
+			let newIndex = evt.newIndex;
+
+			if (oldIndex != newIndex)
+			{
+				let newOrdering = 0;
+
+				if (newIndex == 0) newOrdering = this.wikiPages[this.list[1].id].ordering - 5;
+				else newOrdering = this.wikiPages[this.list[newIndex - 1].id].ordering + 5;
+
+				let params = {
+					id: id,
+					ordering: newOrdering
+				}
+
+				this.storePageUpdateOrdering(params).then(() => {
+					self.dialogSuccess();
+				});
+			}
+			
+		},
 
 		emitter(value) {
 			this.$emit("input", value);

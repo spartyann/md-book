@@ -74,5 +74,17 @@ a:hover{
 
 @media print {
 	.ck-editor__top, .ctrl-s{ display: none; }
+}
 
+.ck {
+	h2 {
+		color: $primary;
+	}
+	h3 {
+		padding-left: 30px;
+		color: $secondary;
+	}
+	h4 {
+		padding-left: 60px;
+	}
 }

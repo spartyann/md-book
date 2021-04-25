@@ -1,6 +1,10 @@
 
 @media print {
 	.page-wiki .wiki-sidebar{ display: none;}
+	.page-wiki .wiki-content{
+		flex: 1;
+		max-width: 100%;
+	}
 }
 
 

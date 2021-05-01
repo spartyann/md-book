@@ -10,6 +10,7 @@ import MyAccount from '../pages/MyAccount'
 import Test from '../pages/Test'
 import Consult from '../pages/Consult/Consult'
 import WikiHome from '../pages/Wiki/Home'
+import WikiShare from '../pages/Wiki/Share'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ const routes = [
 	{
 		path: '/',
 		name: 'Home',
-		component: Home
+		component: Home,
+		meta: { noUserLogged: true }
 	},
 
 	// Login / Register
@@ -30,12 +32,14 @@ const routes = [
 	{
 		path: '/login',
 		name: 'Login',
-		component: Login
+		component: Login,
+		meta: { noUserLogged: true }
 	},
 	{
 		path: '/register',
 		name: 'Register',
-		component: Register
+		component: Register,
+		meta: { noUserLogged: true }
 	},
 
 	// homes
@@ -85,6 +89,13 @@ const routes = [
 		component: WikiHome,
 		meta: { fullBody: true }
 	},
+	{
+		path: '/share/wiki/:alias',
+		name: 'ShareWikiPage',
+		component: WikiShare,
+		meta: { fullBody: true, share: true }
+	},
+	
 	
 ]
 

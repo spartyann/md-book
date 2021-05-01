@@ -73,6 +73,25 @@ export default {
 			})
 		},
 
+		getPageByShareAlias(context, alias)
+		{
+			return new Promise((resolve, reject) => {
+
+				const apiParams = { };
+
+				Communication.call("wiki", "page/share_alias/" + alias, apiParams).then(function(page)
+				{
+					context.state.page = page;
+					resolve(page);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		},
+
 		pageUpdate(context, params)
 		{
 			return new Promise((resolve, reject) => {

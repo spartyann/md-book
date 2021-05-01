@@ -74,17 +74,34 @@ a:hover{
 
 @media print {
 	.ck-editor__top, .ctrl-s{ display: none; }
+
+	.ck-content {
+		border: none !important;
+		padding: 0 !important;
+	}
 }
 
-.ck {
+.ck-content {
 	h2 {
 		color: $primary;
+		font-size: 1.8rem;
+		border-bottom: dotted 1px #b8c5ff;
+		margin: 1.5rem 0 1rem 0;
+		padding-bottom: 0.3rem;
 	}
 	h3 {
 		padding-left: 30px;
 		color: $secondary;
+		font-size: 1.6rem;
 	}
 	h4 {
 		padding-left: 60px;
 	}
+}
+
+
+
+embed {
+	width: 100%;
+	min-height: 300px;
 }

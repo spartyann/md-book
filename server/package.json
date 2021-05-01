@@ -33,6 +33,7 @@
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
     "express-session": "^1.17.1",
+    "generate-password": "^1.6.0",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

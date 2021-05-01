@@ -65,12 +65,12 @@
 
 
 .tr {
-	display:table-row !important;
+	display:table-row;
 }
 
 .td {
 	vertical-align: top;
-	display:table-cell !important;
+	display:table-cell;
 }
 
 @mixin generate-td($i: 0) {

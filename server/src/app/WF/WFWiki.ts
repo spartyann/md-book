@@ -28,6 +28,16 @@ export class WFWiki extends AppBase {
 		return page;
 	}
 
+	async getPageByShareAlias(alias: string)
+	{
+		const page = await this.WikiHelper.getPageByShareAlias(alias);
+
+		// ACL
+		if (page == null) throw new AccessDeniedException();
+
+		return page;
+	}
+
 	async update(pageUpdate: WikiPageUpdate)
 	{
 		// User logged ?

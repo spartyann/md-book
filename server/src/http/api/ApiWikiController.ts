@@ -46,6 +46,18 @@ export class ApiWikiController {
 		});
 	}
 
+	@Post('page/share_alias/:alias')
+	@ApiParam({ name: 'alias', required: true })
+	async getByAlias(@Param() params, @Body() body, @Req() request: Request, @Res() response: Response, @Session() session) {
+
+		this.apiService.runApi(params, body, request, response, session, async function(app, context)
+		{
+			const alias = context.getParam('alias', ApiContext.TYPE_STRING, null);
+
+			return await app.WFWiki.getPageByShareAlias(alias);
+		});
+	}
+
 	@Post('page/:id/update')
 	@ApiParam({ name: 'id', required: true })
 	async update(@Param() params, @Body() body: WikiPageUpdate, @Req() request: Request, @Res() response: Response, @Session() session) {

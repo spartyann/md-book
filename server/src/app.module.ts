@@ -28,6 +28,7 @@ import { WikiPage } from './app/Models/WikiPage.entity';
 				username: configService.get('DB_USERNAME'),
 				password: configService.get('DB_PASSWORD'),
 				database: configService.get('DB_DATABASE'),
+				charset : 'utf8mb4',
 				//entities: ["dist/**/*.entity{.ts,.js}"],
 				entities: [ User, Consult, Client ],
 				synchronize: false,

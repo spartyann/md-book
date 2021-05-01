@@ -75,8 +75,9 @@
 		methods: {
 			checkRoute()
 			{
-				let routeName = this.$route.name;
-				if (this.user == null && routeName != 'Home' && routeName != 'Login' && routeName != 'Register')
+				if (this.user == null 
+					&& this.$route.meta.noUserLogged != true
+					&& this.$route.meta.share != true )
 				{
 					this.$router.push({name: "Login"});
 				}

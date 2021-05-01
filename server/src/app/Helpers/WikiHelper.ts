@@ -3,6 +3,7 @@ import { AppBase } from "../AppBase";
 import { AppException } from "../Exceptions/AppException";
 import { UserException } from "../Exceptions/UserException";
 import { WikiPage } from "../Models/WikiPage.entity";
+let generator = require('generate-password');
 
 export class WikiHelper extends AppBase {
 
@@ -210,7 +211,33 @@ export class WikiHelper extends AppBase {
 	 */
 	async getPage(id: number): Promise<WikiPage>
 	{
-		return await this.queryRunner.manager.findOne(WikiPage, id);
+		let page = await this.queryRunner.manager.findOne(WikiPage, id);
+
+		if (page == null) return null;
+
+		page.acl = {
+			update: this.session.userId == page.userId
+		};
+
+		return page
+	}
+
+	/**
+	 * Get page
+	 * 
+	 * @param alias
+	 */
+	async getPageByShareAlias(alias: string): Promise<WikiPage>
+	{
+		let page = await this.queryRunner.manager.findOne(WikiPage, null, { where: { shareAlias: alias }});
+
+		if (page == null) return null;
+		
+		page.acl = {
+			update: this.session.userId == page.userId
+		};
+
+		return page
 	}
 	
 	/**
@@ -278,10 +305,18 @@ export class WikiHelper extends AppBase {
 
 		const keyWords = [];
 
-		let sql = 'INSERT INTO wiki_page(userId, title, parentId, ordering, keyWords, content) VALUES (?,?,?,?,?,?)';
+		let alias = generator.generate({
+			length: 20,
+			uppercase: false,
+			numbers: true,
+			excludeSimilarCharacters: true
+		});
+
+
+		let sql = 'INSERT INTO wiki_page(userId, shareAlias, title, parentId, ordering, keyWords, content) VALUES (?,?,?,?,?,?,?)';
 
 		let res = await this.queryRunner.query(sql, [
-			this.session.userId, pageCreate.title, pageCreate.parentId, 100000, JSON.stringify(keyWords), JSON.stringify(content)
+			this.session.userId, alias, pageCreate.title, pageCreate.parentId, 100000, JSON.stringify(keyWords), JSON.stringify(content)
 		]);
 
 		// Create Page

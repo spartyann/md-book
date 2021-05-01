@@ -5,6 +5,7 @@ export default {
 		...mapActions({
 			storeWikiList: 'wiki/list',
 			storeGetPage: 'wiki/getPage',
+			storeGetPageByShareAlias: 'wiki/getPageByShareAlias',
 			storePageUpdate: 'wiki/pageUpdate',
 			storePageUpdateOrdering: 'wiki/pageUpdateOrdering',
 			storeResetPage: 'wiki/resetPage',

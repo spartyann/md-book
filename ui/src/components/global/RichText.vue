@@ -1,5 +1,6 @@
 <template>
-	<ckeditor :editor="editor" v-model="model" :config="editorConfig"></ckeditor>	
+	<ckeditor :editor="editor" v-model="model" :config="editorConfig" :disabled="disabled" v-if="disabled == false"></ckeditor>	
+	<div class="ck-content" v-else v-html="value"></div>
 </template>
 
 <script>
@@ -10,6 +11,7 @@ export default {
 
 	props: {
 		value: { default: null, type: String },
+		disabled: { default: false, type: Boolean },
 	},
 
 	model: {

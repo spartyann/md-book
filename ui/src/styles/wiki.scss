@@ -7,6 +7,9 @@
 	}
 }
 
+.wiki-tree {
+	margin-bottom: 3rem;
+}
 
 .page-wiki
 {
@@ -15,10 +18,10 @@
 	flex: 1;*/
 
 	.wiki-diagram{
-		min-height: 100px;
+		min-height: 10px;
 		min-width: 100px;
 		cursor: pointer;
-		border: solid 1px $gray-400;
+		//border: solid 1px $gray-400;
 		padding: 10px;
 
 		&:hover {
@@ -38,6 +41,7 @@
 		//padding: 24px 15px 15px 15px;
 		//min-width: 250px;
 		//width: 20vw;
+		padding-right: 2rem;
 		border-right: solid 1px $gray-200;
 	}
 

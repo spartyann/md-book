@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './http/app.controller';
 import { ApiService } from './app/Services/Api/api.service';
-import { TestController } from './http/test/controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -55,8 +54,7 @@ import { Configuration } from './app/Models/Configuration.entity';
 		ApiUserController,
 		ApiClientController,
 		ApiConsultController,
-		ApiWikiController,
-		TestController
+		ApiWikiController
 	],
 	providers: [ ApiService ],
 })

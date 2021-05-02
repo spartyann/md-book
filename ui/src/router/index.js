@@ -87,13 +87,44 @@ const routes = [
 		path: '/wiki/:pageId',
 		name: 'WikiPage',
 		component: WikiHome,
-		meta: { fullBody: true }
+		meta: {
+			fullBody: true,
+			pageHead: {
+				title: function(app)
+				{
+					if (app.wikiPage == null) return null;
+					return app.wikiPage.title;
+				},/*
+				description: function(app)
+				{
+					if (app.wikiPage == null) return null;
+					let desc = app.wikiPage.subTitle; if (desc != "" && app.wikiPage.summary != "") desc += "\n";
+					return desc + app.wikiPage.summary;
+				}*/
+			}
+		}
 	},
 	{
 		path: '/share/wiki/:alias',
 		name: 'ShareWikiPage',
 		component: WikiShare,
-		meta: { fullBody: true, share: true }
+		meta: {
+			fullBody: true,
+			share: true,
+			pageHead: {
+				title: function(app)
+				{
+					if (app.wikiPage == null) return null;
+					return app.wikiPage.title;
+				},/*
+				description: function(app)
+				{
+					if (app.wikiPage == null) return null;
+					let desc = app.wikiPage.subTitle; if (desc != "" && app.wikiPage.summary != "") desc += "\n";
+					return desc + app.wikiPage.summary;
+				}*/
+			}
+		}
 	},
 	
 	

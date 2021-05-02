@@ -48,6 +48,7 @@
 					<input v-model="clonePage.subTitle" type="text" class="form-control form-control-sm" placeholder="Sous-titre" :disabled="canUpdate == false">
 				</div>
 			</div>
+			
 			<div class="col-lg-6 " v-if="canUpdate">
 				<div class="form-group d-print-none">
 					<label for="">Résumé</label>
@@ -220,7 +221,8 @@ export default {
 		shareLink() {
 			if (this.clonePage.shareAlias == null) return null;
 
-			return window.location.protocol + '//' + window.location.hostname  + ( window.location.port == 443 ? '': ':' + window.location.port ) + this.$router.resolve({ 
+			return window.location.protocol + '//' + window.location.hostname  +
+				( window.location.port == "" ? '' : ':' + window.location.port ) + this.$router.resolve({ 
 				name: 'ShareWikiPage',
 				params: { alias: this.clonePage.shareAlias  },
 			}).route.fullPath;

@@ -41,7 +41,18 @@
 
 		watch:
 		{
-			$route(){ if (this.loaded) { this.checkRoute(); } }
+			$route(){
+				if (this.loaded)
+				{
+					this.checkRoute();
+					this.refreshPageHead();
+				}
+			},
+			wikiPage() { this.refreshPageHead(); }
+		},
+
+		updated(){
+			this.refreshPageHead();
 		},
 
 		mounted()
@@ -82,6 +93,31 @@
 					this.$router.push({name: "Login"});
 				}
 			},
+			refreshPageHead() {
+				const meta = this.$route.meta;
+		
+				let pageTitle = null;
+				let pageDescription = null
+
+				if(meta != null && meta.pageHead != undefined) 
+				{
+					if (meta.pageHead.title != undefined)
+					{
+						pageTitle = typeof meta.pageHead.title == 'function' ? meta.pageHead.title(this) : meta.pageHead.title;
+					}
+					if (meta.pageHead.description != undefined)
+					{
+						pageDescription = typeof meta.pageHead.description == 'function' ? meta.pageHead.description(this) : meta.pageHead.description;
+					}
+				}
+
+				if (pageTitle == null) pageTitle = "MD Book";
+				if (pageDescription == null) pageDescription = "Application d'aide aux praticiens des médecines douces.";
+
+				$("html>head>title").text(pageTitle);
+				$("html>head>meta[name=description]").attr('content', pageDescription);
+
+			},
 			...mapActions({
 				storeInit: 'init'
 			}),
@@ -89,6 +125,7 @@
 		computed: {
 			...mapState({
 				user: state => state.user.loggedUser,
+				wikiPage: state => state.wiki.page,
 			})
 		}
 	}

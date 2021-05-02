@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { AppException } from 'src/app/Exceptions/AppException';
 import { ApiService } from 'src/app/Services/Api/api.service';
 import { ApiContext } from 'src/app/Services/Api/ApiContext';
-import { UserUpdate } from './Schemas';
+import { UserRegister, UserUpdate } from './Schemas';
 
 @Controller('api/user')
 @ApiTags('User')
@@ -21,6 +21,15 @@ export class ApiUserController {
 		});
 	}
 
+
+	@Post('register')
+	async register(@Param() params, @Body() user: UserRegister, @Req() request: Request, @Res() response: Response, @Session() session) {
+
+		this.apiService.runApi(params, user, request, response, session, async function(app, context)
+		{
+			return await app.WFUser.register(user);
+		});
+	}
 
 	@Post('login')
 	//@ApiBody({ email: String, pwd: String })

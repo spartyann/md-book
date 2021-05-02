@@ -15,6 +15,8 @@ import { User } from './app/Models/User.entity';
 import { Consult } from './app/Models/Consult.entity';
 import { Client } from './app/Models/Client.entity';
 import { WikiPage } from './app/Models/WikiPage.entity';
+import { Recovery } from './app/Models/Recovery.entity';
+import { Configuration } from './app/Models/Configuration.entity';
 
 @Module({
 	imports: [
@@ -39,7 +41,7 @@ import { WikiPage } from './app/Models/WikiPage.entity';
 			}),
 		  	inject: [ConfigService],
 		}),
-		TypeOrmModule.forFeature([ User, Consult, Client, WikiPage ]),
+		TypeOrmModule.forFeature([ User, Consult, Client, WikiPage, Recovery, Configuration ]),
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, '../../ui/dist'),
 			serveStaticOptions: {

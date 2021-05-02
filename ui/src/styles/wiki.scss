@@ -20,11 +20,10 @@
 	.wiki-diagram{
 		min-height: 10px;
 		min-width: 100px;
-		cursor: pointer;
 		//border: solid 1px $gray-400;
 		padding: 10px;
 
-		&:hover {
+		&.clickable:hover {
 			background-color: $gray-100;
 		}
 

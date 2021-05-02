@@ -67,7 +67,7 @@
 				</p>
 
 				<div v-if="clonePage.image != null || canUpdate" :class="'pt-4 pb-4 tac ' + (clonePage.image == null ? 'd-print-none' : '')">
-					<div class="wiki-diagram" @click='clickDiagram'>
+					<div :class="'wiki-diagram ' + ( canUpdate ? 'clickable': '')" @click='clickDiagram'>
 						<img ref="imgDiag" :src="imgSrc"/>
 					</div>
 				</div>

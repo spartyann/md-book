@@ -1,7 +1,9 @@
 import { ConfigService } from "@nestjs/config";
 import { Connection, QueryRunner, Repository } from "typeorm";
 import { ClientHelper } from "./Helpers/ClientHelper";
+import { ConfigurationHelper } from "./Helpers/ConfigurationHelper";
 import { ConsultHelper } from "./Helpers/ConsultHelper";
+import { RecoveryHelper } from "./Helpers/RecoveryHelper";
 import { UserHelper } from "./Helpers/UserHelper";
 import { WikiHelper } from "./Helpers/WikiHelper";
 import { WFClient } from "./WF/WFClient";
@@ -23,7 +25,7 @@ export class App{
 
 	}
 
-	private getModuleFromName(name: string): any
+	private createModuleFromName(name: string): any
 	{
 		// WFs
 		if (name == 'WFUser') return new WFUser(this);
@@ -36,10 +38,12 @@ export class App{
 		if (name == 'ClientHelper') return new ClientHelper(this);
 		if (name == 'ConsultHelper') return new ConsultHelper(this);
 		if (name == 'WikiHelper') return new WikiHelper(this);
+		if (name == 'RecoveryHelper') return new RecoveryHelper(this);
+		if (name == 'ConfigurationHelper') return new ConfigurationHelper(this);
 	}
 
 	public getModule(name: string): any {
-		if (this._modules[name] == undefined) this._modules[name] = this.getModuleFromName(name);
+		if (this._modules[name] == undefined) this._modules[name] = this.createModuleFromName(name);
 		return this._modules[name];
 	}
 
@@ -55,5 +59,7 @@ export class App{
 	get ClientHelper(): ClientHelper { return this.getModule('ClientHelper'); }
 	get ConsultHelper(): ConsultHelper { return this.getModule('ConsultHelper'); }
 	get WikiHelper(): WikiHelper { return this.getModule('WikiHelper'); }
+	get RecoveryHelper(): RecoveryHelper { return this.getModule('RecoveryHelper'); }
+	get ConfigurationHelper(): ConfigurationHelper { return this.getModule('ConfigurationHelper'); }
 
 }

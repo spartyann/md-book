@@ -52,6 +52,8 @@ export class ClientHelper extends AppBase {
 	{
 		let client = await this.queryRunner.manager.findOne(Client, clientUpdate.id);
 
+		await this.RecoveryHelper.add('Client_' + clientUpdate.id, clientUpdate);
+
 		for (let field in clientUpdate)
 		{
 			let val = clientUpdate[field];

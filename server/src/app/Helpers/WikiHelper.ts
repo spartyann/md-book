@@ -248,6 +248,9 @@ export class WikiHelper extends AppBase {
 	async update(pageUpdate: WikiPageUpdate): Promise<WikiPage>
 	{
 		let page = await this.queryRunner.manager.findOne(WikiPage, pageUpdate.id);
+
+		await this.RecoveryHelper.add('WikiPage_' + pageUpdate.id, pageUpdate);
+
 		let orderingFieldUpdated = false;
 
 		for (let field in pageUpdate)

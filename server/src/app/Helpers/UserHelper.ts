@@ -1,4 +1,4 @@
-import { UserUpdate } from "src/http/api/Schemas";
+import { UserRegister, UserUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { PasswordTools } from "../Tools/PasswordTools";
 
@@ -16,6 +16,21 @@ export class UserHelper extends AppBase {
 		let res = await this.queryRunner.query("SELECT * FROM user WHERE email = ?", [ email ]);
 		if (res.length == 1) return res[0];
 		return null;
+	}
+
+	async create(user: UserRegister)
+	{
+		const name = user.firstName + " " + user.lastName;
+
+		let sql = 'INSERT INTO user(name, firstName, lastName, email, password) VALUES (?,?,?,?,?)';
+
+		let res = await this.queryRunner.query(sql, [
+			name, user.firstName, user.lastName, user.email, await PasswordTools.hashPassword(user.pwd)
+		]);
+
+		res = await this.queryRunner.query('SELECT LAST_INSERT_ID() as id');
+
+		return res[0].id;
 	}
 
 	async update(user: UserUpdate)

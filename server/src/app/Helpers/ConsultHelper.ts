@@ -111,6 +111,8 @@ export class ConsultHelper extends AppBase {
 	{
 		let consult = await this.queryRunner.manager.findOne(Consult, consultUpdate.id);
 
+		await this.RecoveryHelper.add('Consult_' + consultUpdate.id, consultUpdate, 30);
+
 		for (let field in consultUpdate)
 		{
 			let val = consultUpdate[field];

@@ -1,7 +1,7 @@
 
 export class ObjectTools {
 
-	static arrayToObjectIndexed(array: Array<any>, field: string): { [id:string] : any } {
+	static arrayToObjectIndexed<T>(array: Array<T>, field: string): { [id:string] : T } {
 		let res = {};
 
 		for (let i = 0; i < array.length; i++)

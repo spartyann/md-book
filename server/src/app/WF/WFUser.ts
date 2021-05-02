@@ -1,4 +1,4 @@
-import { UserUpdate } from "src/http/api/Schemas";
+import { UserRegister, UserUpdate } from "src/http/api/Schemas";
 import { AppBase } from "../AppBase";
 import { AccessDeniedException } from "../Exceptions/AccessDeniedException";
 import { ApiException } from "../Exceptions/ApiException";
@@ -53,6 +53,28 @@ export class WFUser extends AppBase {
 
 		// Return user
 		return await this.UserHelper.get(id);
+	}
+
+
+	async register(user: UserRegister)
+	{
+		const registrationEnabled: boolean = await this.ConfigurationHelper.get('registration_enabled');
+		const registrationCodes: string[] = await this.ConfigurationHelper.get('registration_codes');
+
+		if (registrationEnabled == false && registrationCodes.indexOf(user.registrationCode) == -1)
+		{
+			throw new UserException("L'inscription est désactivée ou le code d'invitation est invalide.");
+		}
+
+		const existingUser = await this.UserHelper.getUserByEmail(user.email);
+
+		if (existingUser != null) throw new UserException("Cet email est déjà utilisé par un compte.");
+
+		const id = await this.UserHelper.create(user);
+
+		this.session.userId = id;
+
+		return this.UserHelper.get(id);
 	}
 
 }

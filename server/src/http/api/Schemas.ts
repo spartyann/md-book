@@ -1,6 +1,42 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsArray, IsBoolean, IsDate, IsEmail, IsInt, IsNumber, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEmail, IsInt, IsNumber, isObject, IsObject, IsOptional, IsString, Min, MinLength, ValidateIf } from "class-validator";
+
+export class UserUpdate {
+	
+	@ApiProperty({ description: 'Id'}) @IsInt() @Min(1)
+	id: number;
+
+	@ApiProperty({ description: 'Prénom' }) @IsString() @MinLength(2)
+	firstName: string;
+
+	@ApiProperty({ description: 'Nom' }) @IsString() @MinLength(2)
+	lastName: string;
+
+	@ApiProperty({ description: 'Email' }) @IsEmail({}, {message: "Veuillez saisir un email valide."})
+	email: string;
+
+	@ApiProperty({ description: 'Mot de passe' }) @IsOptional() @IsString()
+	pwd: string;
+}
+
+export class UserRegister {
+	
+	@ApiProperty({ description: 'Prénom' }) @IsString() @MinLength(2)
+	firstName: string;
+
+	@ApiProperty({ description: 'Nom' }) @IsString() @MinLength(2)
+	lastName: string;
+
+	@ApiProperty({ description: 'Email' }) @IsEmail({}, {message: "Veuillez saisir un email valide."})
+	email: string;
+
+	@ApiProperty({ description: 'Mot de passe' }) @IsString() @MinLength(6)
+	pwd: string;
+
+	@ApiProperty({ description: "Code d'invitation pour inscription" }) @IsOptional() @IsString()
+	registrationCode: string;
+}
 
 export class ClientCreate {
 	
@@ -66,23 +102,7 @@ export class ClientUpdate {
 
 }
 
-export class UserUpdate {
-	
-	@ApiProperty({ description: 'Id'}) @IsInt() @Min(1)
-	id: number;
 
-	@ApiProperty({ description: 'Prénom' }) @IsString() @MinLength(2)
-	firstName: string;
-
-	@ApiProperty({ description: 'Nom' }) @IsString() @MinLength(2)
-	lastName: string;
-
-	@ApiProperty({ description: 'Email' }) @IsEmail({}, {message: "Veuillez saisir un email valide."})
-	email: string;
-
-	@ApiProperty({ description: 'Mot de passe' }) @IsOptional() @IsString()
-	pwd: string;
-}
 
 
 export class ConsultCreate {

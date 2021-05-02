@@ -2,7 +2,9 @@ import { ConfigService } from "@nestjs/config";
 import { Connection, EntityManager, EntityTarget, FindManyOptions, QueryRunner, SelectQueryBuilder } from "typeorm";
 import { App } from "./App";
 import { ClientHelper } from "./Helpers/ClientHelper";
+import { ConfigurationHelper } from "./Helpers/ConfigurationHelper";
 import { ConsultHelper } from "./Helpers/ConsultHelper";
+import { RecoveryHelper } from "./Helpers/RecoveryHelper";
 import { UserHelper } from "./Helpers/UserHelper";
 import { WikiHelper } from "./Helpers/WikiHelper";
 import { ObjectTools } from "./Tools/ObjectTools";
@@ -48,8 +50,6 @@ export class AppBase {
 			'id');
 	}
 
-	
-
 
 	
 	get WFUser(): WFUser { return this.app.WFUser; }
@@ -61,6 +61,8 @@ export class AppBase {
 	get ClientHelper(): ClientHelper { return this.app.ClientHelper; }
 	get ConsultHelper(): ConsultHelper { return this.app.ConsultHelper; }
 	get WikiHelper(): WikiHelper { return this.app.WikiHelper; }
+	get RecoveryHelper(): RecoveryHelper { return this.app.RecoveryHelper; }
+	get ConfigurationHelper(): ConfigurationHelper { return this.app.ConfigurationHelper; }
 
 }
 

@@ -53,6 +53,34 @@ export default {
 				});
 			})
 		},
+
+		register(context, params)
+		{
+			return new Promise((resolve, reject) => {
+
+
+				const apiParams = {
+					firstName: params.firstName,
+					lastName: params.lastName,
+					email: params.email,
+					pwd: params.pwd,
+					registrationCode: params.registrationCode,
+				};
+
+				Communication.call("user", "register", apiParams).then(function(user)
+				{
+					context.state.loggedUser = user;
+					resolve(user);
+
+				}).catch(function(data)
+				{
+					context.dispatch("apiError", data);
+					reject(data);
+				});
+			})
+		},
+
+
 		logout(context)
 		{
 			return new Promise((resolve, reject) => {

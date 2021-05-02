@@ -63,7 +63,7 @@
 
 				<p class="tar mt-3" v-if="canUpdate">
 					<UpdatingIconItem :status="wikiUpdateStatus"></UpdatingIconItem>
-					<button type="button" class="btn btn-success ctrl-s ml-3" @click="save">Enregistrer</button>
+					<button type="button" class="btn btn-success ctrl-s ml-3" @click="save(false)">Enregistrer</button>
 				</p>
 
 				<div v-if="clonePage.image != null || canUpdate" :class="'pt-4 pb-4 tac ' + (clonePage.image == null ? 'd-print-none' : '')">
@@ -84,7 +84,7 @@
 						<div class="td-100">
 							<small><a :href="link" target="_blank">{{link}}</a></small>
 						</div>
-						<div class="td hover-only" v-if="canUpdate"><a @click="deleteMediaLink(index)"><fa :icon="['fas', 'trash']"></fa></a></div>
+						<div class="td hover-only d-print-none" v-if="canUpdate"><a @click="deleteMediaLink(index)"><fa :icon="['fas', 'trash']"></fa></a></div>
 					</div>
 				</div>
 				
@@ -139,7 +139,8 @@ export default {
 	},
 
 	methods: {
-		save(){
+		save(includeImage)
+		{
 			let self = this;
 			let params = {
 				id: this.clonePage.id,
@@ -147,7 +148,7 @@ export default {
 
 			for (let field in this.clonePage)
 			{
-				if (field == 'image') continue;
+				if (includeImage == false && field == 'image') continue;
 				params[field] = this.clonePage[field];
 			}
 
@@ -186,21 +187,13 @@ export default {
 		clickDiagram()
 		{
 			if (this.canUpdate == false) return;
-			let self = this;
 			DiagramEditor.editElement(this.$refs.imgDiag, null,null, (data, image, draft) => {
 				//console.log(data, draft, elt, elt.getAttribute('src'), elt.getAttribute('src').substring("data:image/svg+xml;base64,".length));
 	
 				if (draft == false)
 				{
-					let params = {
-						id: this.clonePage.id,
-						image: image
-					};
-
-					this.dialogWaiting(true);
-					self.storePageUpdate(params).then(() => {
-						self.dialogSuccess();
-					});
+					this.clonePage.image = image;
+					this.save(true);
 				}
 			});
 		},
